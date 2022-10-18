@@ -6,7 +6,7 @@ export default function TripForm() {
   return (
     <FormBox>
       <InputWrapper>
-        <CountryInput />
+        <CountryInput required />
         <AddTripButton type="submit">
           <Image src={addButtonCircleActive} alt="Add button" />
         </AddTripButton>
