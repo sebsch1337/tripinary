@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import styled from "styled-components";
 import TripCard from "../components/TripCard";
+import TripForm from "../components/TripForm";
 import { dbTrips } from "../db";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
           {trips.map((trip) => (
             <TripCard key={trip.id} country={trip.country} />
           ))}
+          <TripForm />
         </TripsWrapper>
       </Main>
     </div>
@@ -33,7 +35,9 @@ const TripsHeadline = styled.h1`
   font-weight: 500;
 `;
 
-const Main = styled.main``;
+const Main = styled.main`
+  margin-bottom: 2em;
+`;
 
 const TripsWrapper = styled.div`
   display: flex;
