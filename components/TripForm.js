@@ -2,12 +2,18 @@ import styled from "styled-components";
 import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 import Image from "next/image";
 
-export default function TripForm() {
+export default function TripForm({ addTrip }) {
+  const onSubmitNewTrip = (event) => {
+    event.preventDefault();
+    addTrip(event.target.country.value);
+    event.target.reset();
+  };
+
   return (
-    <FormBox>
+    <FormBox onSubmit={onSubmitNewTrip}>
       <InputWrapper>
-        <CountryInput required />
-        <AddTripButton type="submit">
+        <CountryInput name="country" required />
+        <AddTripButton>
           <Image src={addButtonCircleActive} alt="Add button" />
         </AddTripButton>
       </InputWrapper>
