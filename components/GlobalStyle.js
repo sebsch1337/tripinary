@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
     :root {
         --text-primary: #121212;
         --background-primary: #fafbff;
+        --drop-shadow: #8e94a3;
     }
   
     /* rubik-regular - latin */
