@@ -12,7 +12,7 @@ export default function TripForm({ addTrip }) {
   return (
     <FormBox onSubmit={onSubmitNewTrip}>
       <InputWrapper>
-        <CountryInput name="country" required />
+        <CountryInput placeholder="Add trip..." name="country" required />
         <AddTripButton>
           <Image src={addButtonCircleActive} alt="Add button" />
         </AddTripButton>
