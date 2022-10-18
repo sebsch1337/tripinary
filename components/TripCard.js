@@ -13,7 +13,7 @@ export default function TripCard({ country }) {
 const CardBox = styled.button`
   width: 20em;
   height: 20em;
-  filter: drop-shadow(0 0 1em #a1a1a1);
+  filter: drop-shadow(0 0 1em var(--drop-shadow));
   background-size: cover;
   background-image: url(${(props) => props.image});
   border: 0;
@@ -34,7 +34,7 @@ const TextArea = styled.span`
 `;
 
 const CountryName = styled.h2`
-  color: #fafbff;
+  color: #fff;
   font-size: 1.8rem;
   font-weight: 400;
 `;
