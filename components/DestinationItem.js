@@ -2,7 +2,6 @@ import bulletCircle from "../assets/bulletCircle.svg";
 import styled from "styled-components";
 
 export default function DestinationItem({ name }) {
-  console.log(bulletCircle);
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} height={15} />
