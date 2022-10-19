@@ -38,4 +38,8 @@ const CountryName = styled.h2`
   font-size: 1.8rem;
   font-weight: 400;
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.5em;
 `;
