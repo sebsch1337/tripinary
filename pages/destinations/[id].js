@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
-import { useEffect } from "react";
-import bulletCircle from "../../assets/bulletCircle.svg";
+import DestinationItem from "../../components/DestinationItem";
 
 export default function Destinations() {
   const router = useRouter();
@@ -21,20 +20,18 @@ export default function Destinations() {
   return (
     <>
       <Head>
-        <title>{countryName}</title>
+        <title>{countryName.toUpperCase()}</title>
       </Head>
       <Cover
         image={`https://source.unsplash.com/random/?${countryQueryName}`}
       ></Cover>
       <MainCard>
-        <DestinationHeadline>{countryName}</DestinationHeadline>
-        <DestinationsWrapper bulletPoint={bulletCircle}>
+        <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
+        <DestinationsWrapper>
           {destinations.map((destination) => {
             if (destination.tripId == id) {
               return (
-                <DestinationItem key={destination.id}>
-                  {destination.name}
-                </DestinationItem>
+                <DestinationItem key={destination.id} name={destination.name} />
               );
             }
           })}
@@ -45,8 +42,8 @@ export default function Destinations() {
 }
 
 const Cover = styled.header`
-  width: 100vw;
-  height: 50vh;
+  width: 100%;
+  height: 50%;
   background-color: red;
   position: fixed;
   background-size: cover;
@@ -59,8 +56,8 @@ const MainCard = styled.main`
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   background-color: var(--background-primary);
-  width: 100vw;
-  height: 60vh;
+  width: 100%;
+  height: 60%;
 `;
 
 const DestinationHeadline = styled.h1`
@@ -70,10 +67,5 @@ const DestinationHeadline = styled.h1`
 
 const DestinationsWrapper = styled.ul`
   list-style: none;
-  margin: 0 3em;
-`;
-
-const DestinationItem = styled.li`
-  padding: 0.5em;
-  font-size: 1.2rem;
+  margin: 0 2em;
 `;

@@ -33,5 +33,15 @@ export function dummyDestinations() {
       name: "Tokio",
       tripId: "bc9d0d74",
     },
+    {
+      id: 5,
+      name: "Koh Phayam",
+      tripId: 1,
+    },
+    {
+      id: 6,
+      name: "Phuket",
+      tripId: 1,
+    },
   ];
 }

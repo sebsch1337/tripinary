@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Trips</title>
+        <title>START YOUR JOURNEY</title>
       </Head>
       <TripsHeadline>
         Start
