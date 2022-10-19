@@ -1,4 +1,4 @@
-export function dbTrips() {
+export function dummyTrips() {
   return [
     {
       id: 1,

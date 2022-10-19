@@ -1,14 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
 import styled from "styled-components";
 import TripCard from "../components/TripCard";
 import TripForm from "../components/TripForm";
-import { dbTrips } from "../db";
 import { v4 as uuid } from "uuid";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Home() {
-  const [trips, setTrips] = useState(dbTrips);
+  const [trips, setTrips] = useLocalStorage("trips", []);
 
   const onSubmitNewTrip = (event) => {
     event.preventDefault();
