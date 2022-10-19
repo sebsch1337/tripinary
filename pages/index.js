@@ -6,7 +6,6 @@ import TripForm from "../components/TripForm";
 import { v4 as uuid } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { dummyTrips } from "../db";
-import { useEffect } from "react";
 
 export default function Home() {
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
