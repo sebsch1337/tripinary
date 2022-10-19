@@ -9,16 +9,21 @@ import { v4 as uuid } from "uuid";
 export default function Home() {
   const [trips, setTrips] = useState(dbTrips);
 
-  const addTrip = (name) => {
+  const onSubmitNewTrip = (event) => {
+    event.preventDefault();
+    const countryName = event.target.country.value;
+
     setTrips((trips) => {
       return [
         ...trips,
         {
           id: uuid().slice(0, 8),
-          country: name,
+          country: countryName,
         },
       ];
     });
+
+    event.target.reset();
   };
 
   return (
@@ -36,7 +41,7 @@ export default function Home() {
           {trips.map((trip) => (
             <TripCard key={trip.id} country={trip.country} />
           ))}
-          <TripForm addTrip={addTrip} />
+          <TripForm onSubmitNewTrip={onSubmitNewTrip} />
         </TripsWrapper>
       </Main>
     </div>
