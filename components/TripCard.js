@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export default function TripCard({ country }) {
+  const countryQueryName = country.replace(" ", "-");
   return (
-    <CardBox image={`https://source.unsplash.com/random/?${country}`}>
+    <CardBox image={`https://source.unsplash.com/random/?${countryQueryName}`}>
       <TextArea>
         <CountryName>{country}</CountryName>
       </TextArea>
