@@ -21,10 +21,10 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        font-family: 'Rubik';
     }
 
     body {
-        font-family: 'Rubik';
         background-color: var(--background-primary);
         color: var(--text-primary);
     }
