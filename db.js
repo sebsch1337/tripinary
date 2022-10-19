@@ -28,5 +28,10 @@ export function dummyDestinations() {
       name: "Chiang Mai",
       tripId: 1,
     },
+    {
+      id: 4,
+      name: "Tokio",
+      tripId: "bc9d0d74",
+    },
   ];
 }
