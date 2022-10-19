@@ -5,9 +5,10 @@ import TripCard from "../components/TripCard";
 import TripForm from "../components/TripForm";
 import { v4 as uuid } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { dummyTrips } from "../db";
 
 export default function Home() {
-  const [trips, setTrips] = useLocalStorage("trips", []);
+  const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
 
   const onSubmitNewTrip = (event) => {
     event.preventDefault();

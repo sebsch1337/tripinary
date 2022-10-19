@@ -10,3 +10,23 @@ export function dummyTrips() {
     },
   ];
 }
+
+export function dummyDestinations() {
+  return [
+    {
+      id: 1,
+      name: "Bangkok",
+      tripId: 1,
+    },
+    {
+      id: 2,
+      name: "Cebu City",
+      tripId: 2,
+    },
+    {
+      id: 3,
+      name: "Chiang Mai",
+      tripId: 1,
+    },
+  ];
+}
