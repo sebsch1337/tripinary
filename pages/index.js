@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import TripCard from "../components/TripCard";
@@ -27,7 +28,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>Trips</title>
       </Head>
@@ -39,12 +40,16 @@ export default function Home() {
       <Main>
         <TripsWrapper>
           {trips.map((trip) => (
-            <TripCard key={trip.id} country={trip.country} />
+            <Link key={trip.id} href={`/destinations/${trip.id}`} passHref>
+              <a>
+                <TripCard country={trip.country} />
+              </a>
+            </Link>
           ))}
           <TripForm onSubmitNewTrip={onSubmitNewTrip} />
         </TripsWrapper>
       </Main>
-    </div>
+    </>
   );
 }
 
