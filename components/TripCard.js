@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export default function TripCard({ country }) {
+  const countryQueryName = country.replaceAll(" ", "-");
   return (
-    <CardBox image={`https://source.unsplash.com/random/?${country}`}>
+    <CardBox image={`https://source.unsplash.com/random/?${countryQueryName}`}>
       <TextArea>
         <CountryName>{country}</CountryName>
       </TextArea>
@@ -37,4 +38,9 @@ const CountryName = styled.h2`
   color: #fff;
   font-size: 1.8rem;
   font-weight: 400;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.5em;
 `;
