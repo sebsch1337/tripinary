@@ -37,4 +37,5 @@ const CountryName = styled.h2`
   color: #fff;
   font-size: 1.8rem;
   font-weight: 400;
+  text-transform: uppercase;
 `;
