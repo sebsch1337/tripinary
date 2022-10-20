@@ -43,13 +43,11 @@ export default function Destinations() {
       <MainCard>
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
         <DestinationsWrapper>
-          {destinations.map((destination) => {
-            if (destination.tripId === id) {
-              return (
-                <DestinationItem key={destination.id} name={destination.name} />
-              );
-            }
-          })}
+          {destinations
+            .filter((destination) => destination.tripId === id)
+            .map((item) => (
+              <DestinationItem key={item.id} name={item.name} />
+            ))}
         </DestinationsWrapper>
       </MainCard>
     </>
