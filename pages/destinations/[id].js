@@ -79,8 +79,8 @@ const MainCard = styled.main`
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   background-color: var(--background-primary);
-  width: 100%;
-  height: 60%;
+  width: 100vw;
+  height: 60vh;
 `;
 
 const DestinationHeadline = styled.h1`
