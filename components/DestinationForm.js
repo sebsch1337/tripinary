@@ -6,10 +6,15 @@ export default function DestinationForm({ onSubmitNewDestination }) {
   return (
     <ListBox>
       <FormBox onSubmit={onSubmitNewDestination}>
-        <AddTripButton>
+        <AddTripButton aria-label="submit">
           <Image src={addButtonCircleActive} alt="Add button" />
         </AddTripButton>
-        <DestinationInput name="destination" required />
+        <DestinationInput
+          name="destination"
+          aria-label="destination"
+          placeholder="Add destination..."
+          required
+        />
       </FormBox>
     </ListBox>
   );
@@ -23,7 +28,7 @@ const FormBox = styled.form`
 
 const DestinationInput = styled.input`
   margin-left: 0.8em;
-  width: 10em;
+  width: 12em;
   height: 2em;
   filter: drop-shadow(0 0 0.3em var(--drop-shadow));
   border: 0;
