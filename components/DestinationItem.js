@@ -4,11 +4,18 @@ import styled from "styled-components";
 export default function DestinationItem({ name }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
-      <BulletCircle src={bulletCircle.src} height={15} />
-      {name}
+      <BulletCircle src={bulletCircle.src} />
+      <NameArea>{name}</NameArea>
     </ListBox>
   );
 }
+
+const NameArea = styled.span`
+  width: 65%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 const ListBox = styled.li`
   padding: 0.8em 0.5em;

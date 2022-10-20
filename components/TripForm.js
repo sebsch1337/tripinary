@@ -4,11 +4,16 @@ import Image from "next/image";
 
 export default function TripForm({ onSubmitNewTrip }) {
   return (
-    <FormBox onSubmit={onSubmitNewTrip}>
+    <FormBox onSubmit={onSubmitNewTrip} aria-label="add trip form">
       <InputWrapper>
-        <CountryInput placeholder="Add trip..." name="country" required />
-        <AddTripButton>
-          <Image src={addButtonCircleActive} alt="Add button" />
+        <CountryInput
+          placeholder="Add trip..."
+          aria-label="countryname"
+          name="country"
+          required
+        />
+        <AddTripButton aria-label="submit">
+          <Image src={addButtonCircleActive} alt="Add icon" />
         </AddTripButton>
       </InputWrapper>
     </FormBox>
