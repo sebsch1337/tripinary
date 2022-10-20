@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function DestinationItem({ name }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
-      <BulletCircle src={bulletCircle.src} height={15} />
+      <BulletCircle src={bulletCircle.src} />
       <NameArea>{name}</NameArea>
     </ListBox>
   );
