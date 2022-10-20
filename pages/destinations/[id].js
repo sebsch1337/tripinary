@@ -36,7 +36,7 @@ export default function Destinations() {
 
     event.target.reset();
     setTimeout(() => {
-      window.scrollBy({ top: 100, left: 0, behavior: "smooth" });
+      window.scrollBy({ top: 100, behavior: "smooth" });
     }, 100);
   };
 
