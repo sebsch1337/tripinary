@@ -35,6 +35,9 @@ export default function Destinations() {
     });
 
     event.target.reset();
+    setTimeout(() => {
+      window.scrollBy({ top: 100, left: 0, behavior: "smooth" });
+    }, 100);
   };
 
   const countryName =
@@ -88,6 +91,7 @@ const BackButton = styled.button`
 const Cover = styled.header`
   width: 100vw;
   height: 50vh;
+  position: fixed;
   background-color: var(--background-primary);
   background-size: cover;
   background-image: url(${(props) => props.image});
@@ -95,12 +99,11 @@ const Cover = styled.header`
 
 const MainCard = styled.main`
   position: absolute;
-  bottom: 0;
+  top: 40vh;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   background-color: var(--background-primary);
   width: 100vw;
-  height: 60vh;
 `;
 
 const DestinationHeadline = styled.h1`
