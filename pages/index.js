@@ -1,13 +1,14 @@
 import Head from "next/head";
-import { useState } from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import TripCard from "../components/TripCard";
 import TripForm from "../components/TripForm";
-import { dbTrips } from "../db";
 import { v4 as uuid } from "uuid";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { dummyTrips } from "../db";
 
 export default function Home() {
-  const [trips, setTrips] = useState(dbTrips);
+  const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
 
   const onSubmitNewTrip = (event) => {
     event.preventDefault();
@@ -27,9 +28,9 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <>
       <Head>
-        <title>Trips</title>
+        <title>START YOUR JOURNEY</title>
       </Head>
       <TripsHeadline>
         Start
@@ -39,12 +40,16 @@ export default function Home() {
       <Main>
         <TripsWrapper>
           {trips.map((trip) => (
-            <TripCard key={trip.id} country={trip.country} />
+            <Link key={trip.id} href={`/destinations/${trip.id}`} passHref>
+              <a>
+                <TripCard country={trip.country} />
+              </a>
+            </Link>
           ))}
           <TripForm onSubmitNewTrip={onSubmitNewTrip} />
         </TripsWrapper>
       </Main>
-    </div>
+    </>
   );
 }
 
