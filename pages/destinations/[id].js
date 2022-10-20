@@ -17,9 +17,9 @@ export default function Destinations() {
     dummyDestinations
   );
 
-  let countryName =
+  const countryName =
     trips.find((trip) => trip.id === id)?.country || "Not found";
-  let countryQueryName = countryName?.replaceAll(" ", "-");
+  const countryQueryName = countryName?.replaceAll(" ", "-");
 
   return (
     <>
