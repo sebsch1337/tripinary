@@ -2,14 +2,14 @@ import styled from "styled-components";
 import Image from "next/image";
 import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 
-export default function DestinationForm() {
+export default function DestinationForm({ onSubmitNewDestination }) {
   return (
     <ListBox>
-      <FormBox>
+      <FormBox onSubmit={onSubmitNewDestination}>
         <AddTripButton>
           <Image src={addButtonCircleActive} alt="Add button" />
         </AddTripButton>
-        <DestinationInput required />
+        <DestinationInput name="destination" required />
       </FormBox>
     </ListBox>
   );

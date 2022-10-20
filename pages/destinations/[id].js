@@ -8,6 +8,7 @@ import arrowBack from "../../assets/arrowBack.svg";
 import Link from "next/link";
 import Image from "next/image";
 import DestinationForm from "../../components/DestinationForm";
+import { v4 as uuid } from "uuid";
 
 export default function Destinations() {
   const router = useRouter();
@@ -17,6 +18,24 @@ export default function Destinations() {
     "destinations",
     dummyDestinations
   );
+
+  const onSubmitNewDestination = (event) => {
+    event.preventDefault();
+    const destinationName = event.target.destination.value;
+
+    setDestinations((destinations) => {
+      return [
+        ...destinations,
+        {
+          id: uuid().slice(0, 8),
+          name: destinationName,
+          tripId: id,
+        },
+      ];
+    });
+
+    event.target.reset();
+  };
 
   const countryName =
     trips.find((trip) => trip.id === id)?.country || "Not found";
@@ -49,7 +68,7 @@ export default function Destinations() {
             .map((item) => (
               <DestinationItem key={item.id} name={item.name} />
             ))}
-          <DestinationForm />
+          <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
       </MainCard>
     </>
