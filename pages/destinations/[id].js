@@ -7,6 +7,7 @@ import DestinationItem from "../../components/DestinationItem";
 import arrowBack from "../../assets/arrowBack.svg";
 import Link from "next/link";
 import Image from "next/image";
+import DestinationForm from "../../components/DestinationForm";
 
 export default function Destinations() {
   const router = useRouter();
@@ -48,6 +49,7 @@ export default function Destinations() {
             .map((item) => (
               <DestinationItem key={item.id} name={item.name} />
             ))}
+          <DestinationForm />
         </DestinationsWrapper>
       </MainCard>
     </>
