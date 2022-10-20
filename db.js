@@ -1,11 +1,11 @@
 export function dummyTrips() {
   return [
     {
-      id: 1,
+      id: "a4e27ee3",
       country: "Thailand",
     },
     {
-      id: 2,
+      id: "3ek2d0s7",
       country: "Philippines",
     },
   ];
@@ -14,34 +14,29 @@ export function dummyTrips() {
 export function dummyDestinations() {
   return [
     {
-      id: 1,
+      id: "br43kd8i",
       name: "Bangkok",
-      tripId: 1,
+      tripId: "a4e27ee3",
     },
     {
-      id: 2,
+      id: "fk4t83he",
       name: "Cebu City",
-      tripId: 2,
+      tripId: "3ek2d0s7",
     },
     {
-      id: 3,
+      id: "f93ks6bt",
       name: "Chiang Mai",
-      tripId: 1,
+      tripId: "a4e27ee3",
     },
     {
-      id: 4,
-      name: "Tokio",
-      tripId: "bc9d0d74",
-    },
-    {
-      id: 5,
+      id: "d82ng76e",
       name: "Koh Phayam",
-      tripId: 1,
+      tripId: "a4e27ee3",
     },
     {
-      id: 6,
+      id: "9d72ejre",
       name: "Phuket",
-      tripId: 1,
+      tripId: "a4e27ee3",
     },
   ];
 }

@@ -17,7 +17,8 @@ export default function Destinations() {
     dummyDestinations
   );
 
-  let countryName = trips.find((trip) => trip.id == id)?.country || "Not found";
+  let countryName =
+    trips.find((trip) => trip.id === id)?.country || "Not found";
   let countryQueryName = countryName?.replaceAll(" ", "-");
 
   return (
@@ -43,7 +44,7 @@ export default function Destinations() {
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
         <DestinationsWrapper>
           {destinations.map((destination) => {
-            if (destination.tripId == id) {
+            if (destination.tripId === id) {
               return (
                 <DestinationItem key={destination.id} name={destination.name} />
               );
