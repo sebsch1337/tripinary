@@ -5,9 +5,12 @@ import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 export default function DestinationForm({ onSubmitNewDestination }) {
   return (
     <ListBox>
-      <FormBox onSubmit={onSubmitNewDestination}>
+      <FormBox
+        onSubmit={onSubmitNewDestination}
+        aria-label="add destination form"
+      >
         <AddTripButton aria-label="submit">
-          <Image src={addButtonCircleActive} alt="Add button" />
+          <Image src={addButtonCircleActive} alt="Add icon" />
         </AddTripButton>
         <DestinationInput
           name="destination"
