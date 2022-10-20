@@ -22,7 +22,7 @@ const FormBox = styled.form`
 `;
 
 const DestinationInput = styled.input`
-  margin-left: 0.5em;
+  margin-left: 0.8em;
   width: 10em;
   height: 2em;
   filter: drop-shadow(0 0 0.3em var(--drop-shadow));
