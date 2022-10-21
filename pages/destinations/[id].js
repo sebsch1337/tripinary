@@ -12,10 +12,7 @@ export default function Destinations() {
   const router = useRouter();
   const { id } = router.query;
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
-  const [destinations, setDestinations] = useLocalStorage(
-    "destinations",
-    dummyDestinations
-  );
+  const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
 
   const onSubmitNewDestination = (event) => {
     event.preventDefault();
@@ -27,6 +24,10 @@ export default function Destinations() {
         {
           id: uuid().slice(0, 8),
           name: destinationName,
+          startDate: Math.floor(new Date().getTime() / 1000),
+          endDate: Math.floor(new Date().getTime() / 1000),
+          hotel: "<No hotel booked yet>",
+          transport: "<No transportation booked yet>",
           tripId: id,
         },
       ];
@@ -38,8 +39,7 @@ export default function Destinations() {
     }, 100);
   };
 
-  const countryName =
-    trips.find((trip) => trip.id === id)?.country || "Not found";
+  const countryName = trips.find((trip) => trip.id === id)?.country || "Not found";
   const countryQueryName = countryName?.replaceAll(" ", "-");
 
   return (

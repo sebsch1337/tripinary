@@ -25,6 +25,10 @@ export function dummyDestinations() {
     {
       id: "fk4t83he",
       name: "Cebu City",
+      startDate: 1668902400,
+      endDate: 1670112000,
+      hotel: "Hilton Hotel",
+      transport: "Flight PH101",
       tripId: "3ek2d0s7",
     },
     {
@@ -34,16 +38,6 @@ export function dummyDestinations() {
       endDate: 1671321600,
       hotel: "River Hotel",
       transport: "Train TX299",
-      tripId: "a4e27ee3",
-    },
-    {
-      id: "d82ng76e",
-      name: "Koh Phayam",
-      tripId: "a4e27ee3",
-    },
-    {
-      id: "9d72ejre",
-      name: "Phuket",
       tripId: "a4e27ee3",
     },
   ];
