@@ -1,11 +1,14 @@
 import bulletCircle from "../assets/bulletCircle.svg";
 import styled from "styled-components";
+import Link from "next/link";
 
-export default function DestinationItem({ name }) {
+export default function DestinationItem({ id, name }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
-      <NameArea>{name}</NameArea>
+      <Link href={`/details/${id}`} passHref>
+        <NameArea>{name}</NameArea>
+      </Link>
     </ListBox>
   );
 }
