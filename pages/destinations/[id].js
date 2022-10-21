@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
 import DestinationItem from "../../components/DestinationItem";
-
-import Image from "next/image";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
 import BackgroundCover from "../../components/BackgroundCover";
