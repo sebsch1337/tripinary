@@ -11,18 +11,13 @@ export default function Details() {
   const [destinations] = useLocalStorage("destinations", dummyDestinations);
 
   const destination =
-    destinations.find((destinationItem) => destinationItem.id === id) ||
-    "Not found";
+    destinations.find((destinationItem) => destinationItem.id === id) || "Not found";
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName?.replaceAll(" ", "-");
 
-  const startDate = new Date(destination?.startDate * 1000)
-    .toISOString()
-    .substring(0, 10);
-  const endDate = new Date(destination?.endDate * 1000)
-    .toISOString()
-    .substring(0, 10);
+  const startDate = new Date(destination?.startDate * 1000).toISOString().substring(0, 10);
+  const endDate = new Date(destination?.endDate * 1000).toISOString().substring(0, 10);
 
   return (
     <>
@@ -40,9 +35,7 @@ export default function Details() {
           <DetailTitle>Hotel</DetailTitle>
           <DetailText>{destination.hotel}</DetailText>
           <DetailTitle>Transport</DetailTitle>
-          <DetailText>
-            {destination.transport.type} - {destination.transport.description}
-          </DetailText>
+          <DetailText>{destination.transport}</DetailText>
         </DetailSection>
       </MainCard>
     </>
