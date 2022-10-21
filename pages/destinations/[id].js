@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
-import BackArrow from "../../components/BackButton";
+import BackgroundCover from "../../components/BackgroundCover";
 
 export default function Destinations() {
   const router = useRouter();
@@ -49,9 +49,7 @@ export default function Destinations() {
       <Head>
         <title>{countryName.toUpperCase()}</title>
       </Head>
-      <Cover image={`https://source.unsplash.com/random/?${countryQueryName}`}>
-        <BackArrow />
-      </Cover>
+      <BackgroundCover imageQuery={countryQueryName} />
       <MainCard>
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
         <DestinationsWrapper>

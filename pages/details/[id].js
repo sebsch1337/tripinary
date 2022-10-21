@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { v4 as uuid } from "uuid";
 import BackArrow from "../../components/BackButton";
+import BackgroundCover from "../../components/BackgroundCover";
 
 export default function Details() {
   const router = useRouter();
@@ -24,28 +25,15 @@ export default function Details() {
   return (
     <>
       <Head>
-        <title></title>
+        <title>{destinationName.toUpperCase()}</title>
       </Head>
-      <Cover
-        image={`https://source.unsplash.com/random/?${destinationQueryName}`}
-      >
-        <BackArrow />
-      </Cover>
+      <BackgroundCover imageQuery={destinationQueryName} />
       <MainCard>
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
       </MainCard>
     </>
   );
 }
-
-const Cover = styled.header`
-  width: 100vw;
-  height: 50vh;
-  position: fixed;
-  background-color: var(--background-primary);
-  background-size: cover;
-  background-image: url(${(props) => props.image});
-`;
 
 const MainCard = styled.main`
   position: absolute;
