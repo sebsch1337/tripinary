@@ -7,11 +7,18 @@ export default function DestinationItem({ id, name }) {
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
       <Link href={`/details/${id}`} passHref>
-        <NameArea>{name}</NameArea>
+        <AnkorTag>
+          <NameArea>{name}</NameArea>
+        </AnkorTag>
       </Link>
     </ListBox>
   );
 }
+
+const AnkorTag = styled.a`
+  text-decoration: none;
+  color: var(--text-primary);
+`;
 
 const NameArea = styled.span`
   width: 65%;
