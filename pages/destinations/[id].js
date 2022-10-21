@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
 import DestinationItem from "../../components/DestinationItem";
-import arrowBack from "../../assets/arrowBack.svg";
 import Link from "next/link";
 import Image from "next/image";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
+import BackArrow from "../../components/BackButton";
 
 export default function Destinations() {
   const router = useRouter();
@@ -50,18 +50,7 @@ export default function Destinations() {
         <title>{countryName.toUpperCase()}</title>
       </Head>
       <Cover image={`https://source.unsplash.com/random/?${countryQueryName}`}>
-        <Link href="/" passHref>
-          <LinkBox>
-            <BackButton>
-              <Image
-                src={arrowBack.src}
-                alt="Navigate to start page"
-                width="40px"
-                height="40px"
-              />
-            </BackButton>
-          </LinkBox>
-        </Link>
+        <BackArrow />
       </Cover>
       <MainCard>
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
@@ -77,16 +66,6 @@ export default function Destinations() {
     </>
   );
 }
-
-const LinkBox = styled.a`
-  margin: 2em;
-  position: absolute;
-`;
-
-const BackButton = styled.button`
-  background-color: transparent;
-  border: 0;
-`;
 
 const Cover = styled.header`
   width: 100vw;
