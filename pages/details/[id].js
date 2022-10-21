@@ -2,25 +2,27 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { dummyTrips, dummyDestinations } from "../../db";
-import Link from "next/link";
-import Image from "next/image";
-import { v4 as uuid } from "uuid";
-import BackArrow from "../../components/BackButton";
+import { dummyDestinations } from "../../db";
 import BackgroundCover from "../../components/BackgroundCover";
 
 export default function Details() {
   const router = useRouter();
   const { id } = router.query;
-  const [destinations, setDestinations] = useLocalStorage(
-    "destinations",
-    dummyDestinations
-  );
+  const [destinations] = useLocalStorage("destinations", dummyDestinations);
 
-  const destinationName =
-    destinations.find((destination) => destination.id === id)?.name ||
+  const destination =
+    destinations.find((destinationItem) => destinationItem.id === id) ||
     "Not found";
+
+  const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName?.replaceAll(" ", "-");
+
+  const startDate = new Date(destination?.startDate * 1000)
+    .toISOString()
+    .substring(0, 10);
+  const endDate = new Date(destination?.endDate * 1000)
+    .toISOString()
+    .substring(0, 10);
 
   return (
     <>
@@ -30,10 +32,34 @@ export default function Details() {
       <BackgroundCover imageQuery={destinationQueryName} />
       <MainCard>
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
+        <DetailSection>
+          <DetailTitle>Date</DetailTitle>
+          <DetailText>
+            {startDate} until {endDate}
+          </DetailText>
+          <DetailTitle>Hotel</DetailTitle>
+          <DetailText>{destination.hotel}</DetailText>
+          <DetailTitle>Transport</DetailTitle>
+          <DetailText>
+            {destination.transport.type} - {destination.transport.description}
+          </DetailText>
+        </DetailSection>
       </MainCard>
     </>
   );
 }
+
+const DetailText = styled.p`
+  margin-bottom: 1em; ;
+`;
+
+const DetailTitle = styled.h3`
+  color: var(--drop-shadow);
+`;
+
+const DetailSection = styled.section`
+  margin: 0 2em;
+`;
 
 const MainCard = styled.main`
   position: absolute;
