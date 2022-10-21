@@ -10,14 +10,10 @@ export default function Details() {
   const { id } = router.query;
   const [destinations] = useLocalStorage("destinations", dummyDestinations);
 
-  const destination =
-    destinations.find((destinationItem) => destinationItem.id === id) || "Not found";
+  const destination = destinations.find((destinationItem) => destinationItem.id === id);
 
   const destinationName = destination?.name || "Not found";
-  const destinationQueryName = destinationName?.replaceAll(" ", "-");
-
-  const startDate = new Date(destination?.startDate * 1000).toISOString().substring(0, 10);
-  const endDate = new Date(destination?.endDate * 1000).toISOString().substring(0, 10);
+  const destinationQueryName = destinationName.replaceAll(" ", "-");
 
   return (
     <>
@@ -27,16 +23,20 @@ export default function Details() {
       <BackgroundCover imageQuery={destinationQueryName} />
       <MainCard>
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
-        <DetailSection>
-          <DetailTitle>Date</DetailTitle>
-          <DetailText>
-            {startDate} until {endDate}
-          </DetailText>
-          <DetailTitle>Hotel</DetailTitle>
-          <DetailText>{destination.hotel}</DetailText>
-          <DetailTitle>Transport</DetailTitle>
-          <DetailText>{destination.transport}</DetailText>
-        </DetailSection>
+        {destination && (
+          <DetailSection>
+            <DetailTitle>Date</DetailTitle>
+            <DetailText>
+              {new Date(destination.startDate * 1000).toISOString().substring(0, 10) +
+                ` until ` +
+                new Date(destination.endDate * 1000).toISOString().substring(0, 10)}
+            </DetailText>
+            <DetailTitle>Hotel</DetailTitle>
+            <DetailText>{destination.hotel}</DetailText>
+            <DetailTitle>Transport</DetailTitle>
+            <DetailText>{destination.transport}</DetailText>
+          </DetailSection>
+        )}
       </MainCard>
     </>
   );
