@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
 import DestinationItem from "../../components/DestinationItem";
-import Link from "next/link";
+
 import Image from "next/image";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
@@ -56,7 +56,7 @@ export default function Destinations() {
           {destinations
             .filter((destination) => destination.tripId === id)
             .map((item) => (
-              <DestinationItem key={item.id} name={item.name} />
+              <DestinationItem key={item.id} id={item.id} name={item.name} />
             ))}
           <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
