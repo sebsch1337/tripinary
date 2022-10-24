@@ -5,8 +5,7 @@ import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 export default function ToDoForm({ onSubmitNewToDoItem }) {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const toDo = event.target.todo.value;
-    onSubmitNewToDoItem(toDo);
+    onSubmitNewToDoItem(event.target.todo.value);
     event.target.reset();
   };
 
