@@ -13,7 +13,7 @@ export default function ToDoItem({ toDo }) {
         height="18px"
         alt={toDo.checked ? "checked" : "unchecked"}
       />
-      <Description for={toDo.id} checked={toDo.checked}>
+      <Description htmlFor={toDo.id} checked={toDo.checked}>
         {toDo.description}
       </Description>
     </ToDoListItem>
