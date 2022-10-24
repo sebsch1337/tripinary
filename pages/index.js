@@ -25,6 +25,9 @@ export default function Home() {
     });
 
     event.target.reset();
+    setTimeout(() => {
+      window.scrollBy({ top: 300, behavior: "smooth" });
+    }, 100);
   };
 
   return (

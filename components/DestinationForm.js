@@ -5,10 +5,7 @@ import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 export default function DestinationForm({ onSubmitNewDestination }) {
   return (
     <ListBox>
-      <FormBox
-        onSubmit={onSubmitNewDestination}
-        aria-label="add destination form"
-      >
+      <FormBox onSubmit={onSubmitNewDestination} aria-label="add destination form">
         <AddTripButton aria-label="submit">
           <Image src={addButtonCircleActive} alt="Add icon" />
         </AddTripButton>
@@ -16,6 +13,7 @@ export default function DestinationForm({ onSubmitNewDestination }) {
           name="destination"
           aria-label="destination"
           placeholder="Add destination..."
+          autoComplete="off"
           required
         />
       </FormBox>
@@ -34,6 +32,7 @@ const DestinationInput = styled.input`
   width: 12em;
   height: 2em;
   filter: drop-shadow(0 0 0.3em var(--drop-shadow));
+  transition: all ease-in-out 200ms;
   border: 0;
   border-radius: 50px;
   padding: 0 1.1em;
@@ -56,11 +55,7 @@ const ListBox = styled.li`
     content: "";
     position: absolute;
     width: 5px;
-    background-image: linear-gradient(
-      90deg,
-      rgba(49, 107, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 200%
-    );
+    background-image: linear-gradient(90deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
     top: 0;
     bottom: 0;
     left: 1em;
