@@ -2,9 +2,12 @@ import styled from "styled-components";
 import Image from "next/image";
 import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 
-export default function ToDoForm() {
+export default function ToDoForm({ onSubmitNewToDoItem, destinationId }) {
   return (
-    <ToDoListForm aria-label="add todo form">
+    <ToDoListForm
+      onSubmit={(event) => onSubmitNewToDoItem(event, destinationId)}
+      aria-label="add todo form"
+    >
       <AddToDoButton aria-label="submit">
         <Image src={addButtonCircleActive} width="20x" height="20px" alt="Add icon" />
       </AddToDoButton>

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { v4 as uuid } from "uuid";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyDestinations } from "../../db";
 import BackgroundCover from "../../components/BackgroundCover";
@@ -10,12 +11,40 @@ import ToDoForm from "../../components/ToDoForm";
 export default function Details() {
   const router = useRouter();
   const { id } = router.query;
-  const [destinations] = useLocalStorage("destinations", dummyDestinations);
+  const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
 
   const destination = destinations.find((destinationItem) => destinationItem.id === id);
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
+
+  const onSubmitNewToDoItem = (event, destinationId) => {
+    event.preventDefault();
+
+    const toDoDescription = event.target.todo.value;
+
+    setDestinations((destinations) => {
+      const updatedDestinations = destinations.map((destination) => {
+        if (destination.id === destinationId) {
+          return {
+            ...destination,
+            toDos: [
+              ...destination.toDos,
+              { id: uuid().slice(0, 8), description: toDoDescription, checked: false },
+            ],
+          };
+        } else {
+          return destination;
+        }
+      });
+      return updatedDestinations;
+    });
+
+    event.target.reset();
+    setTimeout(() => {
+      window.scrollBy({ top: 100, behavior: "smooth" });
+    }, 100);
+  };
 
   return (
     <>
@@ -43,7 +72,7 @@ export default function Details() {
                 <ToDoItem key={toDo.id} toDo={toDo} />
               ))}
             </ToDoWrapper>
-            <ToDoForm />
+            <ToDoForm destinationId={destination.id} onSubmitNewToDoItem={onSubmitNewToDoItem} />
           </DetailSection>
         )}
       </MainCard>
