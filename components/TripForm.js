@@ -10,6 +10,7 @@ export default function TripForm({ onSubmitNewTrip }) {
           placeholder="Add trip..."
           aria-label="countryname"
           name="country"
+          autoComplete="off"
           required
         />
         <AddTripButton aria-label="submit">
