@@ -21,7 +21,7 @@ export default function ToDoItem({ toDo }) {
 }
 
 const Description = styled.label`
-  margin-left: 0.2em;
+  margin-left: 0.4em;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
   color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
 `;

@@ -5,6 +5,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyDestinations } from "../../db";
 import BackgroundCover from "../../components/BackgroundCover";
 import ToDoItem from "../../components/ToDoItem";
+import ToDoForm from "../../components/ToDoForm";
 
 export default function Details() {
   const router = useRouter();
@@ -42,6 +43,7 @@ export default function Details() {
                 <ToDoItem key={toDo.id} toDo={toDo} />
               ))}
             </ToDoWrapper>
+            <ToDoForm />
           </DetailSection>
         )}
       </MainCard>
