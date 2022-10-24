@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyDestinations } from "../../db";
 import BackgroundCover from "../../components/BackgroundCover";
+import ToDoItem from "../../components/ToDoItem";
 
 export default function Details() {
   const router = useRouter();
@@ -35,12 +36,22 @@ export default function Details() {
             <DetailText>{destination.hotel}</DetailText>
             <DetailTitle>Transport</DetailTitle>
             <DetailText>{destination.transport}</DetailText>
+            <DetailTitle>To-Do</DetailTitle>
+            <ToDoWrapper>
+              {destination.toDos.map((toDo) => (
+                <ToDoItem key={toDo.id} toDo={toDo} />
+              ))}
+            </ToDoWrapper>
           </DetailSection>
         )}
       </MainCard>
     </>
   );
 }
+
+const ToDoWrapper = styled.ul`
+  list-style: none;
+`;
 
 const DetailText = styled.p`
   margin-bottom: 1em; ;
