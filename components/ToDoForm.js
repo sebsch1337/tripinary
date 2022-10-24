@@ -2,13 +2,17 @@ import styled from "styled-components";
 import Image from "next/image";
 import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 
-export default function ToDoForm({ onSubmitNewToDoItem, destinationId }) {
+export default function ToDoForm({ onSubmitNewToDoItem }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const toDo = event.target.todo.value;
+    onSubmitNewToDoItem(toDo);
+    event.target.reset();
+  };
+
   return (
-    <ToDoListForm
-      onSubmit={(event) => onSubmitNewToDoItem(event, destinationId)}
-      aria-label="add todo form"
-    >
-      <AddToDoButton aria-label="submit">
+    <ToDoListForm onSubmit={handleSubmit} aria-label="add todo form">
+      <AddToDoButton aria-label="add todo">
         <Image src={addButtonCircleActive} width="20x" height="20px" alt="Add icon" />
       </AddToDoButton>
       <ToDoInput

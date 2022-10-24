@@ -18,29 +18,24 @@ export default function Details() {
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
 
-  const onSubmitNewToDoItem = (event, destinationId) => {
-    event.preventDefault();
-
-    const toDoDescription = event.target.todo.value;
-
+  const onSubmitNewToDoItem = (toDo) => {
     setDestinations((destinations) => {
-      const updatedDestinations = destinations.map((destination) => {
-        if (destination.id === destinationId) {
+      const updatedDestinations = destinations.map((destinationItem) => {
+        if (destinationItem.id === destination.id) {
           return {
-            ...destination,
+            ...destinationItem,
             toDos: [
-              ...destination.toDos,
-              { id: uuid().slice(0, 8), description: toDoDescription, checked: false },
+              ...destinationItem.toDos,
+              { id: uuid().slice(0, 8), description: toDo, checked: false },
             ],
           };
         } else {
-          return destination;
+          return destinationItem;
         }
       });
       return updatedDestinations;
     });
 
-    event.target.reset();
     setTimeout(() => {
       window.scrollBy({ top: 100, behavior: "smooth" });
     }, 100);
@@ -72,7 +67,7 @@ export default function Details() {
                 <ToDoItem key={toDo.id} toDo={toDo} />
               ))}
             </ToDoWrapper>
-            <ToDoForm destinationId={destination.id} onSubmitNewToDoItem={onSubmitNewToDoItem} />
+            <ToDoForm onSubmitNewToDoItem={onSubmitNewToDoItem} />
           </DetailSection>
         )}
       </MainCard>
