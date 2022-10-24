@@ -29,6 +29,7 @@ export default function Destinations() {
           hotel: "<No hotel booked yet>",
           transport: "<No transportation booked yet>",
           tripId: id,
+          toDos: [],
         },
       ];
     });
