@@ -1,20 +1,45 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { v4 as uuid } from "uuid";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyDestinations } from "../../db";
 import BackgroundCover from "../../components/BackgroundCover";
 import ToDoItem from "../../components/ToDoItem";
+import ToDoForm from "../../components/ToDoForm";
 
 export default function Details() {
   const router = useRouter();
   const { id } = router.query;
-  const [destinations] = useLocalStorage("destinations", dummyDestinations);
+  const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
 
   const destination = destinations.find((destinationItem) => destinationItem.id === id);
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
+
+  const onSubmitNewToDoItem = (toDo) => {
+    setDestinations((destinations) => {
+      const updatedDestinations = destinations.map((destinationItem) => {
+        if (destinationItem.id === destination.id) {
+          return {
+            ...destinationItem,
+            toDos: [
+              ...destinationItem.toDos,
+              { id: uuid().slice(0, 8), description: toDo, checked: false },
+            ],
+          };
+        } else {
+          return destinationItem;
+        }
+      });
+      return updatedDestinations;
+    });
+
+    setTimeout(() => {
+      window.scrollBy({ top: 100, behavior: "smooth" });
+    }, 100);
+  };
 
   return (
     <>
@@ -42,6 +67,7 @@ export default function Details() {
                 <ToDoItem key={toDo.id} toDo={toDo} />
               ))}
             </ToDoWrapper>
+            <ToDoForm onSubmitNewToDoItem={onSubmitNewToDoItem} />
           </DetailSection>
         )}
       </MainCard>
