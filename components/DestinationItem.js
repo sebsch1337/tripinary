@@ -1,14 +1,24 @@
 import bulletCircle from "../assets/bulletCircle.svg";
 import styled from "styled-components";
+import Link from "next/link";
 
-export default function DestinationItem({ name }) {
+export default function DestinationItem({ id, name }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
-      <NameArea>{name}</NameArea>
+      <Link href={`/details/${id}`} passHref>
+        <AnkorTag>
+          <NameArea>{name}</NameArea>
+        </AnkorTag>
+      </Link>
     </ListBox>
   );
 }
+
+const AnkorTag = styled.a`
+  text-decoration: none;
+  color: var(--text-primary);
+`;
 
 const NameArea = styled.span`
   width: 65%;

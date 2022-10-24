@@ -4,20 +4,15 @@ import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
 import DestinationItem from "../../components/DestinationItem";
-import arrowBack from "../../assets/arrowBack.svg";
-import Link from "next/link";
-import Image from "next/image";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
+import BackgroundCover from "../../components/BackgroundCover";
 
 export default function Destinations() {
   const router = useRouter();
   const { id } = router.query;
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
-  const [destinations, setDestinations] = useLocalStorage(
-    "destinations",
-    dummyDestinations
-  );
+  const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
 
   const onSubmitNewDestination = (event) => {
     event.preventDefault();
@@ -29,6 +24,10 @@ export default function Destinations() {
         {
           id: uuid().slice(0, 8),
           name: destinationName,
+          startDate: Math.floor(new Date().getTime() / 1000),
+          endDate: Math.floor(new Date().getTime() / 1000),
+          hotel: "<No hotel booked yet>",
+          transport: "<No transportation booked yet>",
           tripId: id,
         },
       ];
@@ -40,8 +39,7 @@ export default function Destinations() {
     }, 100);
   };
 
-  const countryName =
-    trips.find((trip) => trip.id === id)?.country || "Not found";
+  const countryName = trips.find((trip) => trip.id === id)?.country || "Not found";
   const countryQueryName = countryName?.replaceAll(" ", "-");
 
   return (
@@ -49,27 +47,14 @@ export default function Destinations() {
       <Head>
         <title>{countryName.toUpperCase()}</title>
       </Head>
-      <Cover image={`https://source.unsplash.com/random/?${countryQueryName}`}>
-        <Link href="/" passHref>
-          <LinkBox>
-            <BackButton>
-              <Image
-                src={arrowBack.src}
-                alt="Navigate to start page"
-                width="40px"
-                height="40px"
-              />
-            </BackButton>
-          </LinkBox>
-        </Link>
-      </Cover>
+      <BackgroundCover imageQuery={countryQueryName} />
       <MainCard>
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
         <DestinationsWrapper>
           {destinations
             .filter((destination) => destination.tripId === id)
             .map((item) => (
-              <DestinationItem key={item.id} name={item.name} />
+              <DestinationItem key={item.id} id={item.id} name={item.name} />
             ))}
           <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
@@ -77,16 +62,6 @@ export default function Destinations() {
     </>
   );
 }
-
-const LinkBox = styled.a`
-  margin: 2em;
-  position: absolute;
-`;
-
-const BackButton = styled.button`
-  background-color: transparent;
-  border: 0;
-`;
 
 const Cover = styled.header`
   width: 100vw;

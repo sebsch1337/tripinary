@@ -16,26 +16,28 @@ export function dummyDestinations() {
     {
       id: "br43kd8i",
       name: "Bangkok",
+      startDate: 1668902400,
+      endDate: 1670112000,
+      hotel: "Lebua State Hotel",
+      transport: "Flight TG123",
       tripId: "a4e27ee3",
     },
     {
       id: "fk4t83he",
       name: "Cebu City",
+      startDate: 1668902400,
+      endDate: 1670112000,
+      hotel: "Hilton Hotel",
+      transport: "Flight PH101",
       tripId: "3ek2d0s7",
     },
     {
       id: "f93ks6bt",
       name: "Chiang Mai",
-      tripId: "a4e27ee3",
-    },
-    {
-      id: "d82ng76e",
-      name: "Koh Phayam",
-      tripId: "a4e27ee3",
-    },
-    {
-      id: "9d72ejre",
-      name: "Phuket",
+      startDate: 1670112000,
+      endDate: 1671321600,
+      hotel: "River Hotel",
+      transport: "Train TX299",
       tripId: "a4e27ee3",
     },
   ];
