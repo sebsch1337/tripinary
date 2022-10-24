@@ -1,19 +1,29 @@
 import styled from "styled-components";
 import unCheckedIcon from "../assets/unchecked.svg";
+import checkedIcon from "../assets/checked.svg";
 import Image from "next/image";
 
 export default function ToDoItem({ toDo }) {
   return (
     <ToDoListItem>
       <CheckBox id={toDo.id} />
-      <Image src={unCheckedIcon} width="18px" height="18px" alt="unchecked" />
-      <Description for={toDo.id}>{toDo.description}</Description>
+      <Image
+        src={toDo.checked ? checkedIcon : unCheckedIcon}
+        width="18px"
+        height="18px"
+        alt={toDo.checked ? "checked" : "unchecked"}
+      />
+      <Description for={toDo.id} checked={toDo.checked}>
+        {toDo.description}
+      </Description>
     </ToDoListItem>
   );
 }
 
 const Description = styled.label`
   margin-left: 0.2em;
+  text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
+  color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
 `;
 
 const ToDoListItem = styled.li`
@@ -23,9 +33,5 @@ const ToDoListItem = styled.li`
 `;
 
 const CheckBox = styled.input.attrs({ type: "checkbox" })`
-  /* width: 1em;
-  height: 1em;
-  -webkit-appearance: none; */
   display: none;
-  background-image: url("../assets/unchecked.svg");
 `;
