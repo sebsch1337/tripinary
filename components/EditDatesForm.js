@@ -4,12 +4,12 @@ import saveSvg from "../assets/save.svg";
 
 export default function EditDatesForm() {
   return (
-    <EditDates>
-      <StyledLabel id="startDate">Start Date</StyledLabel>
-      <StyledInput aria-labelledby="startDate" name="startDate" type="date" />
-      <StyledLabel id="endDate">End Date</StyledLabel>
-      <StyledInput aria-labelledby="endDate" name="endDate" type="date" />
-      <StyledButton>
+    <EditDates aria-label="Edit dates form">
+      <StyledLabel>Start Date</StyledLabel>
+      <StyledInput aria-label="start Date" name="startDate" type="date" />
+      <StyledLabel>End Date</StyledLabel>
+      <StyledInput aria-label="end date" name="endDate" type="date" />
+      <StyledButton aria-label="save dates">
         <Image src={saveSvg} width="290px" height="40px" alt="Save icon" />
       </StyledButton>
     </EditDates>
