@@ -60,7 +60,7 @@ export default function Details() {
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
         {destination && (
           <DetailSection>
-            <DetailTitle>Date</DetailTitle>
+            <DetailTitle onClick={() => toggleModal("Date")}>Date</DetailTitle>
             <DetailText>
               {new Date(destination.startDate * 1000).toISOString().substring(0, 10) +
                 ` until ` +
@@ -80,7 +80,7 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
-      {modal.visible && <Modal modalName={modal.name} />}
+      {modal.visible && <Modal modalName={modal.name} toggleModal={toggleModal} />}
     </>
   );
 }
