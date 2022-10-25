@@ -5,11 +5,6 @@ export default function Modal({ modalName, toggleModal }) {
     <BlurryBackground onClick={toggleModal}>
       <ModalBox onClick={(event) => event.stopPropagation()}>
         <ModalTitle>{modalName}</ModalTitle>
-        <p>loremipsum..............</p>
-        <p>loremipsum..............</p>
-        <p>loremipsum..............</p>
-        <p>loremipsum..............</p>
-        <p>loremipsum..............</p>
       </ModalBox>
     </BlurryBackground>
   );
