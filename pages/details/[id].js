@@ -10,6 +10,7 @@ import ToDoForm from "../../components/ToDoForm";
 import Modal from "../../components/Modal";
 import { useState } from "react";
 import DetailTitle from "../../components/DetailTitle";
+import EditDatesForm from "../../components/EditDatesForm";
 
 export default function Details() {
   const router = useRouter();
@@ -81,7 +82,11 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
-      {modal.visible && <Modal modalName={modal.name} toggleModal={toggleModal} />}
+      {modal.visible && (
+        <Modal modalName={modal.name} toggleModal={toggleModal}>
+          {modal.name === "Dates" && <EditDatesForm />}
+        </Modal>
+      )}
     </>
   );
 }
