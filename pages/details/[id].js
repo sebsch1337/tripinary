@@ -7,16 +7,25 @@ import { dummyDestinations } from "../../db";
 import BackgroundCover from "../../components/BackgroundCover";
 import ToDoItem from "../../components/ToDoItem";
 import ToDoForm from "../../components/ToDoForm";
+import Modal from "../../components/Modal";
+import { useState } from "react";
 
 export default function Details() {
   const router = useRouter();
   const { id } = router.query;
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
+  const [modal, setModal] = useState({ visible: false, name: "" });
 
   const destination = destinations.find((destinationItem) => destinationItem.id === id);
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
+
+  const toggleModal = (modalName = "") => {
+    setModal((modal) => {
+      return { visible: !modal.visible, name: modalName };
+    });
+  };
 
   const onSubmitNewToDoItem = (toDo) => {
     setDestinations((destinations) => {
@@ -71,6 +80,7 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
+      {modal.visible && <Modal modalName={modal.name} />}
     </>
   );
 }
