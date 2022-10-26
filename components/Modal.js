@@ -13,12 +13,13 @@ export default function Modal({ name, toggleModal, children }) {
 
 const ModalTitle = styled.h2`
   text-align: center;
+  margin-bottom: 1em;
 `;
 
 const ModalBox = styled.section`
   width: 90vw;
   padding: 2em;
-  background-color: var(--background-primary);
+  background-color: #fff;
   border-radius: 2em;
   display: flex;
   flex-direction: column;
