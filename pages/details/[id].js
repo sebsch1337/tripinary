@@ -31,7 +31,7 @@ export default function Details() {
 
   const onSubmitChangeDetail = (changedData) => {
     setDestinations((destinations) => {
-      const updatedDestinations = destinations.map((destinationItem) => {
+      return destinations.map((destinationItem) => {
         if (destinationItem.id === destination.id) {
           return {
             ...destinationItem,
@@ -42,13 +42,12 @@ export default function Details() {
           return destinationItem;
         }
       });
-      return updatedDestinations;
     });
   };
 
   const onSubmitNewToDoItem = (toDo) => {
     setDestinations((destinations) => {
-      const updatedDestinations = destinations.map((destinationItem) => {
+      return destinations.map((destinationItem) => {
         if (destinationItem.id === destination.id) {
           return {
             ...destinationItem,
@@ -58,7 +57,6 @@ export default function Details() {
           return destinationItem;
         }
       });
-      return updatedDestinations;
     });
 
     setTimeout(() => {
