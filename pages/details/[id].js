@@ -35,8 +35,7 @@ export default function Details() {
         if (destinationItem.id === destination.id) {
           return {
             ...destinationItem,
-            startDate: changedData.changed === "Dates" ? changedData.startDate : destinationItem.startDate,
-            endDate: changedData.changed === "Dates" ? changedData.endDate : destinationItem.endDate,
+            ...changedData,
           };
         } else {
           return destinationItem;

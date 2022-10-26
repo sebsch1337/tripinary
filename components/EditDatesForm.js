@@ -12,7 +12,6 @@ export default function EditDatesForm({ destination, onSubmitChangeDetail, toggl
   const handleSubmit = (event) => {
     event.preventDefault();
     onSubmitChangeDetail({
-      changed: "Dates",
       startDate: Date.parse(startDate) / 1000,
       endDate: Date.parse(endDate) / 1000,
     });
