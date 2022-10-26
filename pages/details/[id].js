@@ -9,6 +9,8 @@ import ToDoItem from "../../components/ToDoItem";
 import ToDoForm from "../../components/ToDoForm";
 import Modal from "../../components/Modal";
 import { useState } from "react";
+import DetailTitle from "../../components/DetailTitle";
+import EditDatesForm from "../../components/EditDatesForm";
 
 export default function Details() {
   const router = useRouter();
@@ -27,22 +29,33 @@ export default function Details() {
     });
   };
 
-  const onSubmitNewToDoItem = (toDo) => {
+  const onUpdateDetail = (updated) => {
     setDestinations((destinations) => {
-      const updatedDestinations = destinations.map((destinationItem) => {
+      return destinations.map((destinationItem) => {
         if (destinationItem.id === destination.id) {
           return {
             ...destinationItem,
-            toDos: [
-              ...destinationItem.toDos,
-              { id: uuid().slice(0, 8), description: toDo, checked: false },
-            ],
+            ...updated,
           };
         } else {
           return destinationItem;
         }
       });
-      return updatedDestinations;
+    });
+  };
+
+  const onSubmitNewToDoItem = (toDo) => {
+    setDestinations((destinations) => {
+      return destinations.map((destinationItem) => {
+        if (destinationItem.id === destination.id) {
+          return {
+            ...destinationItem,
+            toDos: [...destinationItem.toDos, { id: uuid().slice(0, 8), description: toDo, checked: false }],
+          };
+        } else {
+          return destinationItem;
+        }
+      });
     });
 
     setTimeout(() => {
@@ -60,17 +73,17 @@ export default function Details() {
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
         {destination && (
           <DetailSection>
-            <DetailTitle onClick={() => toggleModal("Date")}>Date</DetailTitle>
+            <DetailTitle name="Dates" toggleModal={() => toggleModal("Dates")} />
             <DetailText>
               {new Date(destination.startDate * 1000).toISOString().substring(0, 10) +
                 ` until ` +
                 new Date(destination.endDate * 1000).toISOString().substring(0, 10)}
             </DetailText>
-            <DetailTitle>Hotel</DetailTitle>
+            <DetailTitle name="Hotel" toggleModal={() => toggleModal("Hotel")} />
             <DetailText>{destination.hotel}</DetailText>
-            <DetailTitle>Transport</DetailTitle>
+            <DetailTitle name="Transport" toggleModal={() => toggleModal("Transport")} />
             <DetailText>{destination.transport}</DetailText>
-            <DetailTitle>To-Do</DetailTitle>
+            <DetailTitle name="To-Do" toggleModal={() => toggleModal("To-Do")} />
             <ToDoWrapper>
               {destination.toDos.map((toDo) => (
                 <ToDoItem key={toDo.id} toDo={toDo} />
@@ -80,7 +93,19 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
-      {modal.visible && <Modal modalName={modal.name} toggleModal={toggleModal} />}
+      {modal.visible && (
+        <Modal name={modal.name} toggleModal={toggleModal}>
+          {modal.name === "Dates" && (
+            <EditDatesForm
+              destination={destination}
+              onUpdateDetail={(startDate, endDate) => {
+                toggleModal();
+                onUpdateDetail({ startDate, endDate });
+              }}
+            />
+          )}
+        </Modal>
+      )}
     </>
   );
 }
@@ -91,10 +116,6 @@ const ToDoWrapper = styled.ul`
 
 const DetailText = styled.p`
   margin-bottom: 1em; ;
-`;
-
-const DetailTitle = styled.h3`
-  color: var(--drop-shadow);
 `;
 
 const DetailSection = styled.section`
