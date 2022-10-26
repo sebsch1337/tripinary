@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export default function Modal({ modalName, toggleModal, children }) {
+export default function Modal({ name, toggleModal, children }) {
   return (
     <BlurryBackground onClick={toggleModal}>
       <ModalBox onClick={(event) => event.stopPropagation()}>
-        <ModalTitle>{modalName}</ModalTitle>
+        <ModalTitle>{name}</ModalTitle>
         {children}
       </ModalBox>
     </BlurryBackground>
