@@ -29,7 +29,7 @@ export default function Details() {
     });
   };
 
-  const onSubmitChangeDetail = (updated) => {
+  const onUpdateDetail = (updated) => {
     setDestinations((destinations) => {
       return destinations.map((destinationItem) => {
         if (destinationItem.id === destination.id) {
@@ -98,7 +98,7 @@ export default function Details() {
           {modal.name === "Dates" && (
             <EditDatesForm
               destination={destination}
-              onSubmitChangeDetail={onSubmitChangeDetail}
+              onUpdateDetail={onUpdateDetail}
               toggleModal={toggleModal}
             />
           )}
