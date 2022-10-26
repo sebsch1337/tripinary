@@ -3,9 +3,9 @@ import Image from "next/image";
 import saveSvg from "../assets/save.svg";
 import { useState } from "react";
 
-export default function EditDatesForm({ destination, onSubmitChangeDetail, toggleModal }) {
-  const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
+const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
 
+export default function EditDatesForm({ destination, onSubmitChangeDetail, toggleModal }) {
   const [startDate, setStartDate] = useState(timestampToIsoString(destination.startDate));
   const [endDate, setEndDate] = useState(timestampToIsoString(destination.endDate));
 
