@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export default function Modal({ modalName, toggleModal, children }) {
-  console.log(children);
   return (
     <BlurryBackground onClick={toggleModal}>
       <ModalBox onClick={(event) => event.stopPropagation()}>

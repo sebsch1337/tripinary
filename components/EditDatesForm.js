@@ -1,14 +1,44 @@
 import styled from "styled-components";
 import Image from "next/image";
 import saveSvg from "../assets/save.svg";
+import { useState } from "react";
 
-export default function EditDatesForm() {
+export default function EditDatesForm({ destination, onSubmitChangeDetail, toggleModal }) {
+  const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
+
+  const [startDate, setStartDate] = useState(timestampToIsoString(destination.startDate));
+  const [endDate, setEndDate] = useState(timestampToIsoString(destination.endDate));
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmitChangeDetail({
+      changed: "Dates",
+      startDate: Date.parse(startDate) / 1000,
+      endDate: Date.parse(endDate) / 1000,
+    });
+    toggleModal();
+  };
+
   return (
-    <EditDates aria-label="Edit dates form">
+    <EditDates onSubmit={handleSubmit} aria-label="Edit dates form">
       <StyledLabel>Start Date</StyledLabel>
-      <StyledInput aria-label="start Date" name="startDate" type="date" />
+      <StyledInput
+        aria-label="start Date"
+        name="startDate"
+        type="date"
+        onChange={(event) => setStartDate(event.target.value)}
+        value={startDate}
+        required
+      />
       <StyledLabel>End Date</StyledLabel>
-      <StyledInput aria-label="end date" name="endDate" type="date" />
+      <StyledInput
+        aria-label="end date"
+        name="endDate"
+        type="date"
+        onChange={(event) => setEndDate(event.target.value)}
+        value={endDate}
+        required
+      />
       <StyledButton aria-label="save dates">
         <Image src={saveSvg} width="290px" height="40px" alt="Save icon" />
       </StyledButton>

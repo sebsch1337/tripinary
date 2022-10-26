@@ -29,16 +29,30 @@ export default function Details() {
     });
   };
 
+  const onSubmitChangeDetail = (changedData) => {
+    setDestinations((destinations) => {
+      const updatedDestinations = destinations.map((destinationItem) => {
+        if (destinationItem.id === destination.id) {
+          return {
+            ...destinationItem,
+            startDate: changedData.changed === "Dates" ? changedData.startDate : destinationItem.startDate,
+            endDate: changedData.changed === "Dates" ? changedData.endDate : destinationItem.endDate,
+          };
+        } else {
+          return destinationItem;
+        }
+      });
+      return updatedDestinations;
+    });
+  };
+
   const onSubmitNewToDoItem = (toDo) => {
     setDestinations((destinations) => {
       const updatedDestinations = destinations.map((destinationItem) => {
         if (destinationItem.id === destination.id) {
           return {
             ...destinationItem,
-            toDos: [
-              ...destinationItem.toDos,
-              { id: uuid().slice(0, 8), description: toDo, checked: false },
-            ],
+            toDos: [...destinationItem.toDos, { id: uuid().slice(0, 8), description: toDo, checked: false }],
           };
         } else {
           return destinationItem;
@@ -84,7 +98,13 @@ export default function Details() {
       </MainCard>
       {modal.visible && (
         <Modal modalName={modal.name} toggleModal={toggleModal}>
-          {modal.name === "Dates" && <EditDatesForm />}
+          {modal.name === "Dates" && (
+            <EditDatesForm
+              destination={destination}
+              onSubmitChangeDetail={onSubmitChangeDetail}
+              toggleModal={toggleModal}
+            />
+          )}
         </Modal>
       )}
     </>
