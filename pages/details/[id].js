@@ -98,8 +98,10 @@ export default function Details() {
           {modal.name === "Dates" && (
             <EditDatesForm
               destination={destination}
-              onUpdateDetail={onUpdateDetail}
-              toggleModal={toggleModal}
+              onUpdateDetail={(startDate, endDate) => {
+                toggleModal();
+                onUpdateDetail({ startDate, endDate });
+              }}
             />
           )}
         </Modal>

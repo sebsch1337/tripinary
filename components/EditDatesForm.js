@@ -5,17 +5,13 @@ import { useState } from "react";
 
 const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
 
-export default function EditDatesForm({ destination, onUpdateDetail, toggleModal }) {
+export default function EditDatesForm({ destination, onUpdateDetail }) {
   const [startDate, setStartDate] = useState(timestampToIsoString(destination.startDate));
   const [endDate, setEndDate] = useState(timestampToIsoString(destination.endDate));
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onUpdateDetail({
-      startDate: Date.parse(startDate) / 1000,
-      endDate: Date.parse(endDate) / 1000,
-    });
-    toggleModal();
+    onUpdateDetail(Date.parse(startDate) / 1000, Date.parse(endDate) / 1000);
   };
 
   return (
