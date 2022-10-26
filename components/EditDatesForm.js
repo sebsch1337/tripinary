@@ -8,9 +8,18 @@ const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOStri
 export default function EditDatesForm({ destination, onUpdateDetail }) {
   const [startDate, setStartDate] = useState(timestampToIsoString(destination.startDate));
   const [endDate, setEndDate] = useState(timestampToIsoString(destination.endDate));
+  const [validationError, setValidationError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (Date.parse(startDate) - Date.parse(endDate) > 0) {
+      setValidationError("You can travel back in time, but you can't travel backwards!");
+      return;
+    } else {
+      setValidationError("");
+    }
+
     onUpdateDetail(Date.parse(startDate) / 1000, Date.parse(endDate) / 1000);
   };
 
@@ -34,6 +43,7 @@ export default function EditDatesForm({ destination, onUpdateDetail }) {
         value={endDate}
         required
       />
+      {validationError && <ValidationError>{validationError}</ValidationError>}
       <StyledButton aria-label="save dates">
         <Image src={saveSvg} width="290px" height="40px" alt="Save icon" />
       </StyledButton>
@@ -41,8 +51,12 @@ export default function EditDatesForm({ destination, onUpdateDetail }) {
   );
 }
 
+const ValidationError = styled.p`
+  color: red;
+  margin-bottom: 2em;
+`;
+
 const StyledButton = styled.button`
-  margin-top: 4em;
   display: flex;
   justify-content: center;
   border: none;
@@ -50,9 +64,10 @@ const StyledButton = styled.button`
 `;
 
 const StyledInput = styled.input`
+  margin: 0.5em 0 2em;
   width: 100%;
   height: 2em;
-  filter: drop-shadow(0 0 0.3em var(--drop-shadow));
+  filter: drop-shadow(0 0 0.2em var(--drop-shadow));
   transition: all ease-in-out 200ms;
   border: 0;
   border-radius: 50px;
@@ -62,7 +77,7 @@ const StyledInput = styled.input`
   outline: none;
 
   &:focus {
-    filter: drop-shadow(0 0 0.6em var(--drop-shadow));
+    filter: drop-shadow(0 0 0.4em var(--drop-shadow));
   }
 
   &::-webkit-calendar-picker-indicator {
@@ -71,7 +86,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledLabel = styled.h3`
-  margin: 1.5em 0 0.5em 0;
+  color: var(--drop-shadow);
 `;
 
 const EditDates = styled.form`
