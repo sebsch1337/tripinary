@@ -5,7 +5,8 @@ import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 export default function ToDoForm({ onSubmitNewToDoItem }) {
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmitNewToDoItem(event.target.todo.value);
+    if (event.target.todo.value.trim().length === 0) return;
+    onSubmitNewToDoItem(event.target.todo.value.trim());
     event.target.reset();
   };
 
@@ -16,6 +17,7 @@ export default function ToDoForm({ onSubmitNewToDoItem }) {
       </AddToDoButton>
       <ToDoInput
         name="todo"
+        type="text"
         aria-label="todo"
         placeholder="Add To-Do..."
         autoComplete="off"
