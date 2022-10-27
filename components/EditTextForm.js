@@ -5,19 +5,10 @@ import saveSvg from "../assets/save.svg";
 
 export default function EditTextForm({ prevTextValue, onUpdateDetail }) {
   const [description, setDescription] = useState(prevTextValue);
-  const [validationError, setValidationError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (event.target.description.value.trim().length === 0) {
-      setValidationError("You can travel to space, but spaces only are not allowed!");
-      return;
-    } else {
-      setValidationError("");
-    }
-
-    onUpdateDetail(event.target.description.value);
+    onUpdateDetail(event.target.description.value.trim());
   };
 
   return (
@@ -28,9 +19,7 @@ export default function EditTextForm({ prevTextValue, onUpdateDetail }) {
         type="text"
         onChange={(event) => setDescription(event.target.value)}
         value={description}
-        required
       />
-      {validationError && <ValidationError>{validationError}</ValidationError>}
       <StyledButton aria-label="save description">
         <Image src={saveSvg} width="290px" height="40px" alt="Save icon" />
       </StyledButton>
