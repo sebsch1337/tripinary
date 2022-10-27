@@ -4,7 +4,7 @@ import checkedIcon from "../assets/checked.svg";
 import Image from "next/image";
 import deleteSvg from "../assets/delete.svg";
 
-export default function ToDoItem({ toDo }) {
+export default function ToDoItem({ toDo, onDeleteToDoItem }) {
   return (
     <ToDoListItem>
       <Image
@@ -15,8 +15,8 @@ export default function ToDoItem({ toDo }) {
       />
 
       <Description checked={toDo.checked}>{toDo.description}</Description>
-      <DeleteToDo>
-        <Image src={deleteSvg} width="10px" height="10px" alt="Delete ToDo" />
+      <DeleteToDo onClick={onDeleteToDoItem} aria-label="Delete todo">
+        <Image src={deleteSvg} width="10px" height="10px" alt="Delete todo icon" />
       </DeleteToDo>
     </ToDoListItem>
   );
