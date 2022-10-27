@@ -11,6 +11,7 @@ import Modal from "../../components/Modal";
 import { useState } from "react";
 import DetailTitle from "../../components/DetailTitle";
 import EditDatesForm from "../../components/EditDatesForm";
+import EditTextForm from "../../components/EditTextForm";
 
 export default function Details() {
   const router = useRouter();
@@ -101,6 +102,24 @@ export default function Details() {
               onUpdateDetail={(startDate, endDate) => {
                 toggleModal();
                 onUpdateDetail({ startDate, endDate });
+              }}
+            />
+          )}
+          {modal.name === "Hotel" && (
+            <EditTextForm
+              prevTextValue={destination.hotel}
+              onUpdateDetail={(hotel) => {
+                toggleModal();
+                onUpdateDetail({ hotel });
+              }}
+            />
+          )}
+          {modal.name === "Transport" && (
+            <EditTextForm
+              prevTextValue={destination.transport}
+              onUpdateDetail={(transport) => {
+                toggleModal();
+                onUpdateDetail({ transport });
               }}
             />
           )}
