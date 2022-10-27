@@ -9,9 +9,9 @@ import ToDoItem from "../../components/ToDoItem";
 import ToDoForm from "../../components/ToDoForm";
 import Modal from "../../components/Modal";
 import { useState } from "react";
-import DetailTitle from "../../components/DetailTitle";
 import EditDatesForm from "../../components/EditDatesForm";
 import EditTextForm from "../../components/EditTextForm";
+import EditButton from "../../components/EditButton";
 
 export default function Details() {
   const router = useRouter();
@@ -23,6 +23,21 @@ export default function Details() {
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
+
+  const onDeleteToDoItem = (deleteId) => {
+    setDestinations((destinations) => {
+      return destinations.map((destinationItem) => {
+        if (destinationItem.id === destination.id) {
+          return {
+            ...destinationItem,
+            toDos: destinationItem.toDos.filter((toDo) => toDo.id !== deleteId),
+          };
+        } else {
+          return destinationItem;
+        }
+      });
+    });
+  };
 
   const toggleModal = (modalName = "") => {
     setModal((modal) => {
@@ -74,22 +89,31 @@ export default function Details() {
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
         {destination && (
           <DetailSection>
-            <DetailTitle name="Dates" toggleModal={() => toggleModal("Dates")} />
+            <DetailTitle>
+              Dates
+              <EditButton toggleModal={() => toggleModal("Dates")} />
+            </DetailTitle>
             <DetailText>
               {new Date(destination.startDate * 1000).toISOString().substring(0, 10) +
                 ` until ` +
                 new Date(destination.endDate * 1000).toISOString().substring(0, 10)}
             </DetailText>
-            <DetailTitle name="Hotel" toggleModal={() => toggleModal("Hotel")} />
+            <DetailTitle>
+              Hotel
+              <EditButton toggleModal={() => toggleModal("Hotel")} />
+            </DetailTitle>
             <DetailText>{destination.hotel === "" ? "<No hotel booked yet>" : destination.hotel}</DetailText>
-            <DetailTitle name="Transport" toggleModal={() => toggleModal("Transport")} />
+            <DetailTitle>
+              Transport
+              <EditButton toggleModal={() => toggleModal("Transport")} />
+            </DetailTitle>
             <DetailText>
               {destination.transport === "" ? "<No transportation booked yet>" : destination.transport}
             </DetailText>
-            <DetailTitle name="To-Do" toggleModal={() => toggleModal("To-Do")} />
+            <DetailTitle>To-Do</DetailTitle>
             <ToDoWrapper>
               {destination.toDos.map((toDo) => (
-                <ToDoItem key={toDo.id} toDo={toDo} />
+                <ToDoItem key={toDo.id} toDo={toDo} onDeleteToDoItem={() => onDeleteToDoItem(toDo.id)} />
               ))}
             </ToDoWrapper>
             <ToDoForm onSubmitNewToDoItem={onSubmitNewToDoItem} />
@@ -133,6 +157,12 @@ export default function Details() {
 
 const ToDoWrapper = styled.ul`
   list-style: none;
+`;
+
+const DetailTitle = styled.h3`
+  color: var(--drop-shadow);
+  display: flex;
+  justify-content: space-between;
 `;
 
 const DetailText = styled.p`
