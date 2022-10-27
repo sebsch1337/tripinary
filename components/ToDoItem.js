@@ -14,9 +14,7 @@ export default function ToDoItem({ toDo }) {
         alt={toDo.checked ? "checked" : "unchecked"}
       />
 
-      <Description htmlFor={toDo.id} checked={toDo.checked}>
-        {toDo.description}
-      </Description>
+      <Description checked={toDo.checked}>{toDo.description}</Description>
       <DeleteToDo>
         <Image src={deleteSvg} width="10px" height="10px" alt="Delete ToDo" />
       </DeleteToDo>
@@ -29,7 +27,8 @@ const DeleteToDo = styled.button`
   align-items: center;
   background-color: transparent;
   border: none;
-  justify-self: flex-end;
+  position: absolute;
+  right: 10%;
 `;
 
 const Description = styled.label`
