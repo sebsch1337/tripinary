@@ -1,22 +1,23 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Image from "next/image";
+import saveSvg from "../assets/save.svg";
 
-export default function EditTextForm() {
-  const [description, setDescription] = useState("");
+export default function EditTextForm({ prevTextValue, onUpdateDetail }) {
+  const [description, setDescription] = useState(prevTextValue);
   const [validationError, setValidationError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (event.target.description.value.every(" ")) {
-      setValidationError("You can tYou can travel to space, but spaces only are not allowed!");
+    if (event.target.description.value.trim().length === 0) {
+      setValidationError("You can travel to space, but spaces only are not allowed!");
       return;
     } else {
       setValidationError("");
     }
 
-    onUpdateDetail(Date.parse(startDate) / 1000, Date.parse(endDate) / 1000);
+    onUpdateDetail(event.target.description.value);
   };
 
   return (
