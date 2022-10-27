@@ -18,6 +18,7 @@ export default function EditTextForm({ prevTextValue, onUpdateDetail }) {
         name="description"
         type="text"
         onChange={(event) => setDescription(event.target.value)}
+        autoComplete="off"
         value={description}
       />
       <StyledButton aria-label="save description">
