@@ -81,9 +81,7 @@ export default function Details() {
                 new Date(destination.endDate * 1000).toISOString().substring(0, 10)}
             </DetailText>
             <DetailTitle name="Hotel" toggleModal={() => toggleModal("Hotel")} />
-            <DetailText>
-              {destination.hotel === "" ? "<No transportation booked yet>" : destination.hotel}
-            </DetailText>
+            <DetailText>{destination.hotel === "" ? "<No hotel booked yet>" : destination.hotel}</DetailText>
             <DetailTitle name="Transport" toggleModal={() => toggleModal("Transport")} />
             <DetailText>
               {destination.transport === "" ? "<No transportation booked yet>" : destination.transport}
