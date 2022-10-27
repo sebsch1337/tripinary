@@ -35,12 +35,6 @@ const Description = styled.label`
   margin-left: 0.4em;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
   color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
-
-  &::before {
-    left: 0;
-    right: 0;
-    background-image: url({unCheckedIcon});
-  }
 `;
 
 const ToDoListItem = styled.li`
