@@ -15,4 +15,5 @@ const FooterBar = styled.footer`
   bottom: 0;
   background-color: #fff;
   filter: drop-shadow(0 0 0.3em var(--drop-shadow));
+  z-index: 10;
 `;

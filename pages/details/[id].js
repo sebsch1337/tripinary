@@ -13,6 +13,7 @@ import EditDatesForm from "../../components/EditDatesForm";
 import EditTextForm from "../../components/EditTextForm";
 import EditButton from "../../components/EditButton";
 import Footer from "../../components/Footer";
+import DeleteButton from "../../components/DeleteButton";
 
 export default function Details() {
   const router = useRouter();
@@ -118,7 +119,6 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
-      <Footer></Footer>
       {modal.visible && (
         <Modal name={modal.name} toggleModal={toggleModal}>
           {modal.name === "Dates" && (

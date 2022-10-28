@@ -7,6 +7,8 @@ import DestinationItem from "../../components/DestinationItem";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
 import BackgroundCover from "../../components/BackgroundCover";
+import Footer from "../../components/Footer";
+import DeleteButton from "../../components/DeleteButton";
 
 export default function Destinations() {
   const router = useRouter();
@@ -60,6 +62,9 @@ export default function Destinations() {
           <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
       </MainCard>
+      <Footer>
+        <DeleteButton />
+      </Footer>
     </>
   );
 }
@@ -89,5 +94,5 @@ const DestinationHeadline = styled.h1`
 
 const DestinationsWrapper = styled.ul`
   list-style: none;
-  margin: 0 2em;
+  margin: 0 2em 5em;
 `;
