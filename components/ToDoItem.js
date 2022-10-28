@@ -2,23 +2,34 @@ import styled from "styled-components";
 import unCheckedIcon from "../assets/unchecked.svg";
 import checkedIcon from "../assets/checked.svg";
 import Image from "next/image";
+import deleteSvg from "../assets/delete.svg";
 
-export default function ToDoItem({ toDo }) {
+export default function ToDoItem({ toDo, onDeleteToDoItem }) {
   return (
     <ToDoListItem>
-      <CheckBox id={toDo.id} />
       <Image
         src={toDo.checked ? checkedIcon : unCheckedIcon}
-        width="18px"
-        height="18px"
+        width={toDo.checked ? "17px" : "14px"}
+        height={toDo.checked ? "17px" : "14px"}
         alt={toDo.checked ? "checked" : "unchecked"}
       />
-      <Description htmlFor={toDo.id} checked={toDo.checked}>
-        {toDo.description}
-      </Description>
+
+      <Description checked={toDo.checked}>{toDo.description}</Description>
+      <DeleteToDoButton onClick={onDeleteToDoItem} aria-label="Delete todo">
+        <Image src={deleteSvg} width="10px" height="10px" alt="Delete todo icon" />
+      </DeleteToDoButton>
     </ToDoListItem>
   );
 }
+
+const DeleteToDoButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  right: 10%;
+`;
 
 const Description = styled.label`
   margin-left: 0.4em;
@@ -30,8 +41,4 @@ const ToDoListItem = styled.li`
   padding: 0.5em 0;
   display: flex;
   align-items: center;
-`;
-
-const CheckBox = styled.input.attrs({ type: "checkbox" })`
-  display: none;
 `;
