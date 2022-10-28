@@ -16,6 +16,8 @@ export default function Destinations() {
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
 
+  const onDeleteTrip = (id) => setTrips((trips) => trips.filter((trip) => trip.id !== id));
+
   const onSubmitNewDestination = (event) => {
     event.preventDefault();
     const destinationName = event.target.destination.value;
@@ -63,7 +65,12 @@ export default function Destinations() {
         </DestinationsWrapper>
       </MainCard>
       <Footer>
-        <DeleteButton />
+        <DeleteButton
+          onDelete={() => {
+            router.push("/");
+            onDeleteTrip(id);
+          }}
+        />
       </Footer>
     </>
   );
