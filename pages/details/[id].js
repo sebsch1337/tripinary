@@ -24,20 +24,17 @@ export default function Details() {
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
 
-  const onDeleteToDoItem = (deleteId) => {
-    setDestinations((destinations) => {
-      return destinations.map((destinationItem) => {
-        if (destinationItem.id === destination.id) {
-          return {
-            ...destinationItem,
-            toDos: destinationItem.toDos.filter((toDo) => toDo.id !== deleteId),
-          };
-        } else {
-          return destinationItem;
-        }
-      });
-    });
-  };
+  const onDeleteToDoItem = (id) =>
+    setDestinations((destinations) =>
+      destinations.map((destinationItem) =>
+        destinationItem.id === destination.id
+          ? {
+              ...destinationItem,
+              toDos: destinationItem.toDos.filter((toDo) => toDo.id !== id),
+            }
+          : destinationItem
+      )
+    );
 
   const toggleModal = (modalName = "") => {
     setModal((modal) => {
