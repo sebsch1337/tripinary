@@ -12,6 +12,7 @@ import { useState } from "react";
 import EditDatesForm from "../../components/EditDatesForm";
 import EditTextForm from "../../components/EditTextForm";
 import EditButton from "../../components/EditButton";
+import Footer from "../../components/Footer";
 
 export default function Details() {
   const router = useRouter();
@@ -117,6 +118,7 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
+      <Footer></Footer>
       {modal.visible && (
         <Modal name={modal.name} toggleModal={toggleModal}>
           {modal.name === "Dates" && (
@@ -167,7 +169,7 @@ const DetailText = styled.p`
 `;
 
 const DetailSection = styled.section`
-  margin: 0 2em;
+  margin: 0 2em 5em;
 `;
 
 const MainCard = styled.main`
@@ -177,6 +179,7 @@ const MainCard = styled.main`
   border-top-right-radius: 50px;
   background-color: var(--background-primary);
   width: 100vw;
+  overflow: hidden;
 `;
 
 const DetailHeadline = styled.h1`
