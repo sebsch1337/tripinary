@@ -12,8 +12,6 @@ import { useState } from "react";
 import EditDatesForm from "../../components/EditDatesForm";
 import EditTextForm from "../../components/EditTextForm";
 import EditButton from "../../components/EditButton";
-import Footer from "../../components/Footer";
-import DeleteButton from "../../components/DeleteButton";
 
 export default function Details() {
   const router = useRouter();
@@ -38,11 +36,7 @@ export default function Details() {
       )
     );
 
-  const toggleModal = (modalName = "") => {
-    setModal((modal) => {
-      return { visible: !modal.visible, name: modalName };
-    });
-  };
+  const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
 
   const onUpdateDetail = (updated) => {
     setDestinations((destinations) => {
@@ -165,7 +159,7 @@ const DetailTitle = styled.h3`
 `;
 
 const DetailText = styled.p`
-  margin-bottom: 1em; ;
+  margin-bottom: 1em;
 `;
 
 const DetailSection = styled.section`
