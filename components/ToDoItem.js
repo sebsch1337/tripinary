@@ -15,14 +15,14 @@ export default function ToDoItem({ toDo, onDeleteToDoItem }) {
       />
 
       <Description checked={toDo.checked}>{toDo.description}</Description>
-      <DeleteToDo onClick={onDeleteToDoItem} aria-label="Delete todo">
+      <DeleteToDoButton onClick={onDeleteToDoItem} aria-label="Delete todo">
         <Image src={deleteSvg} width="10px" height="10px" alt="Delete todo icon" />
-      </DeleteToDo>
+      </DeleteToDoButton>
     </ToDoListItem>
   );
 }
 
-const DeleteToDo = styled.button`
+const DeleteToDoButton = styled.button`
   display: flex;
   align-items: center;
   background-color: transparent;
