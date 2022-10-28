@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export default function Footer() {
-  return <FooterBar></FooterBar>;
+export default function Footer({ children }) {
+  return <FooterBar>{children}</FooterBar>;
 }
 
 const FooterBar = styled.footer`
