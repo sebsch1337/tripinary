@@ -74,7 +74,13 @@ export default function Destinations() {
         </DestinationsWrapper>
       </MainCard>
       <Footer>
-        <DeleteButton onDelete={() => toggleModal(countryName)} />
+        <DeleteButton
+          onClick={() => toggleModal(countryName)}
+          icon="trashCan"
+          width="25px"
+          height="25px"
+          ariaLabel="Delete trip"
+        />
       </Footer>
       {modal.visible && (
         <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>

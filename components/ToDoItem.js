@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import Image from "next/image";
 import unCheckedIcon from "../assets/unchecked.svg";
 import checkedIcon from "../assets/checked.svg";
-import Image from "next/image";
-import deleteSvg from "../assets/delete.svg";
+
+import crossSvg from "../assets/cross.svg";
+import DeleteButton from "./DeleteButton";
 
 export default function ToDoItem({ toDo, onDeleteToDoItem }) {
   return (
@@ -15,21 +17,17 @@ export default function ToDoItem({ toDo, onDeleteToDoItem }) {
       />
 
       <Description checked={toDo.checked}>{toDo.description}</Description>
-      <DeleteToDoButton onClick={onDeleteToDoItem} aria-label="Delete todo">
-        <Image src={deleteSvg} width="10px" height="10px" alt="Delete todo icon" />
-      </DeleteToDoButton>
+      <DeleteButton
+        onClick={onDeleteToDoItem}
+        ariaLabel="Delete todo"
+        icon="cross"
+        width="10px"
+        height="10px"
+        right="10%"
+      />
     </ToDoListItem>
   );
 }
-
-const DeleteToDoButton = styled.button`
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  border: none;
-  position: absolute;
-  right: 10%;
-`;
 
 const Description = styled.label`
   margin-left: 0.4em;

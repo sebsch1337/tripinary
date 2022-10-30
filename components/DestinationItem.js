@@ -1,6 +1,7 @@
 import bulletCircle from "../assets/bulletCircle.svg";
 import styled from "styled-components";
 import Link from "next/link";
+import DeleteButton from "./DeleteButton";
 
 export default function DestinationItem({ id, name }) {
   return (
@@ -11,6 +12,7 @@ export default function DestinationItem({ id, name }) {
           <NameArea>{name}</NameArea>
         </AnkorTag>
       </Link>
+      <DeleteButton icon="cross" width="10px" height="10px" right="0" ariaLabel="Delete destination" />
     </ListBox>
   );
 }
@@ -38,11 +40,7 @@ const ListBox = styled.li`
     content: "";
     position: absolute;
     width: 5px;
-    background-image: linear-gradient(
-      90deg,
-      rgba(49, 107, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 200%
-    );
+    background-image: linear-gradient(90deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
     top: 0;
     bottom: 0;
     left: 1em;
