@@ -7,12 +7,25 @@ import DestinationItem from "../../components/DestinationItem";
 import DestinationForm from "../../components/DestinationForm";
 import { v4 as uuid } from "uuid";
 import BackgroundCover from "../../components/BackgroundCover";
+import Footer from "../../components/Footer";
+import DeleteButton from "../../components/DeleteButton";
+import Modal from "../../components/Modal";
+import DeleteModal from "../../components/DeleteModal";
+import { useState } from "react";
 
 export default function Destinations() {
   const router = useRouter();
   const { id } = router.query;
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
+  const [modal, setModal] = useState({ visible: false, name: "" });
+
+  const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
+
+  const onDeleteTrip = (id) => {
+    setTrips((trips) => trips.filter((trip) => trip.id !== id));
+    setDestinations((destinations) => destinations.filter((destination) => destination.tripId !== id));
+  };
 
   const onSubmitNewDestination = (event) => {
     event.preventDefault();
@@ -60,6 +73,20 @@ export default function Destinations() {
           <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
       </MainCard>
+      <Footer>
+        <DeleteButton onDelete={() => toggleModal(countryName)} />
+      </Footer>
+      {modal.visible && (
+        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
+          <DeleteModal
+            name={countryName}
+            onDeleteTrip={() => {
+              router.push("/");
+              onDeleteTrip(id);
+            }}
+          />
+        </Modal>
+      )}
     </>
   );
 }
@@ -89,5 +116,5 @@ const DestinationHeadline = styled.h1`
 
 const DestinationsWrapper = styled.ul`
   list-style: none;
-  margin: 0 2em;
+  margin: 0 2em 5em;
 `;

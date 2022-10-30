@@ -36,11 +36,7 @@ export default function Details() {
       )
     );
 
-  const toggleModal = (modalName = "") => {
-    setModal((modal) => {
-      return { visible: !modal.visible, name: modalName };
-    });
-  };
+  const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
 
   const onUpdateDetail = (updated) => {
     setDestinations((destinations) => {
@@ -163,11 +159,11 @@ const DetailTitle = styled.h3`
 `;
 
 const DetailText = styled.p`
-  margin-bottom: 1em; ;
+  margin-bottom: 1em;
 `;
 
 const DetailSection = styled.section`
-  margin: 0 2em;
+  margin: 0 2em 5em;
 `;
 
 const MainCard = styled.main`
@@ -177,6 +173,7 @@ const MainCard = styled.main`
   border-top-right-radius: 50px;
   background-color: var(--background-primary);
   width: 100vw;
+  overflow: hidden;
 `;
 
 const DetailHeadline = styled.h1`
