@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
 
-export default function DestinationItem({ id, name }) {
+export default function DestinationItem({ id, name, onDeleteDestination }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
@@ -12,7 +12,14 @@ export default function DestinationItem({ id, name }) {
           <NameArea>{name}</NameArea>
         </AnkorTag>
       </Link>
-      <DeleteButton icon="cross" width="10px" height="10px" right="0" ariaLabel="Delete destination" />
+      <DeleteButton
+        onClick={onDeleteDestination}
+        icon="cross"
+        width="10px"
+        height="10px"
+        right="0"
+        ariaLabel="Delete destination"
+      />
     </ListBox>
   );
 }

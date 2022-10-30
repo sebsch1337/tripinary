@@ -22,6 +22,10 @@ export default function Destinations() {
 
   const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
 
+  const onDeleteDestination = (id) => {
+    setDestinations((destinations) => destinations.filter((destination) => destination.id !== id));
+  };
+
   const onDeleteTrip = (id) => {
     setTrips((trips) => trips.filter((trip) => trip.id !== id));
     setDestinations((destinations) => destinations.filter((destination) => destination.tripId !== id));
@@ -68,7 +72,12 @@ export default function Destinations() {
           {destinations
             .filter((destination) => destination.tripId === id)
             .map((item) => (
-              <DestinationItem key={item.id} id={item.id} name={item.name} />
+              <DestinationItem
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                onDeleteDestination={() => onDeleteDestination(item.id)}
+              />
             ))}
           <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
@@ -96,15 +105,6 @@ export default function Destinations() {
     </>
   );
 }
-
-const Cover = styled.header`
-  width: 100vw;
-  height: 50vh;
-  position: fixed;
-  background-color: var(--background-primary);
-  background-size: cover;
-  background-image: url(${(props) => props.image});
-`;
 
 const MainCard = styled.main`
   position: absolute;
