@@ -2,11 +2,11 @@ import styled from "styled-components";
 import Image from "next/image";
 import deleteButtonModalSvg from "../assets/deleteButtonModal.svg";
 
-export default function DeleteModal({ name, onDeleteTrip }) {
+export default function DeleteModal({ name, onClick }) {
   return (
     <DeleteSection>
       <DeleteText>{`Are you sure you want to delete ${name}?`}</DeleteText>
-      <StyledButton onClick={onDeleteTrip} aria-label={`Delete ${name}`}>
+      <StyledButton onClick={onClick} aria-label={`Delete ${name}`}>
         <Image src={deleteButtonModalSvg} width="290px" height="40px" alt="Delete icon" />
       </StyledButton>
     </DeleteSection>
