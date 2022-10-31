@@ -18,9 +18,14 @@ export default function Destinations() {
   const { id } = router.query;
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
-  const [modal, setModal] = useState({ visible: false, name: "" });
+  const [modal, setModal] = useState({ visible: false, name: "", id: "" });
 
-  const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
+  const toggleModal = (modalName = "", type = "", id = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+
+  const onDeleteDestination = (id) => {
+    setDestinations((destinations) => destinations.filter((destination) => destination.id !== id));
+  };
 
   const onDeleteTrip = (id) => {
     setTrips((trips) => trips.filter((trip) => trip.id !== id));
@@ -68,21 +73,43 @@ export default function Destinations() {
           {destinations
             .filter((destination) => destination.tripId === id)
             .map((item) => (
-              <DestinationItem key={item.id} id={item.id} name={item.name} />
+              <DestinationItem
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                onClick={() => toggleModal(item.name, "destination", item.id)}
+              />
             ))}
           <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
         </DestinationsWrapper>
       </MainCard>
       <Footer>
-        <DeleteButton onDelete={() => toggleModal(countryName)} />
+        <DeleteButton
+          onClick={() => toggleModal(countryName, "trip")}
+          icon="trashCan"
+          width="25px"
+          height="25px"
+          ariaLabel="Delete trip"
+        />
       </Footer>
-      {modal.visible && (
+      {modal.visible && modal.type === "trip" && (
         <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
           <DeleteModal
-            name={countryName}
-            onDeleteTrip={() => {
+            name={modal.name}
+            onClick={() => {
               router.push("/");
               onDeleteTrip(id);
+            }}
+          />
+        </Modal>
+      )}
+      {modal.visible && modal.type === "destination" && (
+        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
+          <DeleteModal
+            name={modal.name}
+            onClick={() => {
+              toggleModal();
+              onDeleteDestination(modal.id);
             }}
           />
         </Modal>
@@ -90,15 +117,6 @@ export default function Destinations() {
     </>
   );
 }
-
-const Cover = styled.header`
-  width: 100vw;
-  height: 50vh;
-  position: fixed;
-  background-color: var(--background-primary);
-  background-size: cover;
-  background-image: url(${(props) => props.image});
-`;
 
 const MainCard = styled.main`
   position: absolute;
