@@ -12,6 +12,8 @@ import { useState } from "react";
 import EditDatesForm from "../../components/EditDatesForm";
 import EditTextForm from "../../components/EditTextForm";
 import EditButton from "../../components/EditButton";
+import Footer from "../../components/Footer";
+import Duration from "../../components/Duration";
 
 export default function Details() {
   const router = useRouter();
@@ -23,6 +25,8 @@ export default function Details() {
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
+
+  const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
 
   const onToggleToDoItem = (id) =>
     setDestinations((destinations) =>
@@ -131,6 +135,9 @@ export default function Details() {
           </DetailSection>
         )}
       </MainCard>
+      <Footer>
+        <Duration title="Duration" number={calculateDuration()} type="night" />
+      </Footer>
       {modal.visible && (
         <Modal name={modal.name} toggleModal={toggleModal}>
           {modal.name === "Dates" && (

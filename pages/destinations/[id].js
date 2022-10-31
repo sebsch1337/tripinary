@@ -12,6 +12,7 @@ import DeleteButton from "../../components/DeleteButton";
 import Modal from "../../components/Modal";
 import DeleteModal from "../../components/DeleteModal";
 import { useState } from "react";
+import Duration from "../../components/Duration";
 
 export default function Destinations() {
   const router = useRouter();
@@ -19,6 +20,17 @@ export default function Destinations() {
   const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
   const [modal, setModal] = useState({ visible: false, name: "", id: "" });
+
+  const calculateTotalDuration = () => {
+    const minDate = Math.min(
+      ...destinations.filter((filtered) => filtered.tripId === id).map((destination) => destination.startDate)
+    );
+    const maxDate = Math.max(
+      ...destinations.filter((filtered) => filtered.tripId === id).map((destination) => destination.endDate)
+    );
+    const dayDifference = (maxDate - minDate) / 86400 + 1;
+    return dayDifference > 0 ? dayDifference : 0;
+  };
 
   const toggleModal = (modalName = "", type = "", id = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
@@ -84,6 +96,7 @@ export default function Destinations() {
         </DestinationsWrapper>
       </MainCard>
       <Footer>
+        <Duration title="Total duration" number={calculateTotalDuration()} type="day" />
         <DeleteButton
           onClick={() => toggleModal(countryName, "trip")}
           icon="trashCan"
