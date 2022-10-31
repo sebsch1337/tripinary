@@ -7,12 +7,12 @@ import DeleteButton from "./DeleteButton";
 export default function ToDoItem({ toDo, onDeleteToDoItem, onToggleToDoItem }) {
   return (
     <ToDoListItem>
-      <ToDoButton onClick={onToggleToDoItem}>
+      <ToDoButton aria-label={toDo.checked ? "Uncheck to-do" : "Check to-do"} onClick={onToggleToDoItem}>
         <Image
           src={toDo.checked ? checkedIcon : unCheckedIcon}
           width={toDo.checked ? "17px" : "14px"}
           height={toDo.checked ? "17px" : "14px"}
-          alt={toDo.checked ? "checked" : "unchecked"}
+          alt={toDo.checked ? "checked icon" : "unchecked icon"}
         />
         <Description checked={toDo.checked}>{toDo.description}</Description>
         <DeleteButton
@@ -36,7 +36,7 @@ const ToDoButton = styled.button`
   font-size: 1rem;
 `;
 
-const Description = styled.p`
+const Description = styled.span`
   margin-left: 0.4em;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
   color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
