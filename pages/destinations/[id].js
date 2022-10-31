@@ -22,14 +22,8 @@ export default function Destinations() {
   const [modal, setModal] = useState({ visible: false, name: "", id: "" });
 
   const calculateTotalDuration = () => {
-    const minDate = Math.min.apply(
-      Math,
-      destinations.map((destination) => destination.startDate)
-    );
-    const maxDate = Math.max.apply(
-      Math,
-      destinations.map((destination) => destination.endDate)
-    );
+    const minDate = Math.min(...destinations.map((destination) => destination.startDate));
+    const maxDate = Math.max(...destinations.map((destination) => destination.endDate));
     const dayDifference = (maxDate - minDate) / 86400 + 1;
     return dayDifference > 0 ? dayDifference : 0;
   };
