@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
 
-export default function DestinationItem({ id, name, onClick, onDeleteDestination }) {
+export default function DestinationItem({ id, name, onClick }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
