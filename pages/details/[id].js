@@ -24,6 +24,19 @@ export default function Details() {
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
 
+  const onToggleToDoItem = (id) =>
+    setDestinations((destinations) =>
+      destinations.map((destinationItem) =>
+        destinationItem.id === destination.id
+          ? {
+              ...destinationItem,
+              toDos: destinationItem.toDos.map((toDo) =>
+                toDo.id === id ? { ...toDo, checked: !toDo.checked } : toDo
+              ),
+            }
+          : destinationItem
+      )
+    );
   const onDeleteToDoItem = (id) =>
     setDestinations((destinations) =>
       destinations.map((destinationItem) =>
@@ -106,7 +119,12 @@ export default function Details() {
             <DetailTitle>To-Do</DetailTitle>
             <ToDoWrapper>
               {destination.toDos.map((toDo) => (
-                <ToDoItem key={toDo.id} toDo={toDo} onDeleteToDoItem={() => onDeleteToDoItem(toDo.id)} />
+                <ToDoItem
+                  key={toDo.id}
+                  toDo={toDo}
+                  onDeleteToDoItem={() => onDeleteToDoItem(toDo.id)}
+                  onToggleToDoItem={() => onToggleToDoItem(toDo.id)}
+                />
               ))}
             </ToDoWrapper>
             <ToDoForm onSubmitNewToDoItem={onSubmitNewToDoItem} />
