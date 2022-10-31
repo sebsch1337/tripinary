@@ -15,15 +15,15 @@ export default function ToDoItem({ toDo, onDeleteToDoItem, onToggleToDoItem }) {
           alt={toDo.checked ? "checked icon" : "unchecked icon"}
         />
         <Description checked={toDo.checked}>{toDo.description}</Description>
-        <DeleteButton
-          onClick={onDeleteToDoItem}
-          ariaLabel="Delete todo"
-          icon="cross"
-          width="10px"
-          height="10px"
-          right="10%"
-        />
       </ToDoButton>
+      <DeleteButton
+        onClick={onDeleteToDoItem}
+        ariaLabel="Delete todo"
+        icon="cross"
+        width="10px"
+        height="10px"
+        right="10%"
+      />
     </ToDoListItem>
   );
 }
