@@ -87,8 +87,7 @@ export default function Destinations() {
             .map((item) => (
               <DestinationItem
                 key={item.id}
-                id={item.id}
-                name={item.name}
+                destination={item}
                 onClick={() => toggleModal(item.name, "destination", item.id)}
               />
             ))}

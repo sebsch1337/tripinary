@@ -6,9 +6,9 @@ import ChecklistIcon from "./icons/ChecklistIcon";
 export default function StatusIndicators({ hotel, transport, toDos }) {
   return (
     <StatusSection>
-      <BedIcon active={true} aria-label="bed icon" />
-      <SuitcaseIcon active={true} aria-label="suitcase icon" />
-      <ChecklistIcon active={true} aria-label="checklist icon" />
+      <BedIcon active={hotel} aria-label="bed icon" />
+      <SuitcaseIcon active={transport} aria-label="suitcase icon" />
+      <ChecklistIcon active={toDos.length > 0} aria-label="checklist icon" />
     </StatusSection>
   );
 }

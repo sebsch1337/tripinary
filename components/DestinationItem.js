@@ -4,19 +4,23 @@ import Link from "next/link";
 import DeleteButton from "./DeleteButton";
 import StatusIndicators from "./StatusIndicators";
 
-export default function DestinationItem({ id, name, onClick }) {
+export default function DestinationItem({ destination, onClick }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
-      <Link href={`/details/${id}`} passHref>
+      <Link href={`/details/${destination.id}`} passHref>
         <AnkorTag>
-          <NameArea>{name}</NameArea>
+          <NameArea>{destination.name}</NameArea>
         </AnkorTag>
       </Link>
-      <StatusIndicators />
+      <StatusIndicators
+        hotel={destination.hotel}
+        transport={destination.transport}
+        toDos={destination.toDos}
+      />
       <DeleteButton
         onClick={onClick}
-        name={name}
+        name={destination.name}
         icon="cross"
         width="10px"
         height="10px"
