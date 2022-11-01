@@ -2,6 +2,7 @@ import bulletCircle from "../assets/bulletCircle.svg";
 import styled from "styled-components";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
+import StatusIndicators from "./StatusIndicators";
 
 export default function DestinationItem({ id, name, onClick }) {
   return (
@@ -12,6 +13,7 @@ export default function DestinationItem({ id, name, onClick }) {
           <NameArea>{name}</NameArea>
         </AnkorTag>
       </Link>
+      <StatusIndicators />
       <DeleteButton
         onClick={onClick}
         name={name}
