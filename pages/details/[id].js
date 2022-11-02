@@ -1,19 +1,21 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { v4 as uuid } from "uuid";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { dummyDestinations } from "../../db";
-import BackgroundCover from "../../components/BackgroundCover";
-import ToDoItem from "../../components/ToDoItem";
-import ToDoForm from "../../components/ToDoForm";
-import Modal from "../../components/Modal";
 import { useState } from "react";
-import EditDatesForm from "../../components/EditDatesForm";
-import EditTextForm from "../../components/EditTextForm";
-import EditButton from "../../components/EditButton";
+import { v4 as uuid } from "uuid";
+
+import BackgroundCover from "../../components/BackgroundCover";
+import ToDoItem from "../../components/ToDo/ToDoItem";
+import ToDoForm from "../../components/ToDo/ToDoForm";
+import Modal from "../../components/Modals/Modal";
+import EditDatesForm from "../../components/Edit/EditDatesForm";
+import EditTextForm from "../../components/Edit/EditTextForm";
+import EditButton from "../../components/Buttons/EditButton";
 import Footer from "../../components/Footer";
 import Duration from "../../components/Duration";
+
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { dummyDestinations } from "../../db";
 
 export default function Details() {
   const router = useRouter();

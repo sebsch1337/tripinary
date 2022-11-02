@@ -1,18 +1,21 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { dummyTrips, dummyDestinations } from "../../db";
-import DestinationItem from "../../components/DestinationItem";
-import DestinationForm from "../../components/DestinationForm";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
+
+import DestinationItem from "../../components/Destination/DestinationItem";
+import DestinationForm from "../../components/Destination/DestinationForm";
+
 import BackgroundCover from "../../components/BackgroundCover";
 import Footer from "../../components/Footer";
-import DeleteButton from "../../components/DeleteButton";
-import Modal from "../../components/Modal";
-import DeleteModal from "../../components/DeleteModal";
-import { useState } from "react";
+import DeleteButton from "../../components/Buttons/DeleteButton";
+import Modal from "../../components/Modals/Modal";
+import DeleteModal from "../../components/Modals/DeleteModal";
 import Duration from "../../components/Duration";
+
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { dummyTrips, dummyDestinations } from "../../db";
 
 export default function Destinations() {
   const router = useRouter();
@@ -87,8 +90,7 @@ export default function Destinations() {
             .map((item) => (
               <DestinationItem
                 key={item.id}
-                id={item.id}
-                name={item.name}
+                destination={item}
                 onClick={() => toggleModal(item.name, "destination", item.id)}
               />
             ))}

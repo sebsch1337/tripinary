@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
-import trashCanSvg from "../assets/trashCan.svg";
-import crossSvg from "../assets/cross.svg";
+import trashCanSvg from "../../assets/trashCan.svg";
+import crossSvg from "../../assets/cross.svg";
 
 export default function DeleteButton({ onClick, icon, width, height, ariaLabel, right }) {
   return (

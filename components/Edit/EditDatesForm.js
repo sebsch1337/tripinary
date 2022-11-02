@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
-import saveSvg from "../assets/save.svg";
 import { useState } from "react";
+import saveSvg from "../../assets/save.svg";
 
 const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
 

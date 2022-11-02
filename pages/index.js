@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-import TripCard from "../components/TripCard";
-import TripForm from "../components/TripForm";
+import TripCard from "../components/Trip/TripCard";
+import TripForm from "../components/Trip/TripForm";
 import { v4 as uuid } from "uuid";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { dummyTrips } from "../db";

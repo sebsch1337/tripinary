@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
-import unCheckedIcon from "../assets/unchecked.svg";
-import checkedIcon from "../assets/checked.svg";
-import DeleteButton from "./DeleteButton";
+import DeleteButton from "../Buttons/DeleteButton";
+import checkedIcon from "../../assets/checked.svg";
+import unCheckedIcon from "../../assets/unchecked.svg";
 
 export default function ToDoItem({ toDo, onDeleteToDoItem, onToggleToDoItem }) {
   return (

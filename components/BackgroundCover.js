@@ -1,5 +1,5 @@
-import BackButton from "./BackButton";
 import styled from "styled-components";
+import BackButton from "./Buttons/BackButton";
 
 export default function BackgroundCover({ imageQuery }) {
   return (
