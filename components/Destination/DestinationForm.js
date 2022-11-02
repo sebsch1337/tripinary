@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
+import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
 
 export default function DestinationForm({ onSubmitNewDestination }) {
   return (

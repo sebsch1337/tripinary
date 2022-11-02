@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import addButtonCircleActive from "../assets/addButtonCircleActive.svg";
 import Image from "next/image";
+import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
 
 export default function TripForm({ onSubmitNewTrip }) {
   return (

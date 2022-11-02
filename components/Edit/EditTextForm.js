@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
 import Image from "next/image";
-import saveSvg from "../assets/save.svg";
+import { useState } from "react";
+import saveSvg from "../../assets/save.svg";
 
 export default function EditTextForm({ prevTextValue, onUpdateDetail }) {
   const [description, setDescription] = useState(prevTextValue);

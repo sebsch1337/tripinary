@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import BedIcon from "./icons/BedIcon";
-import SuitcaseIcon from "./icons/SuitcaseIcon";
-import ChecklistIcon from "./icons/ChecklistIcon";
+import BedIcon from "../Icons/BedIcon";
+import SuitcaseIcon from "../Icons/SuitcaseIcon";
+import ChecklistIcon from "../Icons/ChecklistIcon";
 
 export default function StatusIndicators({ hotel, transport, toDos }) {
   return (

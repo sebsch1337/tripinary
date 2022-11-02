@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import deleteButtonModalSvg from "../assets/deleteButtonModal.svg";
+import deleteButtonModalSvg from "../../assets/deleteButtonModal.svg";
 
 export default function DeleteModal({ name, onClick }) {
   return (

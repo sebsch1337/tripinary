@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import Image from "next/image";
-import arrowBack from "../assets/arrowBack.svg";
+import { useRouter } from "next/router";
+import arrowBack from "../../assets/arrowBack.svg";
 
 export default function BackButton() {
   const router = useRouter();

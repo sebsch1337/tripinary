@@ -1,8 +1,8 @@
-import bulletCircle from "../assets/bulletCircle.svg";
 import styled from "styled-components";
 import Link from "next/link";
-import DeleteButton from "./DeleteButton";
+import DeleteButton from "../Buttons/DeleteButton";
 import StatusIndicators from "./StatusIndicators";
+import bulletCircle from "../../assets/bulletCircle.svg";
 
 export default function DestinationItem({ destination, onClick }) {
   return (
