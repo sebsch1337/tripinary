@@ -13,7 +13,7 @@ export default function TripForm({ onSubmitNewTrip }) {
           autoComplete="off"
           required
         />
-        <AddTripButton aria-label="submit">
+        <AddTripButton aria-label="submit" data-testid="add-button">
           <Image src={addButtonCircleActive} alt="Add icon" />
         </AddTripButton>
       </InputWrapper>

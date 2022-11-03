@@ -4,9 +4,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import DestinationItem from "../../components/Destination/DestinationItem";
-import DestinationForm from "../../components/Destination/DestinationForm";
-
 import BackgroundCover from "../../components/BackgroundCover";
 import Footer from "../../components/Footer";
 import DeleteButton from "../../components/Buttons/DeleteButton";
@@ -16,7 +13,7 @@ import Duration from "../../components/Duration";
 
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
-import DestinationList from "../../components/Destination";
+import DestinationList from "../../components/Destination/DestinationList";
 
 export default function Destinations() {
   const router = useRouter();

@@ -1,9 +1,8 @@
 import Head from "next/head";
-import Link from "next/link";
 import styled from "styled-components";
-import TripCard from "../components/Trip/TripCard";
-import TripForm from "../components/Trip/TripForm";
 import { v4 as uuid } from "uuid";
+import TripList from "../components/Trip/TripList";
+
 import useLocalStorage from "../hooks/useLocalStorage";
 import { dummyTrips } from "../db";
 
@@ -41,16 +40,7 @@ export default function Home() {
         your journey
       </TripsHeadline>
       <Main>
-        <TripsWrapper>
-          {trips.map((trip) => (
-            <Link key={trip.id} href={`/destinations/${trip.id}`} passHref>
-              <a>
-                <TripCard country={trip.country} />
-              </a>
-            </Link>
-          ))}
-          <TripForm onSubmitNewTrip={onSubmitNewTrip} />
-        </TripsWrapper>
+        <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
       </Main>
     </>
   );
@@ -64,13 +54,4 @@ const TripsHeadline = styled.h1`
 
 const Main = styled.main`
   margin-bottom: 2em;
-`;
-
-const TripsWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  gap: 2em;
 `;

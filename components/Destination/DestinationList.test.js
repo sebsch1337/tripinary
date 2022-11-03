@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import DestinationList from ".";
+import DestinationList from "./DestinationList";
 
 const destinations = [
   {
@@ -53,7 +53,7 @@ describe("DestinationList", () => {
     expect(screen.getByText("Bangkok"));
   });
 
-  it("calls callbacks when clicking buttons", async () => {
+  it("calls a callback when clicking delete buttton", async () => {
     const dummyCallback = jest.fn();
     render(
       <DestinationList
@@ -64,7 +64,7 @@ describe("DestinationList", () => {
       />
     );
 
-    const buttons = screen.getAllByRole("button");
+    const buttons = screen.getAllByLabelText("Delete destination");
     await userEvent.click(buttons[0]);
     expect(dummyCallback).toHaveBeenCalledTimes(1);
   });
