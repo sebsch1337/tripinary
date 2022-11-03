@@ -4,9 +4,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import DestinationItem from "../../components/Destination/DestinationItem";
-import DestinationForm from "../../components/Destination/DestinationForm";
-
 import BackgroundCover from "../../components/BackgroundCover";
 import Footer from "../../components/Footer";
 import DeleteButton from "../../components/Buttons/DeleteButton";
@@ -16,6 +13,7 @@ import Duration from "../../components/Duration";
 
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
+import DestinationList from "../../components/Destination/DestinationList";
 
 export default function Destinations() {
   const router = useRouter();
@@ -84,18 +82,12 @@ export default function Destinations() {
       <BackgroundCover imageQuery={countryQueryName} />
       <MainCard>
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
-        <DestinationsWrapper>
-          {destinations
-            .filter((destination) => destination.tripId === id)
-            .map((item) => (
-              <DestinationItem
-                key={item.id}
-                destination={item}
-                onClick={() => toggleModal(item.name, "destination", item.id)}
-              />
-            ))}
-          <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
-        </DestinationsWrapper>
+        <DestinationList
+          destinations={destinations}
+          tripId={id}
+          onSubmitNewDestination={onSubmitNewDestination}
+          toggleModal={toggleModal}
+        />
       </MainCard>
       <Footer>
         <Duration title="Total duration" number={calculateTotalDuration()} type="day" />
@@ -145,9 +137,4 @@ const MainCard = styled.main`
 const DestinationHeadline = styled.h1`
   margin: 1em 0 0.5em;
   text-align: center;
-`;
-
-const DestinationsWrapper = styled.ul`
-  list-style: none;
-  margin: 0 2em 5em;
 `;
