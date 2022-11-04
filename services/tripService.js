@@ -1,6 +1,8 @@
 import dbConnect from "../lib/dbConnect";
 import Trip from "../models/Trip";
 
+const validateId = (id) => id.match("^[0-9a-fA-F]{24}$");
+
 export async function getAllTrips() {
   await dbConnect();
   const trips = await Trip.find();
@@ -14,7 +16,7 @@ export async function getAllTrips() {
 }
 
 export async function getTripById(id) {
-  if (!id.match("^[0-9a-fA-F]{24}$") || !id.match("^[a-z0-9]*$")) return "Not found";
+  if (!validateId(id)) return false;
 
   await dbConnect();
   const trip = await Trip.findById(id);
@@ -29,4 +31,13 @@ export async function postTrip(body) {
 
   await dbConnect();
   return Trip.create({ country: cleanedBody });
+}
+
+export async function deleteTrip(id) {
+  if (!validateId(id)) return false;
+
+  await dbConnect();
+  const deleteTrip = await Trip.deleteOne({ _id: id });
+  if (deleteTrip.deletedCount === 0) return false;
+  return deleteTrip;
 }

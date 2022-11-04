@@ -12,7 +12,7 @@ import DeleteModal from "../../components/Modals/DeleteModal";
 import Duration from "../../components/Duration";
 
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { dummyTrips, dummyDestinations } from "../../db";
+import { dummyDestinations } from "../../db";
 import DestinationList from "../../components/Destination/DestinationList";
 import { getTripById } from "../../services/tripService";
 
@@ -21,13 +21,12 @@ export async function getServerSideProps(context) {
   const trip = await getTripById(id);
 
   return {
-    props: { country: trip },
+    props: { id: id, country: !trip ? "Not found" : trip },
   };
 }
 
-export default function Destinations({ country }) {
+export default function Destinations({ id, country }) {
   const router = useRouter();
-  const { id } = router.query;
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
   const [modal, setModal] = useState({ visible: false, name: "", id: "" });
 
