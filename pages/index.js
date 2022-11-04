@@ -1,13 +1,19 @@
 import Head from "next/head";
 import styled from "styled-components";
-import { v4 as uuid } from "uuid";
+import { useState } from "react";
+import { getAllTrips } from "../services/tripService";
 import TripList from "../components/Trip/TripList";
 
-import useLocalStorage from "../hooks/useLocalStorage";
-import { dummyTrips } from "../db";
+export async function getServerSideProps() {
+  const tripsDB = await getAllTrips();
 
-export default function Home() {
-  const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
+  return {
+    props: { tripsDB: tripsDB },
+  };
+}
+
+export default function Home({ tripsDB }) {
+  const [trips, setTrips] = useState(tripsDB);
 
   const onSubmitNewTrip = (event) => {
     event.preventDefault();
