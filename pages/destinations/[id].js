@@ -14,11 +14,20 @@ import Duration from "../../components/Duration";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { dummyTrips, dummyDestinations } from "../../db";
 import DestinationList from "../../components/Destination/DestinationList";
+import { getTripById } from "../../services/tripService";
 
-export default function Destinations() {
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const trip = await getTripById(id);
+
+  return {
+    props: { country: trip },
+  };
+}
+
+export default function Destinations({ country }) {
   const router = useRouter();
   const { id } = router.query;
-  const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
   const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
   const [modal, setModal] = useState({ visible: false, name: "", id: "" });
 
@@ -40,10 +49,7 @@ export default function Destinations() {
     setDestinations((destinations) => destinations.filter((destination) => destination.id !== id));
   };
 
-  const onDeleteTrip = (id) => {
-    setTrips((trips) => trips.filter((trip) => trip.id !== id));
-    setDestinations((destinations) => destinations.filter((destination) => destination.tripId !== id));
-  };
+  const onDeleteTrip = async (id) => await fetch("/api/trips/" + id, { method: "DELETE" });
 
   const onSubmitNewDestination = (event) => {
     event.preventDefault();
@@ -71,41 +77,44 @@ export default function Destinations() {
     }, 100);
   };
 
-  const countryName = trips.find((trip) => trip.id === id)?.country || "Not found";
-  const countryQueryName = countryName?.replaceAll(" ", "-");
+  const countryQueryName = country?.replaceAll(" ", "-");
 
   return (
     <>
       <Head>
-        <title>{countryName.toUpperCase()}</title>
+        <title>{country.toUpperCase()}</title>
       </Head>
       <BackgroundCover imageQuery={countryQueryName} />
       <MainCard>
-        <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
-        <DestinationList
-          destinations={destinations}
-          tripId={id}
-          onSubmitNewDestination={onSubmitNewDestination}
-          toggleModal={toggleModal}
-        />
+        <DestinationHeadline>{country.toUpperCase()}</DestinationHeadline>
+        {country !== "Not found" && (
+          <DestinationList
+            destinations={destinations}
+            tripId={id}
+            onSubmitNewDestination={onSubmitNewDestination}
+            toggleModal={toggleModal}
+          />
+        )}
       </MainCard>
-      <Footer>
-        <Duration title="Total duration" number={calculateTotalDuration()} type="day" />
-        <DeleteButton
-          onClick={() => toggleModal(countryName, "trip")}
-          icon="trashCan"
-          width="25px"
-          height="25px"
-          ariaLabel="Delete trip"
-        />
-      </Footer>
+      {country !== "Not found" && (
+        <Footer>
+          <Duration title="Total duration" number={calculateTotalDuration()} type="day" />
+          <DeleteButton
+            onClick={() => toggleModal(country, "trip")}
+            icon="trashCan"
+            width="25px"
+            height="25px"
+            ariaLabel="Delete trip"
+          />
+        </Footer>
+      )}
       {modal.visible && modal.type === "trip" && (
         <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
           <DeleteModal
             name={modal.name}
-            onClick={() => {
-              router.push("/");
-              onDeleteTrip(id);
+            onClick={async () => {
+              await onDeleteTrip(id);
+              router.push("/", null, { shallow: false });
             }}
           />
         </Modal>
@@ -115,8 +124,8 @@ export default function Destinations() {
           <DeleteModal
             name={modal.name}
             onClick={() => {
-              toggleModal();
               onDeleteDestination(modal.id);
+              toggleModal();
             }}
           />
         </Modal>

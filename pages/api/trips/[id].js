@@ -1,5 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import Trip from "../../../models/Trip";
+import { getTripById } from "../../../services/tripService";
 
 export default async function handler(req, res) {
   const {
@@ -9,12 +10,13 @@ export default async function handler(req, res) {
 
   await dbConnect();
 
-  if (id.length !== 24 || !id.match("^[a-z0-9]*$")) return res.status(400).json({ error: "Wrong id" });
+  if (!id.match("^[0-9a-fA-F]{24}$") || !id.match("^[a-z0-9]*$"))
+    return res.status(400).json({ error: "Wrong id" });
 
   switch (method) {
     case "GET":
       try {
-        const trip = await Trip.findById(id);
+        const trip = await getTripById(id);
         if (!trip) return res.status(404).json({ error: id + " not found" });
         res.status(200).json(trip);
       } catch (err) {
