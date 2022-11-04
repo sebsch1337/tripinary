@@ -12,3 +12,12 @@ export async function getAllTrips() {
 
   return sanitizedTrips;
 }
+
+export async function postTrip(body) {
+  await dbConnect();
+
+  const cleanedBody = body.trim();
+  if (cleanedBody === "" || !cleanedBody.match("^[a-zA-ZäÄöÖüÜß ]*$")) return false;
+
+  return Trip.create({ country: cleanedBody });
+}

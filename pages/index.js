@@ -5,29 +5,28 @@ import { getAllTrips } from "../services/tripService";
 import TripList from "../components/Trip/TripList";
 
 export async function getServerSideProps() {
-  const tripsDB = await getAllTrips();
+  const tripsDb = await getAllTrips();
 
   return {
-    props: { tripsDB: tripsDB },
+    props: { tripsDb: tripsDb },
   };
 }
 
-export default function Home({ tripsDB }) {
-  const [trips, setTrips] = useState(tripsDB);
+export default function Home({ tripsDb }) {
+  const [trips, setTrips] = useState(tripsDb);
 
-  const onSubmitNewTrip = (event) => {
+  const onSubmitNewTrip = async (event) => {
     event.preventDefault();
     const countryName = event.target.country.value;
 
-    setTrips((trips) => {
-      return [
-        ...trips,
-        {
-          id: uuid().slice(0, 8),
-          country: countryName,
-        },
-      ];
+    const res = await fetch("/api/trips", {
+      method: "POST",
+      body: countryName,
     });
+    const newTrips = await res.json();
+
+    if (newTrips.error) return alert("Invalid name");
+    setTrips(newTrips);
 
     event.target.reset();
     setTimeout(() => {
