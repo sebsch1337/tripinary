@@ -17,11 +17,15 @@ export default async function handler(req, res) {
       break;
 
     case "POST":
+      const cleanedBody = req.body.trim();
+      if (cleanedBody === "" || !cleanedBody.match("^[a-zA-Z ]*$"))
+        return res.status(400).json({ error: "Invalid name" });
+
       try {
-        const newTrip = await Trip.create({ country: req.body });
+        const newTrip = await Trip.create({ country: cleanedBody });
         res.status(201).json(newTrip);
       } catch (err) {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: "Couldn't create " + cleanedBody });
       }
       break;
 
