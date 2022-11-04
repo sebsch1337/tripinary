@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         if (!trip) return res.status(404).json({ error: id + " not found" });
         res.status(200).json(trip);
       } catch (err) {
-        res.status(4045).json({ error: id + " not found" });
+        res.status(404).json({ error: id + " not found" });
       }
       break;
 
