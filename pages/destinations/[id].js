@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
   const trip = await getTripById(id);
 
   return {
-    props: { id: id, country: !trip ? "Not found" : trip },
+    props: { id: id, country: trip?.error ? "Not found" : trip },
   };
 }
 

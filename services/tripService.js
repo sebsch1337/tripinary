@@ -1,11 +1,11 @@
+import { validateId, validateTripName } from "../helpers/validate";
 import dbConnect from "../lib/dbConnect";
 import Trip from "../models/Trip";
-
-const validateId = (id) => id.match("^[0-9a-fA-F]{24}$");
 
 export async function getAllTrips() {
   await dbConnect();
   const trips = await Trip.find();
+  if (!Array.isArray(trips)) return { status: 500, error: "Internal server error" };
 
   const sanitizedTrips = trips.map((trip) => ({
     id: trip.id,
@@ -16,28 +16,27 @@ export async function getAllTrips() {
 }
 
 export async function getTripById(id) {
-  if (!validateId(id)) return false;
+  if (!validateId(id)) return { status: 400, error: "Invalid id" };
 
   await dbConnect();
   const trip = await Trip.findById(id);
-  const sanitizedTrip = trip?.country ? trip.country : "Not found";
-
-  return sanitizedTrip;
+  return trip?.country ? trip.country : { status: 404, error: `${id} not found` };
 }
 
 export async function postTrip(body) {
   const cleanedBody = body.trim();
-  if (cleanedBody === "" || !cleanedBody.match("^[a-zA-ZäÄöÖüÜß ]*$")) return false;
+  if (!validateTripName(cleanedBody)) return { status: 400, error: "Invalid name" };
 
   await dbConnect();
-  return Trip.create({ country: cleanedBody });
+  const newTrip = await Trip.create({ country: cleanedBody });
+  if (!newTrip._id) return { status: 500, error: "Internal server error" };
+  return await getAllTrips();
 }
 
 export async function deleteTrip(id) {
-  if (!validateId(id)) return false;
+  if (!validateId(id)) return { status: 400, error: "Invalid id" };
 
   await dbConnect();
-  const deleteTrip = await Trip.deleteOne({ _id: id });
-  if (deleteTrip.deletedCount === 0) return false;
-  return deleteTrip;
+  const deletedTrip = await Trip.deleteOne({ _id: id });
+  return deletedTrip.deletedCount > 0 ? deletedTrip : { status: 404, error: `${id} not found` };
 }

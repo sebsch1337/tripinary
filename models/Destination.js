@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Trip from "./Trip";
 const { Schema } = mongoose;
 
 const destinationSchema = new Schema({
@@ -7,8 +8,7 @@ const destinationSchema = new Schema({
   endDate: { type: Date, required: true },
   hotel: { type: String, required: true },
   transport: { type: String, required: true },
-  _tripId: { type: String, required: true },
-  toDos: { type: Array, required: true },
+  tripId: Trip._id,
 });
 
 const Destination =

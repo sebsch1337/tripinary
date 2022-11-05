@@ -24,8 +24,7 @@ export default function Home({ tripsDb }) {
       body: countryName,
     });
     const newTrips = await res.json();
-
-    if (newTrips.error) return alert("Invalid name");
+    if (newTrips.error) return alert(newTrips.error);
     setTrips(newTrips);
 
     event.target.reset();
