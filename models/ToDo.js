@@ -8,6 +8,6 @@ const toDoSchema = new Schema({
   destinationId: Destination._id,
 });
 
-const ToDo = mongoose.models.Destination || mongoose.model("ToDo", toDoSchema, "todos");
+const ToDo = mongoose.models.ToDo || mongoose.model("ToDo", toDoSchema, "todos");
 
 export default ToDo;
