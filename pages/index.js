@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { getAllTrips } from "../services/tripService";
 import TripList from "../components/Trip/TripList";
+import Loader from "../components/Modals/Loader";
 
 export async function getServerSideProps() {
   const tripsDb = await getAllTrips();
@@ -14,16 +15,22 @@ export async function getServerSideProps() {
 
 export default function Home({ tripsDb }) {
   const [trips, setTrips] = useState(tripsDb);
+  const [loader, setLoader] = useState(false);
+
+  const toggleLoader = () => setLoader((loader) => !loader);
 
   const onSubmitNewTrip = async (event) => {
     event.preventDefault();
     const countryName = event.target.country.value;
 
+    toggleLoader();
     const res = await fetch("/api/trips", {
       method: "POST",
       body: countryName,
     });
     const newTrips = await res.json();
+    toggleLoader();
+
     if (newTrips.error) return alert(newTrips.error);
     setTrips(newTrips);
 
@@ -46,6 +53,7 @@ export default function Home({ tripsDb }) {
       <Main>
         <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
       </Main>
+      {loader && <Loader />}
     </>
   );
 }
