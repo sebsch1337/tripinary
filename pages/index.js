@@ -1,27 +1,38 @@
 import Head from "next/head";
 import styled from "styled-components";
-import { v4 as uuid } from "uuid";
+import { useState } from "react";
+import { getAllTrips } from "../services/tripService";
 import TripList from "../components/Trip/TripList";
+import Loader from "../components/Modals/Loader";
 
-import useLocalStorage from "../hooks/useLocalStorage";
-import { dummyTrips } from "../db";
+export async function getServerSideProps() {
+  const tripsDb = await getAllTrips();
 
-export default function Home() {
-  const [trips, setTrips] = useLocalStorage("trips", dummyTrips);
+  return {
+    props: { tripsDb: tripsDb },
+  };
+}
 
-  const onSubmitNewTrip = (event) => {
+export default function Home({ tripsDb }) {
+  const [trips, setTrips] = useState(tripsDb);
+  const [loader, setLoader] = useState(false);
+
+  const toggleLoader = () => setLoader((loader) => !loader);
+
+  const onSubmitNewTrip = async (event) => {
     event.preventDefault();
     const countryName = event.target.country.value;
 
-    setTrips((trips) => {
-      return [
-        ...trips,
-        {
-          id: uuid().slice(0, 8),
-          country: countryName,
-        },
-      ];
+    toggleLoader();
+    const res = await fetch("/api/trips", {
+      method: "POST",
+      body: countryName,
     });
+    const newTrips = await res.json();
+    toggleLoader();
+
+    if (newTrips.error) return alert(newTrips.error);
+    setTrips(newTrips);
 
     event.target.reset();
     setTimeout(() => {
@@ -42,6 +53,7 @@ export default function Home() {
       <Main>
         <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
       </Main>
+      {loader && <Loader />}
     </>
   );
 }
