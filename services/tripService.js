@@ -1,6 +1,7 @@
 import { validateId, validateTripName } from "../helpers/validate";
 import dbConnect from "../lib/dbConnect";
 import Trip from "../models/Trip";
+import { deleteDestination, getDestinationsByTripId } from "./destinationService";
 
 export async function getAllTrips() {
   await dbConnect();
@@ -37,6 +38,10 @@ export async function deleteTrip(id) {
   if (!validateId(id)) return { status: 400, error: "Invalid id" };
 
   await dbConnect();
+  const allDestinations = await getDestinationsByTripId(id);
+  allDestinations.map((destination) => deleteDestination(destination.id, id));
+
   const deletedTrip = await Trip.deleteOne({ _id: id });
-  return deletedTrip.deletedCount > 0 ? deletedTrip : { status: 404, error: `${id} not found` };
+  if (!deletedTrip.acknowledged) return { status: 404, error: `${id} not found` };
+  return deletedTrip;
 }
