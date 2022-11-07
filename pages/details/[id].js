@@ -1,90 +1,96 @@
 import Head from "next/head";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import { v4 as uuid } from "uuid";
 
 import BackgroundCover from "../../components/BackgroundCover";
 import ToDoItem from "../../components/ToDo/ToDoItem";
 import ToDoForm from "../../components/ToDo/ToDoForm";
 import Modal from "../../components/Modals/Modal";
+import Loader from "../../components/Modals/Loader";
 import EditDatesForm from "../../components/Edit/EditDatesForm";
 import EditTextForm from "../../components/Edit/EditTextForm";
 import EditButton from "../../components/Buttons/EditButton";
 import Footer from "../../components/Footer";
 import Duration from "../../components/Duration";
 
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { dummyDestinations } from "../../db";
+import { getToDosByDestinationId } from "../../services/toDoService";
+import { getDestinationById } from "../../services/destinationService";
 
-export default function Details() {
-  const router = useRouter();
-  const { id } = router.query;
-  const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const destinationDB = await getDestinationById(id);
+  const toDosDB = await getToDosByDestinationId(id);
+
+  return {
+    props: { id: id, destinationDB, toDosDB },
+  };
+}
+
+export default function Details({ id, destinationDB, toDosDB }) {
+  const [destination, setDestination] = useState(destinationDB);
+  const [toDos, setToDos] = useState(toDosDB);
   const [modal, setModal] = useState({ visible: false, name: "" });
-
-  const destination = destinations.find((destinationItem) => destinationItem.id === id);
+  const [loader, setLoader] = useState(false);
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
 
+  const toggleLoader = () => setLoader((loader) => !loader);
+
   const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
 
-  const onToggleToDoItem = (id) =>
-    setDestinations((destinations) =>
-      destinations.map((destinationItem) =>
-        destinationItem.id === destination.id
-          ? {
-              ...destinationItem,
-              toDos: destinationItem.toDos.map((toDo) =>
-                toDo.id === id ? { ...toDo, checked: !toDo.checked } : toDo
-              ),
-            }
-          : destinationItem
-      )
-    );
-  const onDeleteToDoItem = (id) =>
-    setDestinations((destinations) =>
-      destinations.map((destinationItem) =>
-        destinationItem.id === destination.id
-          ? {
-              ...destinationItem,
-              toDos: destinationItem.toDos.filter((toDo) => toDo.id !== id),
-            }
-          : destinationItem
-      )
-    );
+  const onToggleToDoItem = async (id, checked) => {
+    toggleLoader();
+    const res = await fetch("/api/todos/" + id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ checked: !checked }),
+    });
+    const newToDos = await res.json();
+    setToDos(newToDos);
+    toggleLoader();
+  };
+
+  const onDeleteToDoItem = async (id, destinationId) => {
+    toggleLoader();
+    const res = await fetch("/api/todos/" + id + "?destinationId=" + destinationId, {
+      method: "DELETE",
+    });
+    const newToDos = await res.json();
+    setToDos(newToDos);
+    toggleLoader();
+  };
 
   const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
 
-  const onUpdateDetail = (updated) => {
-    setDestinations((destinations) => {
-      return destinations.map((destinationItem) => {
-        if (destinationItem.id === destination.id) {
-          return {
-            ...destinationItem,
-            ...updated,
-          };
-        } else {
-          return destinationItem;
-        }
-      });
+  const onUpdateDetail = async (updated) => {
+    toggleLoader();
+    const res = await fetch("/api/destinations/" + id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...destination, ...updated }),
     });
+    const newDestination = await res.json();
+    setDestination(newDestination);
+    toggleLoader();
   };
 
-  const onSubmitNewToDoItem = (toDo) => {
-    setDestinations((destinations) => {
-      return destinations.map((destinationItem) => {
-        if (destinationItem.id === destination.id) {
-          return {
-            ...destinationItem,
-            toDos: [...destinationItem.toDos, { id: uuid().slice(0, 8), description: toDo, checked: false }],
-          };
-        } else {
-          return destinationItem;
-        }
-      });
+  const onSubmitNewToDoItem = async (toDo) => {
+    toggleLoader();
+    const res = await fetch("/api/todos/?destinationId=" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ description: toDo }),
     });
+    const newToDos = await res.json();
+    setToDos(newToDos);
+    toggleLoader();
 
     setTimeout(() => {
       window.scrollBy({ top: 100, behavior: "smooth" });
@@ -124,12 +130,12 @@ export default function Details() {
             </DetailText>
             <DetailTitle>To-Do</DetailTitle>
             <ToDoWrapper>
-              {destination.toDos.map((toDo) => (
+              {toDos.map((toDo) => (
                 <ToDoItem
                   key={toDo.id}
                   toDo={toDo}
-                  onDeleteToDoItem={() => onDeleteToDoItem(toDo.id)}
-                  onToggleToDoItem={() => onToggleToDoItem(toDo.id)}
+                  onDeleteToDoItem={() => onDeleteToDoItem(toDo.id, toDo.destinationId)}
+                  onToggleToDoItem={() => onToggleToDoItem(toDo.id, toDo.checked)}
                 />
               ))}
             </ToDoWrapper>
@@ -171,6 +177,7 @@ export default function Details() {
           )}
         </Modal>
       )}
+      {loader && <Loader />}
     </>
   );
 }

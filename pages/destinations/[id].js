@@ -14,18 +14,20 @@ import DestinationList from "../../components/Destination/DestinationList";
 
 import { getTripById } from "../../services/tripService";
 import { getDestinationsByTripId } from "../../services/destinationService";
+import { getAllToDos } from "../../services/toDoService";
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
   const trip = await getTripById(id);
   const destinationsDB = await getDestinationsByTripId(id);
+  const toDosDB = await getAllToDos();
 
   return {
-    props: { id: id, destinationsDB, country: trip?.error ? "Not found" : trip },
+    props: { id: id, destinationsDB, country: trip?.error ? "Not found" : trip, toDosDB },
   };
 }
 
-export default function Destinations({ id, destinationsDB, country }) {
+export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const router = useRouter();
 
   const [destinations, setDestinations] = useState(destinationsDB);
@@ -96,6 +98,7 @@ export default function Destinations({ id, destinationsDB, country }) {
         {country !== "Not found" && (
           <DestinationList
             destinations={destinations}
+            toDos={toDosDB}
             tripId={id}
             onSubmitNewDestination={onSubmitNewDestination}
             toggleModal={toggleModal}

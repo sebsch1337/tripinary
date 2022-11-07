@@ -1,4 +1,8 @@
-import { deleteDestination } from "../../../services/destinationService";
+import {
+  deleteDestination,
+  getDestinationById,
+  updateDestination,
+} from "../../../services/destinationService";
 
 export default async function handler(req, res) {
   const {
@@ -11,6 +15,13 @@ export default async function handler(req, res) {
       const destination = await getDestinationById(id);
       if (destination.error) return res.status(destination.status).json({ error: destination.error });
       res.status(200).json(destination);
+      break;
+
+    case "PATCH":
+      const newDestination = await updateDestination(id, req.body);
+      if (newDestination.error)
+        return res.status(newDestination.status).json({ error: newDestination.error });
+      res.status(201).json(newDestination);
       break;
 
     case "DELETE":
