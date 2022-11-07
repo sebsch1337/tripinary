@@ -4,7 +4,7 @@ import DeleteButton from "../Buttons/DeleteButton";
 import StatusIndicators from "./StatusIndicators";
 import bulletCircle from "../../assets/bulletCircle.svg";
 
-export default function DestinationItem({ destination, onClick }) {
+export default function DestinationItem({ destination, toDos, onClick, hasToDos }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
@@ -13,11 +13,7 @@ export default function DestinationItem({ destination, onClick }) {
           <NameArea>{destination.name}</NameArea>
         </AnkorTag>
       </Link>
-      <StatusIndicators
-        hotel={destination.hotel}
-        transport={destination.transport}
-        toDos={destination.toDos}
-      />
+      <StatusIndicators hotel={destination.hotel} transport={destination.transport} hasToDos={hasToDos} />
       <DeleteButton
         onClick={onClick}
         name={destination.name}

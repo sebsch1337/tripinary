@@ -2,7 +2,13 @@ import styled from "styled-components";
 import DestinationItem from "./DestinationItem";
 import DestinationForm from "./DestinationForm";
 
-export default function DestinationList({ destinations, onSubmitNewDestination, tripId, toggleModal }) {
+export default function DestinationList({
+  destinations,
+  onSubmitNewDestination,
+  tripId,
+  toggleModal,
+  toDos,
+}) {
   return (
     <DestinationWrapper>
       {destinations
@@ -12,6 +18,7 @@ export default function DestinationList({ destinations, onSubmitNewDestination, 
             key={item.id}
             destination={item}
             onClick={() => toggleModal(item.name, "destination", item.id)}
+            hasToDos={toDos.some((filteredToDos) => filteredToDos.destinationId === item.id)}
           />
         ))}
       <DestinationForm onSubmitNewDestination={onSubmitNewDestination} />
