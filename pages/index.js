@@ -22,7 +22,9 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ tripsDb }) {
+  // console.log(authOptions);
   const { data: session } = useSession();
+  console.log(session);
   const [trips, setTrips] = useState(tripsDb);
   const [loader, setLoader] = useState(false);
 
@@ -77,6 +79,7 @@ export default function Home({ tripsDb }) {
         </LoginMain>
       )}
       {loader && <Loader />}
+      {console.log(session)}
     </>
   );
 }
