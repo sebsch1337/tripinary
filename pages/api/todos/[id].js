@@ -1,19 +1,16 @@
-import dbConnect from "../../../lib/dbConnect";
-import { getTripById, deleteTrip } from "../../../services/tripService";
+import { deleteToDo, getToDosByDestinationId, updateToDo } from "../../../services/toDoService";
 
 export default async function handler(req, res) {
   const {
-    query: { id },
+    query: { id, destinationId },
     method,
   } = req;
 
-  await dbConnect();
-
   switch (method) {
-    case "GET":
+    case "PATCH":
       try {
-        const trip = await getTripById(id);
-        res.status(200).json(trip);
+        const newToDos = await updateToDo(id, req.body);
+        res.status(200).json(newToDos);
       } catch (error) {
         if (error.status) {
           return res.status(error.status).json({ message: error.message });
@@ -25,8 +22,9 @@ export default async function handler(req, res) {
 
     case "DELETE":
       try {
-        const deletedTrip = await deleteTrip(id);
-        res.status(200).json(deletedTrip);
+        await deleteToDo(id);
+        const newToDos = await getToDosByDestinationId(destinationId);
+        res.status(200).json(newToDos);
       } catch (error) {
         if (error.status) {
           return res.status(error.status).json({ message: error.message });

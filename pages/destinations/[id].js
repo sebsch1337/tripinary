@@ -2,33 +2,39 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { v4 as uuid } from "uuid";
 
 import BackgroundCover from "../../components/BackgroundCover";
 import Footer from "../../components/Footer";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import Modal from "../../components/Modals/Modal";
+import Loader from "../../components/Modals/Loader";
 import DeleteModal from "../../components/Modals/DeleteModal";
 import Duration from "../../components/Duration";
-
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { dummyDestinations } from "../../db";
 import DestinationList from "../../components/Destination/DestinationList";
+
 import { getTripById } from "../../services/tripService";
+import { getDestinationsByTripId } from "../../services/destinationService";
+import { getAllToDos } from "../../services/toDoService";
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
   const trip = await getTripById(id);
+  const destinationsDB = await getDestinationsByTripId(id);
+  const toDosDB = await getAllToDos();
 
   return {
-    props: { id: id, country: trip?.error ? "Not found" : trip },
+    props: { id: id, destinationsDB, country: trip?.error ? "Not found" : trip.country, toDosDB },
   };
 }
 
-export default function Destinations({ id, country }) {
+export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const router = useRouter();
-  const [destinations, setDestinations] = useLocalStorage("destinations", dummyDestinations);
+
+  const [destinations, setDestinations] = useState(destinationsDB);
   const [modal, setModal] = useState({ visible: false, name: "", id: "" });
+  const [loader, setLoader] = useState(false);
+
+  const toggleLoader = () => setLoader((loader) => !loader);
 
   const calculateTotalDuration = () => {
     const minDate = Math.min(
@@ -38,39 +44,38 @@ export default function Destinations({ id, country }) {
       ...destinations.filter((filtered) => filtered.tripId === id).map((destination) => destination.endDate)
     );
     const dayDifference = (maxDate - minDate) / 86400 + 1;
-    return dayDifference > 0 ? dayDifference : 0;
+    return dayDifference > 0 ? Math.floor(dayDifference) : 0;
   };
 
   const toggleModal = (modalName = "", type = "", id = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
 
-  const onDeleteDestination = (id) => {
-    setDestinations((destinations) => destinations.filter((destination) => destination.id !== id));
+  const onDeleteDestination = async (id, tripId) => {
+    toggleLoader();
+    const res = await fetch("/api/destinations/" + id + "?tripId=" + tripId, {
+      method: "DELETE",
+    });
+    const newDestinations = await res.json();
+    setDestinations(newDestinations);
+    toggleLoader();
   };
 
   const onDeleteTrip = async (id) => await fetch("/api/trips/" + id, { method: "DELETE" });
 
-  const onSubmitNewDestination = (event) => {
-    event.preventDefault();
-    const destinationName = event.target.destination.value;
-
-    setDestinations((destinations) => {
-      return [
-        ...destinations,
-        {
-          id: uuid().slice(0, 8),
-          name: destinationName,
-          startDate: Math.floor(new Date().getTime() / 1000),
-          endDate: Math.floor(new Date().getTime() / 1000),
-          hotel: "",
-          transport: "",
-          tripId: id,
-          toDos: [],
-        },
-      ];
+  const onSubmitNewDestination = async (destinationName) => {
+    toggleLoader();
+    const res = await fetch("/api/destinations/?tripId=" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: destinationName }),
     });
+    const newTrips = await res.json();
+    toggleLoader();
 
-    event.target.reset();
+    setDestinations(newTrips);
+
     setTimeout(() => {
       window.scrollBy({ top: 100, behavior: "smooth" });
     }, 100);
@@ -89,6 +94,7 @@ export default function Destinations({ id, country }) {
         {country !== "Not found" && (
           <DestinationList
             destinations={destinations}
+            toDos={toDosDB}
             tripId={id}
             onSubmitNewDestination={onSubmitNewDestination}
             toggleModal={toggleModal}
@@ -123,12 +129,13 @@ export default function Destinations({ id, country }) {
           <DeleteModal
             name={modal.name}
             onClick={() => {
-              onDeleteDestination(modal.id);
+              onDeleteDestination(modal.id, id);
               toggleModal();
             }}
           />
         </Modal>
       )}
+      {loader && <Loader />}
     </>
   );
 }

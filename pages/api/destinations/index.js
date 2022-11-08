@@ -1,19 +1,16 @@
-import dbConnect from "../../../lib/dbConnect";
-import { getTripById, deleteTrip } from "../../../services/tripService";
+import { getDestinationsByTripId, createDestination } from "../../../services/destinationService";
 
 export default async function handler(req, res) {
   const {
-    query: { id },
+    query: { tripId },
     method,
   } = req;
-
-  await dbConnect();
 
   switch (method) {
     case "GET":
       try {
-        const trip = await getTripById(id);
-        res.status(200).json(trip);
+        const destinations = await getDestinationsByTripId(tripId);
+        res.status(200).json(destinations);
       } catch (error) {
         if (error.status) {
           return res.status(error.status).json({ message: error.message });
@@ -23,10 +20,10 @@ export default async function handler(req, res) {
       }
       break;
 
-    case "DELETE":
+    case "POST":
       try {
-        const deletedTrip = await deleteTrip(id);
-        res.status(200).json(deletedTrip);
+        const newDestinations = await createDestination(req.body, tripId);
+        res.status(201).json(newDestinations);
       } catch (error) {
         if (error.status) {
           return res.status(error.status).json({ message: error.message });

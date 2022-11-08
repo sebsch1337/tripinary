@@ -1,14 +1,13 @@
 import mongoose from "mongoose";
-import Trip from "./Trip";
 const { Schema } = mongoose;
 
 const destinationSchema = new Schema({
   name: { type: String, required: true },
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
-  hotel: { type: String, required: true },
-  transport: { type: String, required: true },
-  tripId: Trip._id,
+  startDate: { type: Number },
+  endDate: { type: Number },
+  hotel: { type: String, default: "" },
+  transport: { type: String, default: "" },
+  tripId: { type: String },
 });
 
 const Destination =

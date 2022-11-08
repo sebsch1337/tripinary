@@ -3,9 +3,16 @@ import Image from "next/image";
 import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
 
 export default function DestinationForm({ onSubmitNewDestination }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (event.target.destination.value.trim().length === 0) return;
+    onSubmitNewDestination(event.target.destination.value.trim());
+    event.target.reset();
+  };
+
   return (
     <ListBox>
-      <FormBox onSubmit={onSubmitNewDestination} aria-label="add destination form">
+      <FormBox onSubmit={handleSubmit} aria-label="add destination form">
         <AddTripButton aria-label="submit">
           <Image src={addButtonCircleActive} alt="Add icon" />
         </AddTripButton>

@@ -18,5 +18,4 @@ const StyledButton = styled.button`
   position: absolute;
   background-color: transparent;
   border: none;
-  filter: drop-shadow(0 0 0.1em var(--drop-shadow));
 `;
