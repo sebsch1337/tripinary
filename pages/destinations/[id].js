@@ -62,10 +62,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
 
   const onDeleteTrip = async (id) => await fetch("/api/trips/" + id, { method: "DELETE" });
 
-  const onSubmitNewDestination = async (event) => {
-    event.preventDefault();
-    const destinationName = event.target.destination.value;
-
+  const onSubmitNewDestination = async (destinationName) => {
     toggleLoader();
     const res = await fetch("/api/destinations/?tripId=" + id, {
       method: "POST",
@@ -79,7 +76,6 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
 
     setDestinations(newTrips);
 
-    event.target.reset();
     setTimeout(() => {
       window.scrollBy({ top: 100, behavior: "smooth" });
     }, 100);
