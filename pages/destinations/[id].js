@@ -44,7 +44,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
       ...destinations.filter((filtered) => filtered.tripId === id).map((destination) => destination.endDate)
     );
     const dayDifference = (maxDate - minDate) / 86400 + 1;
-    return dayDifference > 0 ? dayDifference : 0;
+    return dayDifference > 0 ? Math.floor(dayDifference) : 0;
   };
 
   const toggleModal = (modalName = "", type = "", id = "") =>
