@@ -1,5 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -17,6 +19,12 @@ import { getDestinationsByTripId } from "../../services/destinationService";
 import { getAllToDos } from "../../services/toDoService";
 
 export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
+
   const id = context.params.id;
   const trip = await getTripById(id);
   const destinationsDB = await getDestinationsByTripId(id);
