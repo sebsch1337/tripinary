@@ -11,15 +11,29 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
-      const trip = await getTripById(id);
-      if (trip.error) return res.status(trip.status).json({ error: trip.error });
-      res.status(200).json(trip);
+      try {
+        const trip = await getTripById(id);
+        res.status(200).json(trip);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     case "DELETE":
-      const deletedTrip = await deleteTrip(id);
-      if (deletedTrip.error) return res.status(deletedTrip.status).json({ error: deletedTrip.error });
-      res.status(200).json(deletedTrip);
+      try {
+        const deletedTrip = await deleteTrip(id);
+        res.status(200).json(deletedTrip);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     default:

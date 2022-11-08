@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   const toDosDB = await getAllToDos();
 
   return {
-    props: { id: id, destinationsDB, country: trip?.error ? "Not found" : trip, toDosDB },
+    props: { id: id, destinationsDB, country: trip?.error ? "Not found" : trip.country, toDosDB },
   };
 }
 

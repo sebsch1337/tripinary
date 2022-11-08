@@ -1,4 +1,4 @@
-import { createToDo, getAllToDos, getToDosByDestinationId } from "../../../services/toDoService";
+import { createToDo } from "../../../services/toDoService";
 
 export default async function handler(req, res) {
   const {
@@ -8,9 +8,16 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "POST":
-      const newToDos = await createToDo(req.body, destinationId);
-      if (newToDos.error) return res.status(newToDos.status).json({ error: newToDos.error });
-      res.status(201).json(newToDos);
+      try {
+        const newToDos = await createToDo(req.body, destinationId);
+        res.status(201).json(newToDos);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     default:

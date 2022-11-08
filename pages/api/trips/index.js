@@ -5,15 +5,30 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
-      const trips = await getAllTrips();
-      if (trips.error) return res.status(trips.status).json({ error: trips.error });
-      res.status(200).json(trips);
+      try {
+        const trips = await getAllTrips();
+        res.status(200).json(trips);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     case "POST":
-      const newTrips = await postTrip(req.body);
-      if (newTrips.error) return res.status(newTrips.status).json({ error: newTrips.error });
-      res.status(201).json(newTrips);
+      try {
+        await postTrip(req.body);
+        const newTrips = await getAllTrips();
+        res.status(201).json(newTrips);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     default:

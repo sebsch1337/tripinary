@@ -8,16 +8,29 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
-      const destinations = await getDestinationsByTripId(tripId);
-      if (destinations.error) return res.status(destinations.status).json({ error: destinations.error });
-      res.status(200).json(destinations);
+      try {
+        const destinations = await getDestinationsByTripId(tripId);
+        res.status(200).json(destinations);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     case "POST":
-      const newDestinations = await createDestination(req.body, tripId);
-      if (newDestinations.error)
-        return res.status(newDestinations.status).json({ error: newDestinations.error });
-      res.status(201).json(newDestinations);
+      try {
+        const newDestinations = await createDestination(req.body, tripId);
+        res.status(201).json(newDestinations);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     default:

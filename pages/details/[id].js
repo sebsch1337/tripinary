@@ -130,14 +130,15 @@ export default function Details({ id, destinationDB, toDosDB }) {
             </DetailText>
             <DetailTitle>To-Do</DetailTitle>
             <ToDoWrapper>
-              {toDos.map((toDo) => (
-                <ToDoItem
-                  key={toDo.id}
-                  toDo={toDo}
-                  onDeleteToDoItem={() => onDeleteToDoItem(toDo.id, toDo.destinationId)}
-                  onToggleToDoItem={() => onToggleToDoItem(toDo.id, toDo.checked)}
-                />
-              ))}
+              {toDos &&
+                toDos.map((toDo) => (
+                  <ToDoItem
+                    key={toDo.id}
+                    toDo={toDo}
+                    onDeleteToDoItem={() => onDeleteToDoItem(toDo.id, toDo.destinationId)}
+                    onToggleToDoItem={() => onToggleToDoItem(toDo.id, toDo.checked)}
+                  />
+                ))}
             </ToDoWrapper>
             <ToDoForm onSubmitNewToDoItem={onSubmitNewToDoItem} />
           </DetailSection>

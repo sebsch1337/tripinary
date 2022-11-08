@@ -1,6 +1,7 @@
 import {
   deleteDestination,
   getDestinationById,
+  getDestinationsByTripId,
   updateDestination,
 } from "../../../services/destinationService";
 
@@ -12,23 +13,43 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
-      const destination = await getDestinationById(id);
-      if (destination.error) return res.status(destination.status).json({ error: destination.error });
-      res.status(200).json(destination);
+      try {
+        const destination = await getDestinationById(id);
+        res.status(200).json(destination);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     case "PATCH":
-      const newDestination = await updateDestination(id, req.body);
-      if (newDestination.error)
-        return res.status(newDestination.status).json({ error: newDestination.error });
-      res.status(201).json(newDestination);
+      try {
+        const newDestination = await updateDestination(id, req.body);
+        res.status(200).json(newDestination);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     case "DELETE":
-      const deletedDestination = await deleteDestination(id, tripId);
-      if (deletedDestination.error)
-        return res.status(deletedDestination.status).json({ error: deletedDestination.error });
-      res.status(200).json(deletedDestination);
+      try {
+        await deleteDestination(id, tripId);
+        const newDestinations = await getDestinationsByTripId(tripId);
+        res.status(200).json(newDestinations);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     default:

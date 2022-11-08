@@ -1,4 +1,4 @@
-import { deleteToDo, getToDoById, updateToDo } from "../../../services/toDoService";
+import { deleteToDo, getToDosByDestinationId, updateToDo } from "../../../services/toDoService";
 
 export default async function handler(req, res) {
   const {
@@ -7,22 +7,31 @@ export default async function handler(req, res) {
   } = req;
 
   switch (method) {
-    case "GET":
-      const toDo = await getToDoById(id);
-      if (toDo.error) return res.status(toDo.status).json({ error: toDo.error });
-      res.status(200).json(toDo);
-      break;
-
     case "PATCH":
-      const newToDos = await updateToDo(id, req.body);
-      if (newToDos.error) return res.status(newToDos.status).json({ error: newToDos.error });
-      res.status(201).json(newToDos);
+      try {
+        const newToDos = await updateToDo(id, req.body);
+        res.status(200).json(newToDos);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     case "DELETE":
-      const deletedToDo = await deleteToDo(id, destinationId);
-      if (deletedToDo.error) return res.status(deletedToDo.status).json({ error: deletedToDo.error });
-      res.status(200).json(deletedToDo);
+      try {
+        await deleteToDo(id);
+        const newToDos = await getToDosByDestinationId(destinationId);
+        res.status(200).json(newToDos);
+      } catch (error) {
+        if (error.status) {
+          return res.status(error.status).json({ message: error.message });
+        }
+        console.error(error.message);
+        return res.status(500).json({ message: "internal server error" });
+      }
       break;
 
     default:
