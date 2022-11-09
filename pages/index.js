@@ -85,21 +85,18 @@ export default function Home({ tripsDb }) {
             icon={facebookSvg}
             providerName="Facebook"
             bgColor="#0165E1"
-            textColor="#fff"
             onClick={() => signIn("facebook")}
           />
           <LoginButton
             icon={gitHubSvg}
             providerName="GitHub"
             bgColor="#24292e"
-            textColor="#fff"
             onClick={() => signIn("github")}
           />
           <LoginButton
             icon={googleSvg}
             providerName="Google"
-            bgColor="#fff"
-            textColor="var(--text-primary)"
+            bgColor="#DB4437"
             onClick={() => signIn("google")}
           />
         </LoginMain>

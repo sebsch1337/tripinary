@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function LoginButton({ onClick, providerName, bgColor, textColor, icon }) {
   return (
-    <StyledButton onClick={onClick} bgColor={bgColor} textColor={textColor}>
+    <StyledButton onClick={onClick} bgColor={bgColor}>
       <Image src={icon} alt={`${providerName} icon`} width="35px" height="35px" />
       Login with {providerName}
     </StyledButton>
@@ -22,6 +22,6 @@ const StyledButton = styled.button`
   background-color: ${({ bgColor }) => bgColor};
   filter: drop-shadow(0 0 0.1em var(--drop-shadow));
   border-radius: 0.5rem;
-  color: ${({ textColor }) => textColor};
+  color: #fff;
   font-size: 1.5rem;
 `;
