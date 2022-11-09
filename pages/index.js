@@ -13,6 +13,7 @@ import LogoutButton from "../components/Buttons/LogoutButton";
 
 import gitHubSvg from "../assets/github.svg";
 import facebookSvg from "../assets/facebook.svg";
+import googleSvg from "../assets/google.svg";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -84,13 +85,22 @@ export default function Home({ tripsDb }) {
             icon={facebookSvg}
             providerName="Facebook"
             bgColor="#0165E1"
+            textColor="#fff"
             onClick={() => signIn("facebook")}
           />
           <LoginButton
             icon={gitHubSvg}
             providerName="GitHub"
             bgColor="#24292e"
+            textColor="#fff"
             onClick={() => signIn("github")}
+          />
+          <LoginButton
+            icon={googleSvg}
+            providerName="Google"
+            bgColor="#fff"
+            textColor="var(--text-primary)"
+            onClick={() => signIn("google")}
           />
         </LoginMain>
       )}
@@ -107,7 +117,6 @@ const TripsHeadline = styled.h1`
 
 const LoginHeadline = styled.h1`
   text-align: center;
-  margin-bottom: 2rem;
 `;
 
 const LoginMain = styled.main`
@@ -117,7 +126,7 @@ const LoginMain = styled.main`
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5em;
 `;
 
 const Main = styled.main`
