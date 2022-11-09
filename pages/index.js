@@ -8,7 +8,11 @@ import { getAllTrips } from "../services/tripService";
 
 import TripList from "../components/Trip/TripList";
 import Loader from "../components/Modals/Loader";
-import LoginGithubButton from "../components/Buttons/LoginGithubButton";
+import LoginButton from "../components/Buttons/LoginButton";
+import LogoutButton from "../components/Buttons/LogoutButton";
+
+import gitHubSvg from "../assets/github.svg";
+import facebookSvg from "../assets/facebook.svg";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -66,7 +70,7 @@ export default function Home({ tripsDb }) {
           </TripsHeadline>
           <Main>
             <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
-            <LoginGithubButton onClick={signOut} />
+            <LogoutButton onClick={signOut} />
           </Main>
         </>
       ) : (
@@ -76,7 +80,18 @@ export default function Home({ tripsDb }) {
             <br />
             to start your journey
           </LoginHeadline>
-          <LoginGithubButton onClick={signIn} />
+          <LoginButton
+            icon={facebookSvg}
+            providerName="Facebook"
+            bgColor="#0165E1"
+            onClick={() => signIn("facebook")}
+          />
+          <LoginButton
+            icon={gitHubSvg}
+            providerName="GitHub"
+            bgColor="#24292e"
+            onClick={() => signIn("github")}
+          />
         </LoginMain>
       )}
       {loader && <Loader />}
@@ -102,8 +117,12 @@ const LoginMain = styled.main`
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
+  gap: 1rem;
 `;
 
 const Main = styled.main`
-  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
 `;
