@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const trips = await getAllTrips();
+        const trips = await getAllTrips(session.user.email);
         res.status(200).json(trips);
       } catch (error) {
         if (error.status) {
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     case "POST":
       try {
         await postTrip(req.body);
-        const newTrips = await getAllTrips();
+        const newTrips = await getAllTrips(session.user.email);
         res.status(201).json(newTrips);
       } catch (error) {
         if (error.status) {
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       break;
 
     default:
-      res.status(405).json({ error: "Method not allowed" });
+      res.status(405).json({ error: "method not allowed" });
       break;
   }
 }

@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
   }
 
   const id = context.params.id;
-  const trip = await getTripById(id);
+  const trip = await getTripById(id, session.user.email);
   const destinationsDB = await getDestinationsByTripId(id);
   const toDosDB = await getAllToDos();
 

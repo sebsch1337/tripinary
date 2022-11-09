@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
 
   if (session) {
-    const tripsDb = await getAllTrips();
+    const tripsDb = await getAllTrips(session.user.email);
     return { props: { tripsDb: tripsDb } };
   }
 
@@ -22,9 +22,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ tripsDb }) {
-  // console.log(authOptions);
   const { data: session } = useSession();
-  console.log(session);
   const [trips, setTrips] = useState(tripsDb);
   const [loader, setLoader] = useState(false);
 
@@ -37,7 +35,10 @@ export default function Home({ tripsDb }) {
     toggleLoader();
     const res = await fetch("/api/trips", {
       method: "POST",
-      body: countryName,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ country: countryName, userEmail: session.user.email }),
     });
     const newTrips = await res.json();
     toggleLoader();
@@ -79,7 +80,6 @@ export default function Home({ tripsDb }) {
         </LoginMain>
       )}
       {loader && <Loader />}
-      {console.log(session)}
     </>
   );
 }

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const trip = await getTripById(id);
+        const trip = await getTripById(id, session.user.email);
         res.status(200).json(trip);
       } catch (error) {
         if (error.status) {

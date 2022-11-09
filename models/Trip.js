@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const tripSchema = new Schema({
   country: { type: String, required: true },
+  userEmail: { type: String, required: true },
 });
 
 const Trip = mongoose.models.Trip || mongoose.model("Trip", tripSchema, "trips");

@@ -32,7 +32,8 @@ export default async function handler(req, res) {
 
     case "PATCH":
       try {
-        const newDestination = await updateDestination(id, req.body);
+        await updateDestination(id, req.body);
+        const newDestination = await getDestinationById(id, session.user.email);
         res.status(200).json(newDestination);
       } catch (error) {
         if (error.status) {

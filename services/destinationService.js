@@ -3,13 +3,20 @@ import Destination from "../models/Destination";
 import { deleteAllToDosByDestinationId } from "./toDoService";
 import { getTripById } from "./tripService";
 
-export async function getDestinationById(id) {
+export async function getDestinationById(id, userEmail) {
   await dbConnect();
 
   const destination = await Destination.findOne({ _id: id });
   if (!destination) {
     const error = new Error("not found");
     error.status = 404;
+    throw error;
+  }
+
+  const validateUser = await getTripById(destination.tripId, userEmail);
+  if (!validateUser) {
+    const error = new Error("unauthorized");
+    error.status = 401;
     throw error;
   }
 
@@ -20,7 +27,7 @@ export async function getDestinationById(id) {
     endDate: destination.endDate,
     hotel: destination.hotel,
     transport: destination.transport,
-    tripId: destination.tripId,
+    tripId: destination.tripId.toHexString(),
   };
 
   return sanitizedDestination;
@@ -39,25 +46,25 @@ export async function getDestinationsByTripId(id) {
     endDate: destination.endDate,
     hotel: destination.hotel,
     transport: destination.transport,
-    tripId: destination.tripId,
+    tripId: destination.tripId.toHexString(),
   }));
 
   return sanitizedDestinations;
 }
 
-export async function createDestination(body, tripId) {
-  const validatedTrip = await getTripById(tripId);
+export async function createDestination(body, tripId, userEmail) {
+  const validatedTrip = await getTripById(tripId, userEmail);
   await dbConnect();
 
   const newDestination = await Destination.create({
     name: body.name,
     startDate: Math.floor(new Date().getTime() / 1000),
     endDate: Math.floor(new Date().getTime() / 1000),
-    tripId: validatedTrip.id,
+    tripId: validatedTrip._id,
   });
   if (!newDestination) throw new Error();
 
-  return await getDestinationsByTripId(tripId);
+  return newDestination;
 }
 
 export async function updateDestination(id, body) {
@@ -78,7 +85,7 @@ export async function updateDestination(id, body) {
   const savedDestination = await destination.save();
   if (!savedDestination) throw new Error();
 
-  return await getDestinationById(id);
+  return savedDestination;
 }
 
 export async function deleteDestination(id) {

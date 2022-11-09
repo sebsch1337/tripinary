@@ -26,8 +26,8 @@ export async function getServerSideProps(context) {
   }
 
   const id = context.params.id;
-  const destinationDB = await getDestinationById(id);
-  const toDosDB = await getToDosByDestinationId(id);
+  const destinationDB = await getDestinationById(id, session.user.email);
+  const toDosDB = await getToDosByDestinationId(id, session.user.email);
 
   return {
     props: { id: id, destinationDB, toDosDB },
@@ -49,7 +49,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   const onToggleToDoItem = async (id, checked) => {
     toggleLoader();
-    const res = await fetch("/api/todos/" + id, {
+    const res = await fetch("/api/todos/" + id + "?destinationId=" + destination.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -7,7 +7,7 @@ const destinationSchema = new Schema({
   endDate: { type: Number },
   hotel: { type: String, default: "" },
   transport: { type: String, default: "" },
-  tripId: { type: String },
+  tripId: { type: mongoose.Schema.Types.ObjectId, ref: "trips" },
 });
 
 const Destination =

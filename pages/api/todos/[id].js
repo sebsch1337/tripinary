@@ -14,7 +14,8 @@ export default async function handler(req, res) {
   switch (method) {
     case "PATCH":
       try {
-        const newToDos = await updateToDo(id, req.body);
+        await updateToDo(id, req.body);
+        const newToDos = await getToDosByDestinationId(destinationId, session.user.email);
         res.status(200).json(newToDos);
       } catch (error) {
         if (error.status) {
@@ -28,7 +29,7 @@ export default async function handler(req, res) {
     case "DELETE":
       try {
         await deleteToDo(id);
-        const newToDos = await getToDosByDestinationId(destinationId);
+        const newToDos = await getToDosByDestinationId(destinationId, session.user.email);
         res.status(200).json(newToDos);
       } catch (error) {
         if (error.status) {

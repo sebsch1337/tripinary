@@ -27,7 +27,8 @@ export default async function handler(req, res) {
 
     case "POST":
       try {
-        const newDestinations = await createDestination(req.body, tripId);
+        await createDestination(req.body, tripId, session.user.email);
+        const newDestinations = await getDestinationsByTripId(tripId);
         res.status(201).json(newDestinations);
       } catch (error) {
         if (error.status) {
