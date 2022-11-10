@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 import BackgroundCover from "../../components/BackgroundCover";
 import ToDoItem from "../../components/ToDo/ToDoItem";
@@ -14,6 +15,9 @@ import EditTextForm from "../../components/Edit/EditTextForm";
 import EditButton from "../../components/Buttons/EditButton";
 import Footer from "../../components/Footer";
 import Duration from "../../components/Duration";
+import BackButton from "../../components/Buttons/BackButton";
+import UserButton from "../../components/Buttons/UserButton";
+import UserProfile from "../../components/Modals/UserProfile";
 
 import { getToDosByDestinationId } from "../../services/toDoService";
 import { getDestinationById } from "../../services/destinationService";
@@ -35,14 +39,17 @@ export async function getServerSideProps(context) {
 }
 
 export default function Details({ id, destinationDB, toDosDB }) {
+  const { data: session } = useSession();
   const [destination, setDestination] = useState(destinationDB);
   const [toDos, setToDos] = useState(toDosDB);
   const [modal, setModal] = useState({ visible: false, name: "" });
   const [loader, setLoader] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const destinationName = destination?.name || "Not found";
   const destinationQueryName = destinationName.replaceAll(" ", "-");
 
+  const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
 
   const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
@@ -110,8 +117,23 @@ export default function Details({ id, destinationDB, toDosDB }) {
       <Head>
         <title>{destinationName.toUpperCase()}</title>
       </Head>
-      <BackgroundCover imageQuery={destinationQueryName} />
+      <Header>
+        <BackgroundCover imageQuery={destinationQueryName} />
+        <BackButton />
+        {!showProfile && session && <UserButton img={session.user.image} onClick={toggleShowProfile} />}
+      </Header>
       <MainCard>
+        {showProfile && (
+          <UserProfile
+            session={session}
+            toggleShowProfile={toggleShowProfile}
+            showProfile={showProfile}
+            signOut={() => {
+              toggleLoader();
+              signOut();
+            }}
+          />
+        )}
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
         {destination && (
           <DetailSection>
@@ -190,6 +212,8 @@ export default function Details({ id, destinationDB, toDosDB }) {
     </>
   );
 }
+
+const Header = styled.header``;
 
 const ToDoWrapper = styled.ul`
   list-style: none;

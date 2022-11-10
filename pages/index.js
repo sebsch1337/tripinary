@@ -9,10 +9,11 @@ import { getAllTrips } from "../services/tripService";
 import TripList from "../components/Trip/TripList";
 import Loader from "../components/Modals/Loader";
 import LoginButton from "../components/Buttons/LoginButton";
-import LogoutButton from "../components/Buttons/LogoutButton";
 
 import gitHubSvg from "../assets/github.svg";
 import googleSvg from "../assets/google.svg";
+import UserButton from "../components/Buttons/UserButton";
+import UserProfile from "../components/Modals/UserProfile";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -29,7 +30,9 @@ export default function Home({ tripsDb }) {
   const { data: session } = useSession();
   const [trips, setTrips] = useState(tripsDb);
   const [loader, setLoader] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
+  const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
 
   const onSubmitNewTrip = async (event) => {
@@ -63,19 +66,28 @@ export default function Home({ tripsDb }) {
       </Head>
       {session ? (
         <>
-          <TripsHeadline>
-            Start
-            <br />
-            your journey
-          </TripsHeadline>
+          <Header>
+            {!showProfile && session && <UserButton img={session.user.image} onClick={toggleShowProfile} />}
+            <TripsHeadline>
+              Start
+              <br />
+              your journey
+            </TripsHeadline>
+          </Header>
+
           <Main>
+            {showProfile && (
+              <UserProfile
+                session={session}
+                toggleShowProfile={toggleShowProfile}
+                showProfile={showProfile}
+                signOut={() => {
+                  toggleLoader();
+                  signOut();
+                }}
+              />
+            )}
             <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
-            <LogoutButton
-              onClick={() => {
-                toggleLoader();
-                signOut();
-              }}
-            />
           </Main>
         </>
       ) : (
@@ -109,6 +121,8 @@ export default function Home({ tripsDb }) {
     </>
   );
 }
+
+const Header = styled.header``;
 
 const TripsHeadline = styled.h1`
   margin: 1.5em 1em 1em 0.8em;
