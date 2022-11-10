@@ -8,14 +8,14 @@ export default function BackButton() {
 
   return (
     <StyledButton onClick={() => router.back()}>
-      <Image src={arrowBack.src} alt="Navigate to start page" width="40px" height="40px" />
+      <Image src={arrowBack.src} alt="Navigate to start page" width="35px" height="35px" />
     </StyledButton>
   );
 }
 
 const StyledButton = styled.button`
-  margin: 2em;
+  all: unset;
   position: absolute;
-  background-color: transparent;
-  border: none;
+  top: 2rem;
+  left: 2rem;
 `;
