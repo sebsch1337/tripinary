@@ -1,6 +1,11 @@
-import { createToDo } from "../../../services/toDoService";
+import { createToDo, getToDosByDestinationId } from "../../../services/toDoService";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).json({ message: "unauthorized" });
+
   const {
     query: { destinationId },
     method,
@@ -9,7 +14,8 @@ export default async function handler(req, res) {
   switch (method) {
     case "POST":
       try {
-        const newToDos = await createToDo(req.body, destinationId);
+        await createToDo(req.body, destinationId, session.user.email);
+        const newToDos = await getToDosByDestinationId(destinationId, session.user.email);
         res.status(201).json(newToDos);
       } catch (error) {
         if (error.status) {

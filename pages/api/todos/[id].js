@@ -1,6 +1,11 @@
 import { deleteToDo, getToDosByDestinationId, updateToDo } from "../../../services/toDoService";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).json({ message: "unauthorized" });
+
   const {
     query: { id, destinationId },
     method,
@@ -9,7 +14,8 @@ export default async function handler(req, res) {
   switch (method) {
     case "PATCH":
       try {
-        const newToDos = await updateToDo(id, req.body);
+        await updateToDo(id, req.body);
+        const newToDos = await getToDosByDestinationId(destinationId, session.user.email);
         res.status(200).json(newToDos);
       } catch (error) {
         if (error.status) {
@@ -23,7 +29,7 @@ export default async function handler(req, res) {
     case "DELETE":
       try {
         await deleteToDo(id);
-        const newToDos = await getToDosByDestinationId(destinationId);
+        const newToDos = await getToDosByDestinationId(destinationId, session.user.email);
         res.status(200).json(newToDos);
       } catch (error) {
         if (error.status) {

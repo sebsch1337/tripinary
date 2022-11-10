@@ -18,23 +18,25 @@ export async function getAllToDos() {
   return sanitizedToDos;
 }
 
-export async function getToDosByDestinationId(destinationId) {
+export async function getToDosByDestinationId(destinationId, userEmail) {
+  const validatedDestination = await getDestinationById(destinationId, userEmail);
+
   await dbConnect();
-  const toDos = await ToDo.find({ destinationId: destinationId });
+  const toDos = await ToDo.find({ destinationId: validatedDestination.id });
   if (!Array.isArray(toDos)) throw new Error();
 
   const sanitizedToDos = toDos.map((toDo) => ({
     id: toDo.id,
     description: toDo.description,
     checked: toDo.checked,
-    destinationId: toDo.destinationId,
+    destinationId: validatedDestination.id,
   }));
 
   return sanitizedToDos;
 }
 
-export async function createToDo(body, destinationId) {
-  const validatedDestination = await getDestinationById(destinationId);
+export async function createToDo(body, destinationId, userEmail) {
+  const validatedDestination = await getDestinationById(destinationId, userEmail);
 
   await dbConnect();
   const newToDo = await ToDo.create({
@@ -43,7 +45,7 @@ export async function createToDo(body, destinationId) {
   });
   if (!newToDo) throw new Error();
 
-  return await getToDosByDestinationId(destinationId);
+  return newToDo;
 }
 
 export async function updateToDo(id, body) {
@@ -58,7 +60,7 @@ export async function updateToDo(id, body) {
   toDo.checked = body.checked;
   const savedToDo = await toDo.save();
   if (!savedToDo) throw new Error();
-  return await getToDosByDestinationId(toDo.destinationId);
+  return savedToDo;
 }
 
 export async function deleteToDo(id) {

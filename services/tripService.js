@@ -3,10 +3,10 @@ import dbConnect from "../lib/dbConnect";
 import Trip from "../models/Trip";
 import { deleteDestination, getDestinationsByTripId } from "./destinationService";
 
-export async function getAllTrips() {
+export async function getAllTrips(userEmail) {
   await dbConnect();
 
-  const trips = await Trip.find();
+  const trips = await Trip.find({ userEmail: userEmail });
   if (!Array.isArray(trips)) throw new Error();
 
   const sanitizedTrips = trips.map((trip) => ({
@@ -17,10 +17,10 @@ export async function getAllTrips() {
   return sanitizedTrips;
 }
 
-export async function getTripById(id) {
+export async function getTripById(id, userEmail) {
   await dbConnect();
 
-  const trip = await Trip.findById(id);
+  const trip = await Trip.findOne({ _id: id, userEmail: userEmail });
   if (!trip) {
     const error = new Error("not found");
     error.status = 404;
@@ -31,16 +31,15 @@ export async function getTripById(id) {
 }
 
 export async function postTrip(body) {
-  const cleanedBody = body.trim();
-  if (!validateTripName(cleanedBody)) {
+  const cleanedCountry = body.country.trim();
+  if (!validateTripName(cleanedCountry)) {
     const error = new Error("invalid name");
     error.status = 400;
     throw error;
   }
 
   await dbConnect();
-
-  const newTrip = await Trip.create({ country: cleanedBody });
+  const newTrip = await Trip.create({ country: cleanedCountry, userEmail: body.userEmail });
   if (!newTrip) throw new Error();
 
   return newTrip;

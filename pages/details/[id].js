@@ -1,5 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]";
 import { useState } from "react";
 
 import BackgroundCover from "../../components/BackgroundCover";
@@ -17,9 +19,15 @@ import { getToDosByDestinationId } from "../../services/toDoService";
 import { getDestinationById } from "../../services/destinationService";
 
 export async function getServerSideProps(context) {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
+
   const id = context.params.id;
-  const destinationDB = await getDestinationById(id);
-  const toDosDB = await getToDosByDestinationId(id);
+  const destinationDB = await getDestinationById(id, session.user.email);
+  const toDosDB = await getToDosByDestinationId(id, session.user.email);
 
   return {
     props: { id: id, destinationDB, toDosDB },
@@ -41,7 +49,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   const onToggleToDoItem = async (id, checked) => {
     toggleLoader();
-    const res = await fetch("/api/todos/" + id, {
+    const res = await fetch("/api/todos/" + id + "?destinationId=" + destination.id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

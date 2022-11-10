@@ -1,6 +1,11 @@
 import { getDestinationsByTripId, createDestination } from "../../../services/destinationService";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req, res) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).json({ message: "unauthorized" });
+
   const {
     query: { tripId },
     method,
@@ -22,7 +27,8 @@ export default async function handler(req, res) {
 
     case "POST":
       try {
-        const newDestinations = await createDestination(req.body, tripId);
+        await createDestination(req.body, tripId, session.user.email);
+        const newDestinations = await getDestinationsByTripId(tripId);
         res.status(201).json(newDestinations);
       } catch (error) {
         if (error.status) {
