@@ -12,7 +12,6 @@ import LoginButton from "../components/Buttons/LoginButton";
 import LogoutButton from "../components/Buttons/LogoutButton";
 
 import gitHubSvg from "../assets/github.svg";
-import facebookSvg from "../assets/facebook.svg";
 import googleSvg from "../assets/google.svg";
 
 export async function getServerSideProps(context) {
@@ -81,12 +80,6 @@ export default function Home({ tripsDb }) {
             <br />
             to start your journey
           </LoginHeadline>
-          <LoginButton
-            icon={facebookSvg}
-            providerName="Facebook"
-            bgColor="#0165E1"
-            onClick={() => signIn("facebook")}
-          />
           <LoginButton
             icon={gitHubSvg}
             providerName="GitHub"
