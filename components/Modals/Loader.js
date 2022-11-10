@@ -1,20 +1,5 @@
 import styled, { keyframes } from "styled-components";
 
-const blurIn = keyframes`
-0% {backdrop-filter: blur(0px);}
-100% {backdrop-filter: blur(30px);}
-`;
-
-const rotateCircleForwards = keyframes`
-0% { transform: rotate(0);}
-100% { transform: rotate(360deg);}
-`;
-
-const rotateCircleBackwards = keyframes`
-0% { transform: rotate(0);}
-100% { transform: rotate(-360deg);}
-`;
-
 export default function Loader() {
   return (
     <BlurryBackground>
@@ -45,6 +30,16 @@ export default function Loader() {
   );
 }
 
+const rotateCircleForwards = keyframes`
+0% { transform: rotate(0);}
+100% { transform: rotate(360deg);}
+`;
+
+const rotateCircleBackwards = keyframes`
+0% { transform: rotate(0);}
+100% { transform: rotate(-360deg);}
+`;
+
 const BlurryBackground = styled.div`
   top: 0;
   left: 0;
@@ -55,10 +50,7 @@ const BlurryBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 20;
-  animation-name: ${blurIn};
-  animation-duration: 0.2s;
-  animation-iteration-count: initial;
+  z-index: 50;
 `;
 
 const InnerCircle = styled.svg`
