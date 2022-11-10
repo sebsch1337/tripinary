@@ -70,7 +70,12 @@ export default function Home({ tripsDb }) {
           </TripsHeadline>
           <Main>
             <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
-            <LogoutButton onClick={signOut} />
+            <LogoutButton
+              onClick={() => {
+                toggleLoader();
+                signOut();
+              }}
+            />
           </Main>
         </>
       ) : (
@@ -84,13 +89,19 @@ export default function Home({ tripsDb }) {
             icon={gitHubSvg}
             providerName="GitHub"
             bgColor="#24292e"
-            onClick={() => signIn("github")}
+            onClick={() => {
+              toggleLoader();
+              signIn("github");
+            }}
           />
           <LoginButton
             icon={googleSvg}
             providerName="Google"
             bgColor="#DB4437"
-            onClick={() => signIn("google")}
+            onClick={() => {
+              toggleLoader();
+              signIn("google");
+            }}
           />
         </LoginMain>
       )}
