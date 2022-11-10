@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-export default function LoginButton({ onClick, providerName, bgColor, textColor, icon }) {
+export default function LoginButton({ onClick, providerName, bgColor, icon }) {
   return (
     <StyledButton onClick={onClick} bgColor={bgColor}>
       <Image src={icon} alt={`${providerName} icon`} width="35px" height="35px" />
