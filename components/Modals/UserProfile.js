@@ -2,8 +2,9 @@ import styled from "styled-components";
 import Image from "next/image";
 import LogoutButton from "../Buttons/LogoutButton";
 import UserButton from "../Buttons/UserButton";
+import DeleteAccountButton from "../Buttons/DeleteAccountButton";
 
-export default function UserProfile({ session, toggleShowProfile, signOut }) {
+export default function UserProfile({ session, toggleShowProfile, signOut, deleteAccount }) {
   return (
     <BackgroundLayer onClick={toggleShowProfile}>
       <UserButton img={session.user.image} />
@@ -14,6 +15,7 @@ export default function UserProfile({ session, toggleShowProfile, signOut }) {
           <ProfileEmail>{session.user.email}</ProfileEmail>
         </UserInfoSection>
 
+        <DeleteAccountButton icon="cross" onClick={deleteAccount} />
         <LogoutButton onClick={signOut} />
       </UserProfileBox>
     </BackgroundLayer>

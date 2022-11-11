@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export default function LogoutButton({ onClick }) {
-  return <StyledButton onClick={onClick}>Logout</StyledButton>;
+export default function DeleteAccountButton({ onClick }) {
+  return <StyledButton onClick={onClick}>Delete account</StyledButton>;
 }
 
 const StyledButton = styled.button`
@@ -9,7 +9,7 @@ const StyledButton = styled.button`
   padding: 0.3rem 1.5rem;
   height: 2rem;
   width: 8rem;
-  background: linear-gradient(135deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
+  background: linear-gradient(135deg, rgba(255, 49, 49, 1) 0%, rgba(255, 255, 255, 1) 200%);
   border-radius: 25px;
   color: #fff;
   font-size: 1rem;

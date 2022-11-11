@@ -44,12 +44,25 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const { data: session } = useSession();
 
   const [destinations, setDestinations] = useState(destinationsDB);
-  const [modal, setModal] = useState({ visible: false, name: "", id: "" });
+  const [modal, setModal] = useState({ visible: false, name: "" });
   const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
+
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    const deletedAccount = await res;
+    if (deletedAccount.error) return alert(deletedAccount.error);
+  };
 
   const calculateTotalDuration = () => {
     const minDate = Math.min(
@@ -62,8 +75,8 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
     return dayDifference > 0 ? Math.floor(dayDifference) : 0;
   };
 
-  const toggleModal = (modalName = "", type = "", id = "") =>
-    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+  const toggleModal = (modalName = "", type = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
   const onDeleteDestination = async (id, tripId) => {
     toggleLoader();
@@ -115,6 +128,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
             session={session}
             toggleShowProfile={toggleShowProfile}
             showProfile={showProfile}
+            deleteAccount={() => toggleModal("account", "account")}
             signOut={() => {
               toggleLoader();
               signOut();
@@ -162,6 +176,19 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
             onClick={() => {
               onDeleteDestination(modal.id, id);
               toggleModal();
+            }}
+          />
+        </Modal>
+      )}
+      {modal.visible && modal.type === "account" && (
+        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
+          <DeleteModal
+            name={modal.name}
+            onClick={async () => {
+              toggleLoader();
+              toggleModal();
+              await onDeleteAccount();
+              signOut();
             }}
           />
         </Modal>
