@@ -4,15 +4,19 @@ import DeleteButton from "../Buttons/DeleteButton";
 import StatusIndicators from "./StatusIndicators";
 import bulletCircle from "../../assets/bulletCircle.svg";
 
-export default function DestinationItem({ destination, toDos, onClick, hasToDos }) {
+export default function DestinationItem({ destination, onClick, hasToDos }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
-      <Link href={`/details/${destination.id}`} passHref>
-        <AnkorTag>
-          <NameArea>{destination.name}</NameArea>
-        </AnkorTag>
-      </Link>
+      <div>
+        <Link href={`/details/${destination.id}`} passHref>
+          <AnkorTag>
+            <NameArea>{destination.name}</NameArea>
+          </AnkorTag>
+        </Link>
+        <StartDate>{new Date(destination.startDate * 1000).toUTCString().substring(0, 11)}</StartDate>
+      </div>
+
       <StatusIndicators hotel={destination.hotel} transport={destination.transport} hasToDos={hasToDos} />
       <DeleteButton
         onClick={onClick}
@@ -27,7 +31,13 @@ export default function DestinationItem({ destination, toDos, onClick, hasToDos 
   );
 }
 
+const StartDate = styled.p`
+  font-size: 0.8rem;
+  color: var(--drop-shadow);
+`;
+
 const AnkorTag = styled.a`
+  all: unset;
   text-decoration: none;
   color: var(--text-primary);
 `;
@@ -57,11 +67,7 @@ const ListBox = styled.li`
   }
 
   &:first-child:before {
-    top: 1.2em;
-  }
-
-  &:last-child:before {
-    bottom: 1.2em;
+    top: 2.2em;
   }
 `;
 

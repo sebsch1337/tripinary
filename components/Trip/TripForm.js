@@ -22,13 +22,15 @@ export default function TripForm({ onSubmitNewTrip }) {
 }
 
 const FormBox = styled.form`
-  width: 17em;
-  height: 17em;
+  all: unset;
+  width: 17rem;
+  height: 17rem;
   border: 3px var(--drop-shadow) dashed;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 const InputWrapper = styled.span`
@@ -38,7 +40,7 @@ const InputWrapper = styled.span`
 const CountryInput = styled.input`
   width: 12em;
   height: 2.5em;
-  filter: drop-shadow(0 0 0.3em var(--drop-shadow));
+  filter: drop-shadow(0 0 0.3rem var(--drop-shadow));
   transition: all ease-in-out 200ms;
   border: 0;
   border-radius: 50px;
@@ -53,10 +55,10 @@ const CountryInput = styled.input`
 `;
 
 const AddTripButton = styled.button`
-  width: 2.5em;
-  height: 2.5em;
+  all: unset;
+  width: 2rem;
+  height: 2rem;
   border: 0;
-  background-color: transparent;
   position: absolute;
   margin-top: auto;
   margin-bottom: auto;

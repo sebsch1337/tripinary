@@ -78,8 +78,8 @@ const ListBox = styled.li`
 `;
 
 const AddTripButton = styled.button`
-  width: 2.5em;
-  height: 2.5em;
+  width: 2rem;
+  height: 2rem;
   border: 0;
   background-color: transparent;
 `;
