@@ -19,7 +19,7 @@ export default function ToDoForm({ onSubmitNewToDoItem }) {
         name="todo"
         type="text"
         aria-label="todo"
-        placeholder="Some activity"
+        placeholder="Activity"
         autoComplete="off"
         required
       />
