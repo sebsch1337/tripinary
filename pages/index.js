@@ -33,12 +33,12 @@ export default function Home({ tripsDb }) {
   const [trips, setTrips] = useState(tripsDb);
   const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [modal, setModal] = useState({ visible: false, name: "", id: "" });
+  const [modal, setModal] = useState({ visible: false, name: "" });
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
-  const toggleModal = (modalName = "", type = "", id = "") =>
-    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+  const toggleModal = (modalName = "", type = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
   const onDeleteAccount = async () => {
     const res = await fetch("/api/trips", {

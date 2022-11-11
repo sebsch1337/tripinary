@@ -52,8 +52,8 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
-  const toggleModal = (modalName = "", type = "", id = "") =>
-    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+  const toggleModal = (modalName = "", type = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
   const onDeleteAccount = async () => {
     const res = await fetch("/api/trips", {

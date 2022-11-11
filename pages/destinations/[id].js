@@ -44,7 +44,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const { data: session } = useSession();
 
   const [destinations, setDestinations] = useState(destinationsDB);
-  const [modal, setModal] = useState({ visible: false, name: "", id: "" });
+  const [modal, setModal] = useState({ visible: false, name: "" });
   const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
@@ -75,8 +75,8 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
     return dayDifference > 0 ? Math.floor(dayDifference) : 0;
   };
 
-  const toggleModal = (modalName = "", type = "", id = "") =>
-    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+  const toggleModal = (modalName = "", type = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
   const onDeleteDestination = async (id, tripId) => {
     toggleLoader();
