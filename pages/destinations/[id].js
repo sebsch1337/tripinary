@@ -51,6 +51,19 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
 
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    const deletedAccount = await res;
+    if (deletedAccount.error) return alert(deletedAccount.error);
+  };
+
   const calculateTotalDuration = () => {
     const minDate = Math.min(
       ...destinations.filter((filtered) => filtered.tripId === id).map((destination) => destination.startDate)
@@ -115,6 +128,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
             session={session}
             toggleShowProfile={toggleShowProfile}
             showProfile={showProfile}
+            deleteAccount={() => toggleModal("account", "account")}
             signOut={() => {
               toggleLoader();
               signOut();
@@ -162,6 +176,19 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
             onClick={() => {
               onDeleteDestination(modal.id, id);
               toggleModal();
+            }}
+          />
+        </Modal>
+      )}
+      {modal.visible && modal.type === "account" && (
+        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
+          <DeleteModal
+            name={modal.name}
+            onClick={async () => {
+              toggleLoader();
+              toggleModal();
+              await onDeleteAccount();
+              signOut();
             }}
           />
         </Modal>

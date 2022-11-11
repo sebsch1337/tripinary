@@ -18,6 +18,7 @@ import Duration from "../../components/Duration";
 import BackButton from "../../components/Buttons/BackButton";
 import UserButton from "../../components/Buttons/UserButton";
 import UserProfile from "../../components/Modals/UserProfile";
+import DeleteModal from "../../components/Modals/DeleteModal";
 
 import { getToDosByDestinationId } from "../../services/toDoService";
 import { getDestinationById } from "../../services/destinationService";
@@ -51,6 +52,21 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
+  const toggleModal = (modalName = "", type = "", id = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    const deletedAccount = await res;
+    if (deletedAccount.error) return alert(deletedAccount.error);
+  };
 
   const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
 
@@ -77,8 +93,6 @@ export default function Details({ id, destinationDB, toDosDB }) {
     setToDos(newToDos);
     toggleLoader();
   };
-
-  const toggleModal = (modalName = "") => setModal((modal) => ({ visible: !modal.visible, name: modalName }));
 
   const onUpdateDetail = async (updated) => {
     toggleLoader();
@@ -128,6 +142,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
             session={session}
             toggleShowProfile={toggleShowProfile}
             showProfile={showProfile}
+            deleteAccount={() => toggleModal("account", "account")}
             signOut={() => {
               toggleLoader();
               signOut();
@@ -206,6 +221,19 @@ export default function Details({ id, destinationDB, toDosDB }) {
               }}
             />
           )}
+        </Modal>
+      )}
+      {modal.visible && modal.type === "account" && (
+        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
+          <DeleteModal
+            name={modal.name}
+            onClick={async () => {
+              toggleLoader();
+              toggleModal();
+              await onDeleteAccount();
+              signOut();
+            }}
+          />
         </Modal>
       )}
       {loader && <Loader />}

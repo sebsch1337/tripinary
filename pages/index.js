@@ -14,6 +14,8 @@ import gitHubSvg from "../assets/github.svg";
 import googleSvg from "../assets/google.svg";
 import UserButton from "../components/Buttons/UserButton";
 import UserProfile from "../components/Modals/UserProfile";
+import Modal from "../components/Modals/Modal";
+import DeleteModal from "../components/Modals/DeleteModal";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -31,9 +33,25 @@ export default function Home({ tripsDb }) {
   const [trips, setTrips] = useState(tripsDb);
   const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [modal, setModal] = useState({ visible: false, name: "", id: "" });
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
+  const toggleModal = (modalName = "", type = "", id = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type, id: id }));
+
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    const deletedAccount = await res;
+    if (deletedAccount.error) return alert(deletedAccount.error);
+  };
 
   const onSubmitNewTrip = async (event) => {
     event.preventDefault();
@@ -81,6 +99,7 @@ export default function Home({ tripsDb }) {
                 session={session}
                 toggleShowProfile={toggleShowProfile}
                 showProfile={showProfile}
+                deleteAccount={() => toggleModal("account", "account")}
                 signOut={() => {
                   toggleLoader();
                   signOut();
@@ -116,6 +135,19 @@ export default function Home({ tripsDb }) {
             }}
           />
         </LoginMain>
+      )}
+      {modal.visible && modal.type === "account" && (
+        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
+          <DeleteModal
+            name={modal.name}
+            onClick={async () => {
+              toggleLoader();
+              toggleModal();
+              await onDeleteAccount();
+              signOut();
+            }}
+          />
+        </Modal>
       )}
       {loader && <Loader />}
     </>

@@ -57,3 +57,17 @@ export async function deleteTrip(id) {
 
   return deletedTrip;
 }
+
+export async function deleteUserAccount(userEmail) {
+  await dbConnect();
+
+  const trips = await Trip.find({ userEmail: userEmail });
+  if (!Array.isArray(trips)) throw new Error();
+  if (!trips.length) {
+    const error = new Error("not found");
+    error.status = 404;
+    throw error;
+  }
+
+  trips.forEach(async (trip) => await deleteTrip(trip.id));
+}
