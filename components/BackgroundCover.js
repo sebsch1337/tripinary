@@ -1,15 +1,10 @@
 import styled from "styled-components";
-import BackButton from "./Buttons/BackButton";
 
 export default function BackgroundCover({ imageQuery }) {
-  return (
-    <Cover image={`https://source.unsplash.com/random/?${imageQuery}`}>
-      <BackButton />
-    </Cover>
-  );
+  return <Cover image={`https://source.unsplash.com/random/?${imageQuery}`} />;
 }
 
-const Cover = styled.header`
+const Cover = styled.div`
   width: 100vw;
   height: 50vh;
   position: fixed;

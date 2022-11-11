@@ -4,6 +4,7 @@ import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 import BackgroundCover from "../../components/BackgroundCover";
 import Footer from "../../components/Footer";
@@ -13,6 +14,9 @@ import Loader from "../../components/Modals/Loader";
 import DeleteModal from "../../components/Modals/DeleteModal";
 import Duration from "../../components/Duration";
 import DestinationList from "../../components/Destination/DestinationList";
+import UserProfile from "../../components/Modals/UserProfile";
+import BackButton from "../../components/Buttons/BackButton";
+import UserButton from "../../components/Buttons/UserButton";
 
 import { getTripById } from "../../services/tripService";
 import { getDestinationsByTripId } from "../../services/destinationService";
@@ -37,11 +41,14 @@ export async function getServerSideProps(context) {
 
 export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [destinations, setDestinations] = useState(destinationsDB);
   const [modal, setModal] = useState({ visible: false, name: "", id: "" });
   const [loader, setLoader] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
+  const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
 
   const calculateTotalDuration = () => {
@@ -96,8 +103,24 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
       <Head>
         <title>{country.toUpperCase()}</title>
       </Head>
-      <BackgroundCover imageQuery={countryQueryName} />
+      <Header>
+        <BackgroundCover imageQuery={countryQueryName} />
+        <BackButton />
+        {!showProfile && session && <UserButton img={session.user.image} onClick={toggleShowProfile} />}
+      </Header>
+
       <MainCard>
+        {showProfile && (
+          <UserProfile
+            session={session}
+            toggleShowProfile={toggleShowProfile}
+            showProfile={showProfile}
+            signOut={() => {
+              toggleLoader();
+              signOut();
+            }}
+          />
+        )}
         <DestinationHeadline>{country.toUpperCase()}</DestinationHeadline>
         {country !== "Not found" && (
           <DestinationList
@@ -147,6 +170,8 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
     </>
   );
 }
+
+const Header = styled.header``;
 
 const MainCard = styled.main`
   position: absolute;

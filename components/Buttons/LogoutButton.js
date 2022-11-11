@@ -7,12 +7,12 @@ export default function LogoutButton({ onClick }) {
 
 const StyledButton = styled.button`
   all: unset;
-  margin: 1rem;
-  padding: 0.2rem;
-  width: 20%;
+  padding: 0.3rem 1.5rem;
   height: 2rem;
-  background-color: #24292e;
-  border-radius: 0.5rem;
+  width: 8rem;
+  background: rgb(49, 107, 255);
+  background: linear-gradient(135deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
+  border-radius: 25px;
   color: #fff;
   font-size: 1rem;
   text-align: center;
