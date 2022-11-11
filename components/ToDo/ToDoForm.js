@@ -13,13 +13,13 @@ export default function ToDoForm({ onSubmitNewToDoItem }) {
   return (
     <ToDoListForm onSubmit={handleSubmit} aria-label="add todo form">
       <AddToDoButton aria-label="add todo">
-        <Image src={addButtonCircleActive} width="20x" height="20px" alt="Add icon" />
+        <Image src={addButtonCircleActive} width="25x" height="25px" alt="Add icon" />
       </AddToDoButton>
       <ToDoInput
         name="todo"
         type="text"
         aria-label="todo"
-        placeholder="Add To-Do..."
+        placeholder="Something to do"
         autoComplete="off"
         required
       />
@@ -45,8 +45,7 @@ const ToDoInput = styled.input`
 `;
 
 const AddToDoButton = styled.button`
-  background-color: transparent;
-  border: none;
+  all: unset;
   display: flex;
   align-items: center;
 `;

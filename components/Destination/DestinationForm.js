@@ -19,7 +19,7 @@ export default function DestinationForm({ onSubmitNewDestination }) {
         <DestinationInput
           name="destination"
           aria-label="destination"
-          placeholder="Add destination..."
+          placeholder="Place"
           autoComplete="off"
           required
         />

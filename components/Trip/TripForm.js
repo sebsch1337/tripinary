@@ -7,7 +7,7 @@ export default function TripForm({ onSubmitNewTrip }) {
     <FormBox onSubmit={onSubmitNewTrip} aria-label="add trip form">
       <InputWrapper>
         <CountryInput
-          placeholder="Add trip..."
+          placeholder="Country"
           aria-label="countryname"
           name="country"
           autoComplete="off"
