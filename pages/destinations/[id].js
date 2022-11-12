@@ -32,11 +32,11 @@ export async function getServerSideProps(context) {
   const toDosDB = await getAllToDos();
 
   return {
-    props: { id: id, destinationsDB, countryName: trip?.error ? "Not found" : trip.country, toDosDB },
+    props: { id: id, destinationsDB, toDosDB, countryName: trip?.error ? "Not found" : trip.country },
   };
 }
 
-export default function Destinations({ id, destinationsDB, countryName, toDosDB }) {
+export default function Destinations({ id, destinationsDB, toDosDB, countryName }) {
   const router = useRouter();
   const { data: session } = useSession();
 

@@ -1,25 +1,24 @@
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
 
-import ToDoItem from "../../components/ToDo/ToDoItem";
-import ToDoForm from "../../components/ToDo/ToDoForm";
-import Modal from "../../components/Modals/Modal";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import UserProfile from "../../components/Modals/UserProfile";
 import Loader from "../../components/Modals/Loader";
+import Modal from "../../components/Modals/Modal";
+import DeleteModal from "../../components/Modals/DeleteModal";
 import EditDatesForm from "../../components/Edit/EditDatesForm";
 import EditTextForm from "../../components/Edit/EditTextForm";
 import EditButton from "../../components/Buttons/EditButton";
-import Footer from "../../components/Footer";
+import ToDoItem from "../../components/ToDo/ToDoItem";
+import ToDoForm from "../../components/ToDo/ToDoForm";
 import Duration from "../../components/Duration";
-import UserButton from "../../components/Buttons/UserButton";
-import UserProfile from "../../components/Modals/UserProfile";
-import DeleteModal from "../../components/Modals/DeleteModal";
 
 import { getToDosByDestinationId } from "../../services/toDoService";
 import { getDestinationById } from "../../services/destinationService";
-import Header from "../../components/Header";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -29,11 +28,16 @@ export async function getServerSideProps(context) {
   }
 
   const id = context.params.id;
+
   const destinationDB = await getDestinationById(id, session.user.email);
   const toDosDB = await getToDosByDestinationId(id, session.user.email);
 
   return {
-    props: { id: id, destinationDB, toDosDB },
+    props: {
+      id: id,
+      destinationDB,
+      toDosDB,
+    },
   };
 }
 
@@ -45,8 +49,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
   const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  const destinationName = destination?.name || "Not found";
-  const destinationQueryName = destinationName.replaceAll(" ", "-");
+  const destinationName = destinationDB ? destinationDB.name : "Not found";
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
@@ -127,7 +130,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
   return (
     <>
       <Header
-        coverImage={destinationQueryName}
+        coverImage={destinationName}
         showProfile={showProfile}
         session={session}
         toggleShowProfile={toggleShowProfile}
