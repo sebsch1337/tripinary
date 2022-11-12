@@ -15,7 +15,7 @@ export default function StatusIndicators({ hotel, transport, hasToDos }) {
 
 const StatusSection = styled.section`
   display: flex;
-  gap: 0.3em;
+  gap: 0.4rem;
   position: absolute;
   right: 10%;
 `;

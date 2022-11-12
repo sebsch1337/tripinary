@@ -14,4 +14,5 @@ const StyledButton = styled.button`
   color: #fff;
   font-size: 1rem;
   text-align: center;
+  filter: drop-shadow(0 0 0.2rem var(--drop-shadow));
 `;

@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
 import saveSvg from "../../assets/save.svg";
+import Input from "../FormElements/Input";
+import SaveButton from "../Buttons/SaveButton";
 
 const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
 
@@ -25,64 +27,44 @@ export default function EditDatesForm({ destination, onUpdateDetail }) {
 
   return (
     <EditDates onSubmit={handleSubmit} aria-label="Edit dates form">
-      <StyledLabel>Start Date</StyledLabel>
-      <StyledInput
-        aria-label="start Date"
-        name="startDate"
-        type="date"
-        onChange={(event) => setStartDate(event.target.value)}
-        value={startDate}
-        required
-      />
-      <StyledLabel>End Date</StyledLabel>
-      <StyledInput
-        aria-label="end date"
-        name="endDate"
-        type="date"
-        onChange={(event) => setEndDate(event.target.value)}
-        value={endDate}
-        required
-      />
+      <InputWrapper>
+        <StyledLabel>Start Date</StyledLabel>
+        <Input
+          aria-label="start Date"
+          name="startDate"
+          type="date"
+          onChange={(event) => setStartDate(event.target.value)}
+          value={startDate}
+          required
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <StyledLabel>End Date</StyledLabel>
+        <Input
+          aria-label="end date"
+          name="endDate"
+          type="date"
+          onChange={(event) => setEndDate(event.target.value)}
+          value={endDate}
+          required
+        />
+      </InputWrapper>
+
       {validationError && <ValidationError>{validationError}</ValidationError>}
-      <StyledButton aria-label="save dates">
-        <Image src={saveSvg} width="290px" height="40px" alt="Save icon" />
-      </StyledButton>
+      <SaveButton />
     </EditDates>
   );
 }
 
+const InputWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
 const ValidationError = styled.p`
   color: red;
-  margin-bottom: 2em;
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-  justify-content: center;
-  border: none;
-  background-color: transparent;
-`;
-
-const StyledInput = styled.input`
-  margin: 0.5em 0 2em;
-  width: 100%;
-  height: 2em;
-  filter: drop-shadow(0 0 0.2em var(--drop-shadow));
-  transition: all ease-in-out 200ms;
-  border: 0;
-  border-radius: 50px;
-  padding-left: 1.1em;
-  padding-right: 0.5em;
-  font-size: 1.2rem;
-  outline: none;
-
-  &:focus {
-    filter: drop-shadow(0 0 0.4em var(--drop-shadow));
-  }
-
-  &::-webkit-calendar-picker-indicator {
-    right: 0;
-  }
+  margin-bottom: 2rem;
 `;
 
 const StyledLabel = styled.h3`
@@ -93,4 +75,5 @@ const EditDates = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 2rem;
 `;

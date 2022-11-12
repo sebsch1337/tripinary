@@ -5,16 +5,16 @@ export default function Input(props) {
 }
 
 const StyledInput = styled.input`
-  margin: 0.5rem 0 2rem;
+  margin: ${({ margin }) => margin || "0"};
   width: 100%;
-  height: 2.5rem;
+  height: ${({ height }) => height || "2.5rem"};
   filter: drop-shadow(0 0 0.2rem var(--drop-shadow));
   transition: all ease-in-out 200ms;
   border: 0;
   border-radius: 2rem;
   padding-left: 1.1rem;
   padding-right: 0.8rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   outline: none;
 
   &:focus {
@@ -22,6 +22,7 @@ const StyledInput = styled.input`
   }
 
   &::-webkit-calendar-picker-indicator {
-    right: 0;
+    width: 1.4rem;
+    height: 1.4rem;
   }
 `;

@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import Image from "next/image";
 import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
+import Input from "../FormElements/Input";
 
 export default function TripForm({ onSubmitNewTrip }) {
   return (
     <FormBox onSubmit={onSubmitNewTrip} aria-label="add trip form">
       <InputWrapper>
-        <CountryInput
+        <Input
+          height="2.8rem"
           placeholder="Country"
           aria-label="countryname"
           name="country"
@@ -26,8 +28,8 @@ const FormBox = styled.form`
   box-sizing: border-box;
   width: 17rem;
   height: 17rem;
-  border: 3px var(--drop-shadow) dashed;
-  border-radius: 25px;
+  border: 4px lightgray dashed;
+  border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,23 +40,6 @@ const InputWrapper = styled.span`
   position: relative;
 `;
 
-const CountryInput = styled.input`
-  width: 12em;
-  height: 2.5em;
-  filter: drop-shadow(0 0 0.3rem var(--drop-shadow));
-  transition: all ease-in-out 200ms;
-  border: 0;
-  border-radius: 50px;
-  padding-left: 1.1em;
-  padding-right: 2.3em;
-  font-size: 1.2rem;
-  outline: none;
-
-  &:focus {
-    filter: drop-shadow(0 0 0.6em var(--drop-shadow));
-  }
-`;
-
 const AddTripButton = styled.button`
   all: unset;
   width: 2rem;
@@ -63,7 +48,7 @@ const AddTripButton = styled.button`
   position: absolute;
   margin-top: auto;
   margin-bottom: auto;
-  right: 0.5em;
+  right: 0.5rem;
   top: 0;
   bottom: 0;
 `;

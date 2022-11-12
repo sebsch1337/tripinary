@@ -24,6 +24,7 @@ const ModalBox = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  filter: drop-shadow(0 0 0.4rem var(--drop-shadow));
 `;
 
 const BlurryBackground = styled.div`

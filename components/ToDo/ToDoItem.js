@@ -37,13 +37,16 @@ const ToDoButton = styled.button`
 `;
 
 const Description = styled.span`
-  margin-left: 0.4em;
+  margin-left: 0.4rem;
+  width: 85%;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
   color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const ToDoListItem = styled.li`
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   display: flex;
   align-items: center;
 `;

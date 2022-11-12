@@ -24,5 +24,5 @@ const TripsWrapper = styled.section`
   align-items: center;
   flex-wrap: nowrap;
   flex-direction: column;
-  gap: 2em;
+  gap: 2rem;
 `;

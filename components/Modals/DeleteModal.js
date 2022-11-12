@@ -19,7 +19,7 @@ const DeleteSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2em;
+  gap: 2rem;
 `;
 
 const StyledButton = styled.button`

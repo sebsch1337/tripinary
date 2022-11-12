@@ -5,7 +5,7 @@ import floppySvg from "../../assets/floppy.svg";
 export default function SaveButton(props) {
   return (
     <StyledButton {...props} aria-label="save data">
-      <Image src={floppySvg} width="20px" height="20px" alt="Save icon" />
+      <Image src={floppySvg} width="18px" height="18px" alt="" />
       Save
     </StyledButton>
   );
@@ -25,4 +25,5 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  filter: drop-shadow(0 0 0.2rem var(--drop-shadow));
 `;

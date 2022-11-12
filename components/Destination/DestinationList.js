@@ -32,6 +32,6 @@ export default function DestinationList({
 
 const DestinationWrapper = styled.ul`
   list-style: none;
-  margin: 0 2em 5em;
+  margin: 0 1rem 5rem;
   position: relative;
 `;

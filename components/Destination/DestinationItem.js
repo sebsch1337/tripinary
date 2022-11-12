@@ -50,7 +50,7 @@ const NameArea = styled.span`
 `;
 
 const ListBox = styled.li`
-  padding: 0.8em 0.5em;
+  padding: 0.8rem 0.6rem;
   font-size: 1.2rem;
   display: flex;
   align-items: center;
@@ -63,17 +63,17 @@ const ListBox = styled.li`
     background-image: linear-gradient(90deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
     top: 0;
     bottom: 0;
-    left: 1em;
+    left: 1.2rem;
   }
 
   &:first-child:before {
-    top: 2.2em;
+    top: 2.2rem;
   }
 `;
 
 const BulletCircle = styled.img`
-  width: 1.2em;
-  height: 1.2em;
-  margin-right: 1em;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 1rem;
   z-index: 5;
 `;

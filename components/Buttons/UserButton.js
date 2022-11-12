@@ -22,5 +22,5 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(0 0 0.1em var(--drop-shadow));
+  filter: drop-shadow(0 0 0.1rem var(--drop-shadow));
 `;
