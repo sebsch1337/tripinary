@@ -245,6 +245,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
 const ToDoWrapper = styled.ul`
   list-style: none;
+  all: unset;
 `;
 
 const DetailTitle = styled.h3`
@@ -254,24 +255,24 @@ const DetailTitle = styled.h3`
 `;
 
 const DetailText = styled.p`
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 `;
 
 const DetailSection = styled.section`
-  margin: 0 2em 5em;
+  margin: 0 2rem 5rem;
 `;
 
 const MainCard = styled.main`
   position: absolute;
   top: 40vh;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
+  border-top-left-radius: 3rem;
+  border-top-right-radius: 3rem;
   background-color: var(--background-primary);
   width: 100vw;
   overflow: hidden;
 `;
 
 const DetailHeadline = styled.h1`
-  margin: 1em 0 0.5em;
+  margin: 2rem 0 1rem;
   text-align: center;
 `;
