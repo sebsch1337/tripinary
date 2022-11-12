@@ -5,12 +5,15 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import { getAllTrips } from "../services/tripService";
 
+import Image from "next/image";
+import logoSvg from "../assets/logo.svg";
+import gitHubSvg from "../assets/github.svg";
+import googleSvg from "../assets/google.svg";
+
 import TripList from "../components/Trip/TripList";
 import Loader from "../components/Modals/Loader";
 import LoginButton from "../components/Buttons/LoginButton";
 
-import gitHubSvg from "../assets/github.svg";
-import googleSvg from "../assets/google.svg";
 import UserButton from "../components/Buttons/UserButton";
 import UserProfile from "../components/Modals/UserProfile";
 import Modal from "../components/Modals/Modal";
@@ -39,19 +42,6 @@ export default function Home({ tripsDb }) {
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
-  const onDeleteAccount = async () => {
-    const res = await fetch("/api/trips", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    });
-
-    const deletedAccount = await res;
-    if (deletedAccount.error) return alert(deletedAccount.error);
-  };
-
   const onSubmitNewTrip = async (event) => {
     event.preventDefault();
     const countryName = event.target.country.value;
@@ -74,6 +64,19 @@ export default function Home({ tripsDb }) {
     setTimeout(() => {
       window.scrollBy({ top: 300, behavior: "smooth" });
     }, 100);
+  };
+
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    const deletedAccount = await res;
+    if (deletedAccount.error) return alert(deletedAccount.error);
   };
 
   return (
@@ -107,11 +110,11 @@ export default function Home({ tripsDb }) {
         </>
       ) : (
         <LoginMain>
-          <LoginHeadline>
-            Login
-            <br />
-            to start your journey
-          </LoginHeadline>
+          <LogoArea>
+            <Image src={logoSvg} width="150" height="150" alt="logo" />
+            <LogoText>TRIPINARY</LogoText>
+          </LogoArea>
+
           <LoginButton
             icon={gitHubSvg}
             providerName="GitHub"
@@ -158,8 +161,18 @@ const TripsHeadline = styled.h1`
   font-weight: 500;
 `;
 
-const LoginHeadline = styled.h1`
+const LogoArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+`;
+
+const LogoText = styled.h1`
+  color: #316bff;
   text-align: center;
+  font-size: 2.5rem;
 `;
 
 const LoginMain = styled.main`
