@@ -1,11 +1,9 @@
-import Head from "next/head";
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 
-import BackgroundCover from "../../components/BackgroundCover";
 import ToDoItem from "../../components/ToDo/ToDoItem";
 import ToDoForm from "../../components/ToDo/ToDoForm";
 import Modal from "../../components/Modals/Modal";
@@ -15,13 +13,13 @@ import EditTextForm from "../../components/Edit/EditTextForm";
 import EditButton from "../../components/Buttons/EditButton";
 import Footer from "../../components/Footer";
 import Duration from "../../components/Duration";
-import BackButton from "../../components/Buttons/BackButton";
 import UserButton from "../../components/Buttons/UserButton";
 import UserProfile from "../../components/Modals/UserProfile";
 import DeleteModal from "../../components/Modals/DeleteModal";
 
 import { getToDosByDestinationId } from "../../services/toDoService";
 import { getDestinationById } from "../../services/destinationService";
+import Header from "../../components/Header";
 
 export async function getServerSideProps(context) {
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
@@ -128,14 +126,13 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   return (
     <>
-      <Head>
-        <title>{destinationName.toUpperCase()}</title>
-      </Head>
-      <Header>
-        <BackgroundCover imageQuery={destinationQueryName} />
-        <BackButton />
-        {!showProfile && session && <UserButton img={session.user.image} onClick={toggleShowProfile} />}
-      </Header>
+      <Header
+        coverImage={destinationQueryName}
+        showProfile={showProfile}
+        session={session}
+        toggleShowProfile={toggleShowProfile}
+      />
+
       <MainCard>
         {showProfile && (
           <UserProfile
@@ -240,8 +237,6 @@ export default function Details({ id, destinationDB, toDosDB }) {
     </>
   );
 }
-
-const Header = styled.header``;
 
 const ToDoWrapper = styled.ul`
   list-style: none;

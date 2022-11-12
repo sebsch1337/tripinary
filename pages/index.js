@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -79,9 +78,6 @@ export default function Home({ tripsDb }) {
 
   return (
     <>
-      <Head>
-        <title>START YOUR JOURNEY</title>
-      </Head>
       {session ? (
         <>
           <Header>

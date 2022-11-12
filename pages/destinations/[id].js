@@ -1,22 +1,19 @@
-import Head from "next/head";
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
 
-import BackgroundCover from "../../components/BackgroundCover";
+import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import DeleteButton from "../../components/Buttons/DeleteButton";
-import Modal from "../../components/Modals/Modal";
-import Loader from "../../components/Modals/Loader";
-import DeleteModal from "../../components/Modals/DeleteModal";
-import Duration from "../../components/Duration";
-import DestinationList from "../../components/Destination/DestinationList";
 import UserProfile from "../../components/Modals/UserProfile";
-import BackButton from "../../components/Buttons/BackButton";
-import UserButton from "../../components/Buttons/UserButton";
+import Loader from "../../components/Modals/Loader";
+import Modal from "../../components/Modals/Modal";
+import DeleteModal from "../../components/Modals/DeleteModal";
+import DeleteButton from "../../components/Buttons/DeleteButton";
+import DestinationList from "../../components/Destination/DestinationList";
+import Duration from "../../components/Duration";
 
 import { getTripById } from "../../services/tripService";
 import { getDestinationsByTripId } from "../../services/destinationService";
@@ -35,11 +32,11 @@ export async function getServerSideProps(context) {
   const toDosDB = await getAllToDos();
 
   return {
-    props: { id: id, destinationsDB, country: trip?.error ? "Not found" : trip.country, toDosDB },
+    props: { id: id, destinationsDB, countryName: trip?.error ? "Not found" : trip.country, toDosDB },
   };
 }
 
-export default function Destinations({ id, destinationsDB, country, toDosDB }) {
+export default function Destinations({ id, destinationsDB, countryName, toDosDB }) {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -51,19 +48,8 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
-
-  const onDeleteAccount = async () => {
-    const res = await fetch("/api/trips", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    });
-
-    const deletedAccount = await res;
-    if (deletedAccount.error) return alert(deletedAccount.error);
-  };
+  const toggleModal = (modalName = "", type = "") =>
+    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
   const calculateTotalDuration = () => {
     const minDate = Math.min(
@@ -75,21 +61,6 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
     const dayDifference = (maxDate - minDate) / 86400 + 1;
     return dayDifference > 0 ? Math.floor(dayDifference) : 0;
   };
-
-  const toggleModal = (modalName = "", type = "") =>
-    setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
-
-  const onDeleteDestination = async (id, tripId) => {
-    toggleLoader();
-    const res = await fetch("/api/destinations/" + id + "?tripId=" + tripId, {
-      method: "DELETE",
-    });
-    const newDestinations = await res.json();
-    setDestinations(newDestinations);
-    toggleLoader();
-  };
-
-  const onDeleteTrip = async (id) => await fetch("/api/trips/" + id, { method: "DELETE" });
 
   const onSubmitNewDestination = async (destinationName) => {
     toggleLoader();
@@ -110,18 +81,37 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
     }, 100);
   };
 
-  const countryQueryName = country?.replaceAll(" ", "-");
+  const onDeleteDestination = async (id, tripId) => {
+    toggleLoader();
+    const res = await fetch("/api/destinations/" + id + "?tripId=" + tripId, {
+      method: "DELETE",
+    });
+    const newDestinations = await res.json();
+    setDestinations(newDestinations);
+    toggleLoader();
+  };
+
+  const onDeleteTrip = async (id) => await fetch("/api/trips/" + id, { method: "DELETE" });
+
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+    if (res.error) return alert(res.error);
+  };
 
   return (
     <>
-      <Head>
-        <title>{country.toUpperCase()}</title>
-      </Head>
-      <Header>
-        <BackgroundCover imageQuery={countryQueryName} />
-        <BackButton />
-        {!showProfile && session && <UserButton img={session.user.image} onClick={toggleShowProfile} />}
-      </Header>
+      <Header
+        coverImage={countryName}
+        showProfile={showProfile}
+        session={session}
+        toggleShowProfile={toggleShowProfile}
+      />
 
       <MainCard>
         {showProfile && (
@@ -136,8 +126,8 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
             }}
           />
         )}
-        <DestinationHeadline>{country.toUpperCase()}</DestinationHeadline>
-        {country !== "Not found" && (
+        <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
+        {countryName !== "Not found" && (
           <DestinationList
             destinations={destinations}
             toDos={toDosDB}
@@ -148,11 +138,11 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
           />
         )}
       </MainCard>
-      {country !== "Not found" && (
+      {countryName !== "Not found" && (
         <Footer>
           <Duration title="Total duration" number={calculateTotalDuration()} type="day" />
           <DeleteButton
-            onClick={() => toggleModal(country, "trip")}
+            onClick={() => toggleModal(countryName, "trip")}
             icon="trashCan"
             width="25px"
             height="25px"
@@ -199,8 +189,6 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
     </>
   );
 }
-
-const Header = styled.header``;
 
 const MainCard = styled.main`
   position: absolute;
