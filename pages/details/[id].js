@@ -6,7 +6,6 @@ import { useState } from "react";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import UserProfile from "../../components/Modals/UserProfile";
 import Loader from "../../components/Modals/Loader";
 import Modal from "../../components/Modals/Modal";
 import DeleteModal from "../../components/Modals/DeleteModal";
@@ -42,16 +41,13 @@ export async function getServerSideProps(context) {
 }
 
 export default function Details({ id, destinationDB, toDosDB }) {
-  const { data: session } = useSession();
   const [destination, setDestination] = useState(destinationDB);
   const [toDos, setToDos] = useState(toDosDB);
   const [modal, setModal] = useState({ visible: false, name: "" });
   const [loader, setLoader] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
 
   const destinationName = destinationDB ? destinationDB.name : "Not found";
 
-  const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
@@ -129,26 +125,8 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   return (
     <>
-      <Header
-        coverImage={destinationName}
-        showProfile={showProfile}
-        session={session}
-        toggleShowProfile={toggleShowProfile}
-      />
-
+      <Header coverImage={destinationName} />
       <MainCard>
-        {showProfile && (
-          <UserProfile
-            session={session}
-            toggleShowProfile={toggleShowProfile}
-            showProfile={showProfile}
-            deleteAccount={() => toggleModal("account", "account")}
-            signOut={() => {
-              toggleLoader();
-              signOut();
-            }}
-          />
-        )}
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
         {destination && (
           <DetailSection>

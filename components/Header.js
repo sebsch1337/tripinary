@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import BackButton from "./Buttons/BackButton";
-import UserButton from "./Buttons/UserButton";
 
-export default function Header({ coverImage, showProfile, session, toggleShowProfile }) {
+export default function Header({ coverImage }) {
   return (
     <StyledHeader>
       <Cover image={`https://source.unsplash.com/random/?${coverImage?.replaceAll(" ", "-")}`} />
       <BackButton />
-      {!showProfile && session && <UserButton img={session.user.image} onClick={toggleShowProfile} />}
     </StyledHeader>
   );
 }

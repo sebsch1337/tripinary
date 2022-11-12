@@ -7,7 +7,6 @@ import { useState } from "react";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import UserProfile from "../../components/Modals/UserProfile";
 import Loader from "../../components/Modals/Loader";
 import Modal from "../../components/Modals/Modal";
 import DeleteModal from "../../components/Modals/DeleteModal";
@@ -43,10 +42,8 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
   const [destinations, setDestinations] = useState(destinationsDB);
   const [modal, setModal] = useState({ visible: false, name: "" });
   const [loader, setLoader] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
   const [deleteDestinationId, setDeleteDestinationId] = useState(0);
 
-  const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
@@ -106,26 +103,9 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
 
   return (
     <>
-      <Header
-        coverImage={countryName}
-        showProfile={showProfile}
-        session={session}
-        toggleShowProfile={toggleShowProfile}
-      />
+      <Header coverImage={countryName} />
 
       <MainCard>
-        {showProfile && (
-          <UserProfile
-            session={session}
-            toggleShowProfile={toggleShowProfile}
-            showProfile={showProfile}
-            deleteAccount={() => toggleModal("account", "account")}
-            signOut={() => {
-              toggleLoader();
-              signOut();
-            }}
-          />
-        )}
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
         {countryName !== "Not found" && (
           <DestinationList
