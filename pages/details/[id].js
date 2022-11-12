@@ -205,6 +205,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
           )}
           {modal.name === "Hotel" && (
             <EditTextForm
+              placeholder="Accommodation"
               prevTextValue={destination.hotel}
               onUpdateDetail={(hotel) => {
                 toggleModal();
@@ -214,6 +215,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
           )}
           {modal.name === "Transport" && (
             <EditTextForm
+              placeholder="Flight / Bus / Train"
               prevTextValue={destination.transport}
               onUpdateDetail={(transport) => {
                 toggleModal();
