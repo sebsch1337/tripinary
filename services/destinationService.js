@@ -90,7 +90,6 @@ export async function updateDestination(id, body) {
 
 export async function deleteDestination(id) {
   await dbConnect();
-
   const deletedDestination = await Destination.deleteOne({ _id: id });
   if (!deletedDestination.acknowledged) throw new Error();
 

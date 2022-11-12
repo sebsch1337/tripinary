@@ -47,6 +47,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
   const [modal, setModal] = useState({ visible: false, name: "" });
   const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [deleteDestinationId, setDeleteDestinationId] = useState(0);
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
   const toggleLoader = () => setLoader((loader) => !loader);
@@ -143,6 +144,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
             tripId={id}
             onSubmitNewDestination={onSubmitNewDestination}
             toggleModal={toggleModal}
+            setDeleteDestinationId={setDeleteDestinationId}
           />
         )}
       </MainCard>
@@ -174,7 +176,7 @@ export default function Destinations({ id, destinationsDB, country, toDosDB }) {
           <DeleteModal
             name={modal.name}
             onClick={() => {
-              onDeleteDestination(modal.id, id);
+              onDeleteDestination(deleteDestinationId, id);
               toggleModal();
             }}
           />

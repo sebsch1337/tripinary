@@ -8,6 +8,7 @@ export default function DestinationList({
   tripId,
   toggleModal,
   toDos,
+  setDeleteDestinationId,
 }) {
   return (
     <DestinationWrapper>
@@ -17,7 +18,10 @@ export default function DestinationList({
           <DestinationItem
             key={item.id}
             destination={item}
-            onClick={() => toggleModal(item.name, "destination", item.id)}
+            onClick={() => {
+              setDeleteDestinationId(item.id);
+              toggleModal(item.name, "destination");
+            }}
             hasToDos={toDos.some((filteredToDos) => filteredToDos.destinationId === item.id)}
           />
         ))}

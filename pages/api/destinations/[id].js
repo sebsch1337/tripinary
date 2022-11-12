@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
     case "DELETE":
       try {
-        await deleteDestination(id, tripId);
+        await deleteDestination(id);
         const newDestinations = await getDestinationsByTripId(tripId);
         res.status(200).json(newDestinations);
       } catch (error) {

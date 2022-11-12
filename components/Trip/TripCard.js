@@ -12,19 +12,20 @@ export default function TripCard({ country }) {
 }
 
 const CardBox = styled.button`
-  width: 20em;
-  height: 20em;
-  filter: drop-shadow(0 0 1em var(--drop-shadow));
+  all: unset;
+  width: 17rem;
+  height: 17rem;
   background-size: cover;
   background-image: url(${(props) => props.image});
   border: 0;
   border-radius: 25px;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  filter: drop-shadow(0 0 1em var(--drop-shadow));
 `;
 
 const TextArea = styled.span`
-  height: 5em;
+  height: 5rem;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
