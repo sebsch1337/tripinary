@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Input from "../FormElements/Input";
-import SaveButton from "../Buttons/SaveButton";
+import ModalButton from "../Buttons/ModalButton";
 
 export default function EditTextForm({ prevTextValue, onUpdateDetail, placeholder }) {
   const [description, setDescription] = useState(prevTextValue);
@@ -22,7 +22,7 @@ export default function EditTextForm({ prevTextValue, onUpdateDetail, placeholde
         value={description}
         placeholder={placeholder}
       />
-      <SaveButton />
+      <ModalButton type="save" />
     </EditForm>
   );
 }

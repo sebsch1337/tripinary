@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Image from "next/image";
-import saveSvg from "../../assets/save.svg";
 import Input from "../FormElements/Input";
-import SaveButton from "../Buttons/SaveButton";
+import ModalButton from "../Buttons/ModalButton";
 
 const timestampToIsoString = (timestamp) => new Date(timestamp * 1000).toISOString().substring(0, 10);
 
@@ -51,7 +49,7 @@ export default function EditDatesForm({ destination, onUpdateDetail }) {
       </InputWrapper>
 
       {validationError && <ValidationError>{validationError}</ValidationError>}
-      <SaveButton />
+      <ModalButton type="save" />
     </EditDates>
   );
 }

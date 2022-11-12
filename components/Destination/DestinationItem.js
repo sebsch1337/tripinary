@@ -22,10 +22,10 @@ export default function DestinationItem({ destination, onClick, hasToDos }) {
         onClick={onClick}
         name={destination.name}
         icon="cross"
-        width="10px"
-        height="10px"
+        width="10"
+        height="10"
         right="0"
-        ariaLabel="Delete destination"
+        aria-label="Delete destination"
       />
     </ListBox>
   );
