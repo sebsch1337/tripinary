@@ -23,6 +23,7 @@ export default function TripForm({ onSubmitNewTrip }) {
 
 const FormBox = styled.form`
   all: unset;
+  box-sizing: border-box;
   width: 17rem;
   height: 17rem;
   border: 3px var(--drop-shadow) dashed;
