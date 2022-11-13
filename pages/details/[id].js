@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "../../components/Header";
 import Main from "../../components/Main";
@@ -43,13 +43,22 @@ export default function Details({ id, destinationDB, toDosDB }) {
   const [destination, setDestination] = useState(destinationDB);
   const [toDos, setToDos] = useState(toDosDB);
   const [modal, setModal] = useState({ visible: false, name: "" });
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState({ triggered: false, show: false });
 
   const destinationName = destinationDB ? destinationDB.name : "Not found";
 
   const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
 
-  const toggleLoader = () => setLoader((loader) => !loader);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (loader.triggered) {
+        setLoader((loader) => ({ triggered: false, show: !loader.show }));
+      }
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [loader.triggered]);
+
+  const toggleLoader = () => setLoader((loader) => ({ triggered: !loader.triggered, show: loader.show }));
 
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
@@ -190,7 +199,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
           )}
         </Modal>
       )}
-      {loader && <Loader />}
+      {loader.show && <Loader />}
     </>
   );
 }

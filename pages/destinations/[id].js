@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "../../components/Header";
 import Main from "../../components/Main";
@@ -39,11 +39,21 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
   const router = useRouter();
 
   const [destinations, setDestinations] = useState(destinationsDB);
+  const [deleteDestinationId, setDeleteDestinationId] = useState();
   const [modal, setModal] = useState({ visible: false, name: "" });
-  const [loader, setLoader] = useState(false);
-  const [deleteDestinationId, setDeleteDestinationId] = useState(0);
+  const [loader, setLoader] = useState({ triggered: false, show: false });
 
-  const toggleLoader = () => setLoader((loader) => !loader);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (loader.triggered) {
+        setLoader((loader) => ({ triggered: false, show: !loader.show }));
+      }
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [loader.triggered]);
+
+  const toggleLoader = () => setLoader((loader) => ({ triggered: !loader.triggered, show: loader.show }));
+
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
 
@@ -139,7 +149,7 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
           />
         </Modal>
       )}
-      {loader && <Loader />}
+      {loader.show && <Loader />}
     </>
   );
 }
