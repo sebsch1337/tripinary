@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 
 import Header from "../../components/Header";
+import Main from "../../components/Main";
 import Footer from "../../components/Footer";
 import Loader from "../../components/Modals/Loader";
 import Modal from "../../components/Modals/Modal";
-import DeleteModal from "../../components/Modals/DeleteModal";
 import EditDatesForm from "../../components/Edit/EditDatesForm";
 import EditTextForm from "../../components/Edit/EditTextForm";
 import EditButton from "../../components/Buttons/EditButton";
@@ -48,24 +47,12 @@ export default function Details({ id, destinationDB, toDosDB }) {
 
   const destinationName = destinationDB ? destinationDB.name : "Not found";
 
+  const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
+
   const toggleLoader = () => setLoader((loader) => !loader);
+
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
-
-  const onDeleteAccount = async () => {
-    const res = await fetch("/api/trips", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    });
-
-    const deletedAccount = await res;
-    if (deletedAccount.error) return alert(deletedAccount.error);
-  };
-
-  const calculateDuration = () => (destination?.endDate - destination?.startDate) / 86400;
 
   const onToggleToDoItem = async (id, checked) => {
     toggleLoader();
@@ -75,16 +62,6 @@ export default function Details({ id, destinationDB, toDosDB }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ checked: !checked }),
-    });
-    const newToDos = await res.json();
-    setToDos(newToDos);
-    toggleLoader();
-  };
-
-  const onDeleteToDoItem = async (id, destinationId) => {
-    toggleLoader();
-    const res = await fetch("/api/todos/" + id + "?destinationId=" + destinationId, {
-      method: "DELETE",
     });
     const newToDos = await res.json();
     setToDos(newToDos);
@@ -123,10 +100,20 @@ export default function Details({ id, destinationDB, toDosDB }) {
     }, 100);
   };
 
+  const onDeleteToDoItem = async (id, destinationId) => {
+    toggleLoader();
+    const res = await fetch("/api/todos/" + id + "?destinationId=" + destinationId, {
+      method: "DELETE",
+    });
+    const newToDos = await res.json();
+    setToDos(newToDos);
+    toggleLoader();
+  };
+
   return (
     <>
       <Header coverImage={destinationName} />
-      <MainCard>
+      <Main>
         <DetailHeadline>{destinationName.toUpperCase()}</DetailHeadline>
         {destination && (
           <DetailSection>
@@ -166,7 +153,7 @@ export default function Details({ id, destinationDB, toDosDB }) {
             <ToDoForm onSubmitNewToDoItem={onSubmitNewToDoItem} />
           </DetailSection>
         )}
-      </MainCard>
+      </Main>
       <Footer>
         <Duration title="Duration" number={calculateDuration()} type="night" />
       </Footer>
@@ -203,19 +190,6 @@ export default function Details({ id, destinationDB, toDosDB }) {
           )}
         </Modal>
       )}
-      {modal.visible && modal.type === "account" && (
-        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
-          <DeleteModal
-            name={modal.name}
-            onClick={async () => {
-              toggleLoader();
-              toggleModal();
-              await onDeleteAccount();
-              signOut();
-            }}
-          />
-        </Modal>
-      )}
       {loader && <Loader />}
     </>
   );
@@ -238,16 +212,6 @@ const DetailText = styled.p`
 
 const DetailSection = styled.section`
   margin: 0 2rem 5rem;
-`;
-
-const MainCard = styled.main`
-  position: absolute;
-  top: 40vh;
-  border-top-left-radius: 3rem;
-  border-top-right-radius: 3rem;
-  background-color: var(--background-primary);
-  width: 100vw;
-  overflow: hidden;
 `;
 
 const DetailHeadline = styled.h1`

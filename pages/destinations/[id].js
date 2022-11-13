@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import Header from "../../components/Header";
+import Main from "../../components/Main";
 import Footer from "../../components/Footer";
 import Loader from "../../components/Modals/Loader";
 import Modal from "../../components/Modals/Modal";
@@ -37,7 +37,6 @@ export async function getServerSideProps(context) {
 
 export default function Destinations({ id, destinationsDB, toDosDB, countryName }) {
   const router = useRouter();
-  const { data: session } = useSession();
 
   const [destinations, setDestinations] = useState(destinationsDB);
   const [modal, setModal] = useState({ visible: false, name: "" });
@@ -90,22 +89,10 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
 
   const onDeleteTrip = async (id) => await fetch("/api/trips/" + id, { method: "DELETE" });
 
-  const onDeleteAccount = async () => {
-    const res = await fetch("/api/trips", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    });
-    if (res.error) return alert(res.error);
-  };
-
   return (
     <>
       <Header coverImage={countryName} />
-
-      <MainCard>
+      <Main>
         <DestinationHeadline>{countryName.toUpperCase()}</DestinationHeadline>
         {countryName !== "Not found" && (
           <DestinationList
@@ -117,7 +104,7 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
             setDeleteDestinationId={setDeleteDestinationId}
           />
         )}
-      </MainCard>
+      </Main>
       {countryName !== "Not found" && (
         <Footer>
           <Duration title="Total duration" number={calculateTotalDuration()} type="day" />
@@ -152,32 +139,10 @@ export default function Destinations({ id, destinationsDB, toDosDB, countryName 
           />
         </Modal>
       )}
-      {modal.visible && modal.type === "account" && (
-        <Modal name={`Delete ${modal.name}`} toggleModal={toggleModal}>
-          <DeleteModal
-            name={modal.name}
-            onClick={async () => {
-              toggleLoader();
-              toggleModal();
-              await onDeleteAccount();
-              signOut();
-            }}
-          />
-        </Modal>
-      )}
       {loader && <Loader />}
     </>
   );
 }
-
-const MainCard = styled.main`
-  position: absolute;
-  top: 40vh;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
-  background-color: var(--background-primary);
-  width: 100vw;
-`;
 
 const DestinationHeadline = styled.h1`
   margin: 1em 0 0.5em;
