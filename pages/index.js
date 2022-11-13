@@ -152,6 +152,7 @@ export default function Home({ tripsDb }) {
             onClick={async () => {
               toggleLoader();
               toggleModal();
+              toggleShowProfile();
               await onDeleteAccount();
               signOut();
             }}
