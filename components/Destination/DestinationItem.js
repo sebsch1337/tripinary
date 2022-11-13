@@ -8,14 +8,14 @@ export default function DestinationItem({ destination, onClick, hasToDos }) {
   return (
     <ListBox bulletCircle={bulletCircle.src}>
       <BulletCircle src={bulletCircle.src} />
-      <div>
+      <NameWrapper>
         <Link href={`/details/${destination.id}`} passHref>
           <AnkorTag>
             <NameArea>{destination.name}</NameArea>
           </AnkorTag>
         </Link>
         <StartDate>{new Date(destination.startDate * 1000).toUTCString().substring(0, 11)}</StartDate>
-      </div>
+      </NameWrapper>
 
       <StatusIndicators hotel={destination.hotel} transport={destination.transport} hasToDos={hasToDos} />
       <DeleteButton
@@ -36,18 +36,20 @@ const StartDate = styled.p`
   color: var(--drop-shadow);
 `;
 
+const NameWrapper = styled.div`
+  width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const AnkorTag = styled.a`
   all: unset;
   text-decoration: none;
   color: var(--text-primary);
 `;
 
-const NameArea = styled.span`
-  width: 65%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
+const NameArea = styled.span``;
 
 const ListBox = styled.li`
   padding: 0.8rem 0.6rem;

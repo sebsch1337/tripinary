@@ -14,6 +14,8 @@ export default function Modal({ name, toggleModal, children }) {
 const ModalTitle = styled.h2`
   text-align: center;
   margin-bottom: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const ModalBox = styled.section`
@@ -25,6 +27,8 @@ const ModalBox = styled.section`
   flex-direction: column;
   justify-content: space-around;
   filter: drop-shadow(0 0 0.4rem var(--drop-shadow));
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const BlurryBackground = styled.div`
