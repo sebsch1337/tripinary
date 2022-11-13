@@ -44,6 +44,7 @@ export default function EditDatesForm({ destination, onUpdateDetail }) {
           type="date"
           onChange={(event) => setEndDate(event.target.value)}
           value={endDate}
+          min={startDate}
           required
         />
       </InputWrapper>

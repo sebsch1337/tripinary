@@ -131,9 +131,9 @@ export default function Details({ id, destinationDB, toDosDB }) {
               <EditButton toggleModal={() => toggleModal("Dates")} />
             </DetailTitle>
             <DetailText>
-              {new Date(destination.startDate * 1000).toISOString().substring(0, 10) +
+              {new Date(destination.startDate * 1000).toLocaleDateString() +
                 ` until ` +
-                new Date(destination.endDate * 1000).toISOString().substring(0, 10)}
+                new Date(destination.endDate * 1000).toLocaleDateString()}
             </DetailText>
             <DetailTitle>
               Hotel
