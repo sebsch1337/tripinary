@@ -1,8 +1,8 @@
-<div style="text-align: center"><img width="150" alt="image" src="./assets/logo.svg">
-<h3>TRIPINARY</h3>
-<p>Your Next.js Travel Planner</p>
-<a href="https://tripinary.vercel.app/">https://tripinary.vercel.app/</a>
-</div>
+<p align="center"><img width="150" alt="image" src="./assets/logo.svg"></p>
+<h3 align="center">TRIPINARY</h3>
+<p align="center">Your Next.js Travel Planner</p>
+<p align="center"><a href="https://tripinary.vercel.app/">https://tripinary.vercel.app/</a></p>
+
 
 ## Overview
 
