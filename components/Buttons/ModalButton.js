@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import floppySvg from "../../assets/floppy.svg";
-import CrossIconWhiteSvg from "../../assets/crossWhite.svg";
+import CrossIcon from "../DynamicIcons/CrossIcon";
 
 export default function ModalButton(props) {
   return (
@@ -13,7 +13,7 @@ export default function ModalButton(props) {
       {props.type === "save" ? (
         <Image src={floppySvg} width="18px" height="18px" alt="" />
       ) : (
-        <Image src={CrossIconWhiteSvg} width="18px" height="18px" alt="" />
+        <CrossIcon iconSize="2rem" color="#fff" />
       )}
 
       {props.type === "save" ? "Save" : "Delete"}

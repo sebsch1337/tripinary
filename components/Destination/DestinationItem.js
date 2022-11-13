@@ -15,16 +15,13 @@ export default function DestinationItem({ destination, onClick, hasToDos }) {
         </Link>
         <StartDate>{new Date(destination.startDate * 1000).toUTCString().substring(0, 11)}</StartDate>
       </NameWrapper>
-
       <StatusIndicators hotel={destination.hotel} transport={destination.transport} hasToDos={hasToDos} />
       <DeleteButton
         onClick={onClick}
         name={destination.name}
         icon="cross"
-        width="10px"
-        height="10px"
-        right="0"
         aria-label="Delete destination"
+        right="0"
       />
     </ListBox>
   );

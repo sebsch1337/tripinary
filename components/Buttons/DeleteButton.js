@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import trashCanSvg from "../../assets/trashCan.svg";
-import crossIconSvg from "../../assets/cross.svg";
+import CrossIcon from "../DynamicIcons/CrossIcon";
 
 export default function DeleteButton(props) {
   return (
@@ -10,9 +10,7 @@ export default function DeleteButton(props) {
         {props.icon === "trashCan" && (
           <Image src={trashCanSvg} width={props.width} height={props.height} alt="" />
         )}
-        {props.icon === "cross" && (
-          <Image src={crossIconSvg} width={props.width} height={props.height} alt="" />
-        )}
+        {props.icon === "cross" && <CrossIcon iconSize="1.4rem" />}
       </StyledDeleteButton>
     </>
   );
