@@ -16,9 +16,7 @@ export default function EditTextForm({ prevTextValue, onUpdateDetail, placeholde
       <Input
         aria-label="description"
         name="description"
-        type="text"
         onChange={(event) => setDescription(event.target.value)}
-        autoComplete="off"
         value={description}
         placeholder={placeholder}
       />

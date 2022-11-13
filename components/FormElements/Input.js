@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
 export default function Input(props) {
-  return <StyledInput {...props} />;
+  return (
+    <StyledInput
+      {...props}
+      autoComplete={props.autoComplete || "off"}
+      spellCheck={props.spellCheck || "false"}
+    />
+  );
 }
 
 const StyledInput = styled.input`
   margin: ${({ margin }) => margin || "0"};
-  width: 100%;
+  width: ${({ width }) => width || "100%"};
   height: ${({ height }) => height || "2.5rem"};
   filter: drop-shadow(0 0 0.2rem var(--drop-shadow));
   transition: all ease-in-out 200ms;

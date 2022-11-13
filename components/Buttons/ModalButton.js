@@ -26,10 +26,7 @@ const StyledButton = styled.button`
   padding: 0.3rem 1.5rem;
   height: 2.5rem;
   width: 100%;
-  background: ${({ type }) =>
-    type === "save"
-      ? "linear-gradient(135deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%)"
-      : "linear-gradient(135deg, rgba(255, 49, 49, 1) 0%, rgba(255, 255, 255, 1) 200%)"};
+  background: ${({ type }) => (type === "save" ? "var(--gradient-primary)" : "var(--gradient-secondary)")};
   border-radius: 2rem;
   color: #fff;
   font-size: 1.5rem;

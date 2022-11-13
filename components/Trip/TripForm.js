@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Image from "next/image";
-import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
 import Input from "../FormElements/Input";
+import AddButton from "../Buttons/AddButton";
 
 export default function TripForm({ onSubmitNewTrip }) {
   return (
@@ -12,12 +11,9 @@ export default function TripForm({ onSubmitNewTrip }) {
           placeholder="Country"
           aria-label="countryname"
           name="country"
-          autoComplete="off"
-          required
+          required={true}
         />
-        <AddTripButton aria-label="submit">
-          <Image src={addButtonCircleActive} alt="Add icon" />
-        </AddTripButton>
+        <AddTripButton width="2rem" height="2rem" />
       </InputWrapper>
     </FormBox>
   );
@@ -40,11 +36,7 @@ const InputWrapper = styled.span`
   position: relative;
 `;
 
-const AddTripButton = styled.button`
-  all: unset;
-  width: 2rem;
-  height: 2rem;
-  border: 0;
+const AddTripButton = styled(AddButton)`
   position: absolute;
   margin-top: auto;
   margin-bottom: auto;
