@@ -5,6 +5,9 @@ const GlobalStyle = createGlobalStyle`
         --text-primary: #121212;
         --background-primary: #fafbff;
         --drop-shadow: #8e94a3;
+        --gradient-primary: linear-gradient(135deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
+        --gradient-secondary: linear-gradient(135deg, rgba(255, 49, 49, 1) 0%, rgba(255, 255, 255, 1) 200%);
+        --gradient-horizontal: linear-gradient(90deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
     }
   
     /* rubik-regular - latin */

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Image from "next/image";
-import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
+import Input from "../FormElements/Input";
+import AddButton from "../Buttons/AddButton";
 
 export default function ToDoForm({ onSubmitNewToDoItem }) {
   const handleSubmit = (event) => {
@@ -12,46 +12,24 @@ export default function ToDoForm({ onSubmitNewToDoItem }) {
 
   return (
     <ToDoListForm onSubmit={handleSubmit} aria-label="add todo form">
-      <AddToDoButton aria-label="add todo">
-        <Image src={addButtonCircleActive} width="25x" height="25px" alt="Add icon" />
-      </AddToDoButton>
-      <ToDoInput
+      <AddButton height="1.5rem" width="1.5rem" iconSize="1rem" aria-label="submit todo" />
+      <Input
+        margin="0 0 0 0.8rem"
+        height="1.8rem"
+        width="85%"
+        fontSize="1rem"
         name="todo"
-        type="text"
         aria-label="todo"
         placeholder="Activity"
-        autoComplete="off"
-        required
+        pattern=".*[^ ].*"
+        required={true}
       />
     </ToDoListForm>
   );
 }
 
-const ToDoInput = styled.input`
-  margin-left: 0.8em;
-  width: 90%;
-  height: 1.8em;
-  filter: drop-shadow(0 0 0.3em var(--drop-shadow));
-  transition: all ease-in-out 200ms;
-  border: 0;
-  border-radius: 1em;
-  padding: 0 1.1em;
-  font-size: 1rem;
-  outline: none;
-
-  &:focus {
-    filter: drop-shadow(0 0 0.6em var(--drop-shadow));
-  }
-`;
-
-const AddToDoButton = styled.button`
-  all: unset;
-  display: flex;
-  align-items: center;
-`;
-
 const ToDoListForm = styled.form`
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   display: flex;
   align-items: center;
 `;

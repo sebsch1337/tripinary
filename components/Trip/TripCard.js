@@ -17,15 +17,14 @@ const CardBox = styled.button`
   height: 17rem;
   background-size: cover;
   background-image: url(${(props) => props.image});
-  border: 0;
-  border-radius: 25px;
+  border-radius: 2rem;
   position: relative;
   overflow: hidden;
-  filter: drop-shadow(0 0 1em var(--drop-shadow));
+  filter: drop-shadow(0 0 1rem var(--drop-shadow));
 `;
 
 const TextArea = styled.span`
-  height: 5rem;
+  height: 4.5rem;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
@@ -39,9 +38,10 @@ const CountryName = styled.h2`
   color: #fff;
   font-size: 1.8rem;
   font-weight: 400;
+  text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 0.5em;
+  padding: 0 0.8rem;
 `;

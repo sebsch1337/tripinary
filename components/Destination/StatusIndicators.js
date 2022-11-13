@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import BedIcon from "../Icons/BedIcon";
-import SuitcaseIcon from "../Icons/SuitcaseIcon";
-import ChecklistIcon from "../Icons/ChecklistIcon";
+import BedIcon from "../DynamicIcons/BedIcon";
+import SuitcaseIcon from "../DynamicIcons/SuitcaseIcon";
+import ChecklistIcon from "../DynamicIcons/ChecklistIcon";
 
 export default function StatusIndicators({ hotel, transport, hasToDos }) {
   return (
@@ -15,7 +15,7 @@ export default function StatusIndicators({ hotel, transport, hasToDos }) {
 
 const StatusSection = styled.section`
   display: flex;
-  gap: 0.3em;
+  gap: 0.4rem;
   position: absolute;
   right: 10%;
 `;

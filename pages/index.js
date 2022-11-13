@@ -1,17 +1,19 @@
-import Head from "next/head";
 import styled from "styled-components";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getAllTrips } from "../services/tripService";
+
+import Image from "next/image";
+import logoSvg from "../assets/logo.svg";
+import gitHubSvg from "../assets/github.svg";
+import googleSvg from "../assets/google.svg";
 
 import TripList from "../components/Trip/TripList";
 import Loader from "../components/Modals/Loader";
 import LoginButton from "../components/Buttons/LoginButton";
 
-import gitHubSvg from "../assets/github.svg";
-import googleSvg from "../assets/google.svg";
 import UserButton from "../components/Buttons/UserButton";
 import UserProfile from "../components/Modals/UserProfile";
 import Modal from "../components/Modals/Modal";
@@ -31,27 +33,25 @@ export async function getServerSideProps(context) {
 export default function Home({ tripsDb }) {
   const { data: session } = useSession();
   const [trips, setTrips] = useState(tripsDb);
-  const [loader, setLoader] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [modal, setModal] = useState({ visible: false, name: "" });
+  const [loader, setLoader] = useState({ triggered: false, show: false });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (loader.triggered) {
+        setLoader((loader) => ({ triggered: false, show: !loader.show }));
+      }
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [loader.triggered]);
+
+  const toggleLoader = () => setLoader((loader) => ({ triggered: !loader.triggered, show: loader.show }));
 
   const toggleShowProfile = () => setShowProfile((showProfile) => !showProfile);
-  const toggleLoader = () => setLoader((loader) => !loader);
+
   const toggleModal = (modalName = "", type = "") =>
     setModal((modal) => ({ visible: !modal.visible, name: modalName, type: type }));
-
-  const onDeleteAccount = async () => {
-    const res = await fetch("/api/trips", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    });
-
-    const deletedAccount = await res;
-    if (deletedAccount.error) return alert(deletedAccount.error);
-  };
 
   const onSubmitNewTrip = async (event) => {
     event.preventDefault();
@@ -67,8 +67,7 @@ export default function Home({ tripsDb }) {
     });
     const newTrips = await res.json();
     toggleLoader();
-
-    if (newTrips.error) return alert(newTrips.error);
+    if (newTrips.message) return alert(newTrips.message);
     setTrips(newTrips);
 
     event.target.reset();
@@ -77,11 +76,21 @@ export default function Home({ tripsDb }) {
     }, 100);
   };
 
+  const onDeleteAccount = async () => {
+    const res = await fetch("/api/trips", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    const deletedAccount = await res;
+    if (deletedAccount.error) return alert(deletedAccount.error);
+  };
+
   return (
     <>
-      <Head>
-        <title>START YOUR JOURNEY</title>
-      </Head>
       {session ? (
         <>
           <Header>
@@ -106,16 +115,16 @@ export default function Home({ tripsDb }) {
                 }}
               />
             )}
-            <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
+            <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} loader={loader} />
           </Main>
         </>
       ) : (
         <LoginMain>
-          <LoginHeadline>
-            Login
-            <br />
-            to start your journey
-          </LoginHeadline>
+          <LogoArea>
+            <Image src={logoSvg} width="150" height="150" alt="logo" />
+            <LogoText>TRIPINARY</LogoText>
+          </LogoArea>
+
           <LoginButton
             icon={gitHubSvg}
             providerName="GitHub"
@@ -143,13 +152,14 @@ export default function Home({ tripsDb }) {
             onClick={async () => {
               toggleLoader();
               toggleModal();
+              toggleShowProfile();
               await onDeleteAccount();
               signOut();
             }}
           />
         </Modal>
       )}
-      {loader && <Loader />}
+      {loader.show && <Loader />}
     </>
   );
 }
@@ -162,8 +172,18 @@ const TripsHeadline = styled.h1`
   font-weight: 500;
 `;
 
-const LoginHeadline = styled.h1`
+const LogoArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+`;
+
+const LogoText = styled.h1`
+  color: #316bff;
   text-align: center;
+  font-size: 2.5rem;
 `;
 
 const LoginMain = styled.main`

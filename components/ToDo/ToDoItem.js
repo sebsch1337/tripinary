@@ -12,7 +12,7 @@ export default function ToDoItem({ toDo, onDeleteToDoItem, onToggleToDoItem }) {
           src={toDo.checked ? checkedIcon : unCheckedIcon}
           width={toDo.checked ? "17px" : "14px"}
           height={toDo.checked ? "17px" : "14px"}
-          alt={toDo.checked ? "checked icon" : "unchecked icon"}
+          alt=""
         />
         <Description checked={toDo.checked}>{toDo.description}</Description>
       </ToDoButton>
@@ -30,20 +30,26 @@ export default function ToDoItem({ toDo, onDeleteToDoItem, onToggleToDoItem }) {
 
 const ToDoButton = styled.button`
   display: flex;
+  width: 90%;
+  height: 1rem;
   align-items: center;
   background-color: transparent;
   border: none;
   font-size: 1rem;
+  text-align: left;
 `;
 
 const Description = styled.span`
-  margin-left: 0.4em;
+  margin-left: 0.4rem;
+  width: 95%;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
   color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const ToDoListItem = styled.li`
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
   display: flex;
   align-items: center;
 `;

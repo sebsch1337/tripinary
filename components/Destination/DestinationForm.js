@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Image from "next/image";
-import addButtonCircleActive from "../../assets/addButtonCircleActive.svg";
+import Input from "../FormElements/Input";
+import AddButton from "../Buttons/AddButton";
 
 export default function DestinationForm({ onSubmitNewDestination }) {
   const handleSubmit = (event) => {
@@ -12,16 +12,16 @@ export default function DestinationForm({ onSubmitNewDestination }) {
 
   return (
     <ListBox>
-      <FormBox onSubmit={handleSubmit} aria-label="add destination form">
-        <AddTripButton aria-label="submit">
-          <Image src={addButtonCircleActive} alt="Add icon" />
-        </AddTripButton>
-        <DestinationInput
+      <FormBox onSubmit={handleSubmit} aria-label="add place form">
+        <AddButton width="2.5rem" height="2rem" aria-label="submit place" />
+        <Input
+          margin="0 0 0 1rem"
+          height="2.2rem"
           name="destination"
-          aria-label="destination"
+          aria-label="place"
           placeholder="Place"
-          autoComplete="off"
-          required
+          pattern="^[^-\s][a-zA-ZäÄöÖüÜß ]*$"
+          required={true}
         />
       </FormBox>
     </ListBox>
@@ -34,25 +34,8 @@ const FormBox = styled.form`
   position: relative;
 `;
 
-const DestinationInput = styled.input`
-  margin-left: 0.8em;
-  width: 12em;
-  height: 2em;
-  filter: drop-shadow(0 0 0.3em var(--drop-shadow));
-  transition: all ease-in-out 200ms;
-  border: 0;
-  border-radius: 50px;
-  padding: 0 1.1em;
-  font-size: 1.1rem;
-  outline: none;
-
-  &:focus {
-    filter: drop-shadow(0 0 0.6em var(--drop-shadow));
-  }
-`;
-
 const ListBox = styled.li`
-  padding: 0.5em 0.25em;
+  padding: 0.5rem 0.3rem;
   font-size: 1.2rem;
   display: flex;
   align-items: center;
@@ -62,24 +45,17 @@ const ListBox = styled.li`
     content: "";
     position: absolute;
     width: 5px;
-    background-image: linear-gradient(90deg, rgba(49, 107, 255, 1) 0%, rgba(255, 255, 255, 1) 200%);
+    background-image: var(--gradient-horizontal);
     top: 0;
     bottom: 0;
     left: 1em;
   }
 
   &:first-child:before {
-    top: 1.2em;
+    top: 1.2rem;
   }
 
   &:last-child:before {
-    bottom: 1.2em;
+    bottom: 1.2rem;
   }
-`;
-
-const AddTripButton = styled.button`
-  width: 2rem;
-  height: 2rem;
-  border: 0;
-  background-color: transparent;
 `;

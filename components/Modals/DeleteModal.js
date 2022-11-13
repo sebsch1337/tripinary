@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import Image from "next/image";
-import deleteButtonModalSvg from "../../assets/deleteButtonModal.svg";
+import ModalButton from "../Buttons/ModalButton";
 
 export default function DeleteModal({ name, onClick }) {
   return (
@@ -8,9 +7,7 @@ export default function DeleteModal({ name, onClick }) {
       <DeleteText>{`Are you sure you want to delete ${
         name === "account" ? "your account and all your data" : name
       }?`}</DeleteText>
-      <StyledButton onClick={onClick} aria-label={`Delete ${name}`}>
-        <Image src={deleteButtonModalSvg} width="290px" height="40px" alt="Delete icon" />
-      </StyledButton>
+      <ModalButton onClick={onClick} aria-label={`Delete ${name}`} />
     </DeleteSection>
   );
 }
@@ -19,14 +16,7 @@ const DeleteSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2em;
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-  justify-content: center;
-  border: none;
-  background-color: transparent;
+  gap: 2rem;
 `;
 
 const DeleteText = styled.p``;

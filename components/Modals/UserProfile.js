@@ -67,7 +67,7 @@ const UserProfileBox = styled.div`
   gap: 2rem;
   align-items: center;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 1rem;
   padding: 2rem;
   filter: drop-shadow(0 0 0.5rem var(--drop-shadow));
   z-index: 31;
