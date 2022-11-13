@@ -2,12 +2,11 @@ import styled from "styled-components";
 import Link from "next/link";
 import DeleteButton from "../Buttons/DeleteButton";
 import StatusIndicators from "./StatusIndicators";
-import bulletCircle from "../../assets/bulletCircle.svg";
 
 export default function DestinationItem({ destination, onClick, hasToDos }) {
   return (
-    <ListBox bulletCircle={bulletCircle.src}>
-      <BulletCircle src={bulletCircle.src} />
+    <ListBox>
+      <BulletCircle />
       <NameWrapper>
         <Link href={`/details/${destination.id}`} passHref>
           <AnkorTag>
@@ -22,8 +21,8 @@ export default function DestinationItem({ destination, onClick, hasToDos }) {
         onClick={onClick}
         name={destination.name}
         icon="cross"
-        width="10"
-        height="10"
+        width="10px"
+        height="10px"
         right="0"
         aria-label="Delete destination"
       />
@@ -73,7 +72,9 @@ const ListBox = styled.li`
   }
 `;
 
-const BulletCircle = styled.img`
+const BulletCircle = styled.div`
+  background: var(--gradient-primary);
+  border-radius: 100%;
   width: 1.4rem;
   height: 1.4rem;
   margin-right: 1rem;
