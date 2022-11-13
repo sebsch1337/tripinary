@@ -30,7 +30,7 @@ export default function ToDoItem({ toDo, onDeleteToDoItem, onToggleToDoItem }) {
 
 const ToDoButton = styled.button`
   display: flex;
-  width: 100%;
+  width: 90%;
   height: 1rem;
   align-items: center;
   background-color: transparent;
@@ -41,7 +41,7 @@ const ToDoButton = styled.button`
 
 const Description = styled.span`
   margin-left: 0.4rem;
-  width: 85%;
+  width: 95%;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
   color: ${({ checked }) => (checked ? "gray" : "var(--primary-text)")};
   overflow: hidden;
