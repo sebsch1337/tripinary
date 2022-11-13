@@ -18,9 +18,8 @@ const StyledInput = styled.input`
   transition: all ease-in-out 200ms;
   border: 0;
   border-radius: 2rem;
-  padding-left: 1.1rem;
-  padding-right: 0.8rem;
-  font-size: 1.1rem;
+  padding: ${({ padding }) => padding || "0 0.8rem 0 1.1rem"};
+  font-size: ${({ fontSize }) => fontSize || "1.1rem"};
   outline: none;
 
   &:focus {

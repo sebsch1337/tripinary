@@ -5,16 +5,17 @@ import AddButton from "../Buttons/AddButton";
 export default function TripForm({ onSubmitNewTrip }) {
   return (
     <FormBox onSubmit={onSubmitNewTrip} aria-label="add trip form">
-      <InputWrapper>
-        <Input
-          height="2.8rem"
-          placeholder="Country"
-          aria-label="countryname"
-          name="country"
-          required={true}
-        />
-        <AddTripButton width="2rem" height="2rem" />
-      </InputWrapper>
+      <Input
+        width="90%"
+        height="2.8rem"
+        fontSize="1.2rem"
+        padding="0 2.8rem 0 1.2rem"
+        placeholder="Country"
+        aria-label="countryname"
+        name="country"
+        required={true}
+      />
+      <AddTripButton width="2rem" height="2rem" />
     </FormBox>
   );
 }
@@ -30,17 +31,10 @@ const FormBox = styled.form`
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
-`;
-
-const InputWrapper = styled.span`
   position: relative;
 `;
 
 const AddTripButton = styled(AddButton)`
   position: absolute;
-  margin-top: auto;
-  margin-bottom: auto;
-  right: 0.5rem;
-  top: 0;
-  bottom: 0;
+  right: 1.3rem;
 `;

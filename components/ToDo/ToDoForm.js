@@ -17,6 +17,7 @@ export default function ToDoForm({ onSubmitNewToDoItem }) {
         margin="0 0 0 0.8rem"
         height="1.8rem"
         width="85%"
+        fontSize="1rem"
         name="todo"
         aria-label="todo"
         placeholder="Activity"
