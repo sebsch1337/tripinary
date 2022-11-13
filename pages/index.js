@@ -57,8 +57,6 @@ export default function Home({ tripsDb }) {
     event.preventDefault();
     const countryName = event.target.country.value;
 
-    if (countryName.trim().length === 0) return;
-
     toggleLoader();
     const res = await fetch("/api/trips", {
       method: "POST",
@@ -69,8 +67,7 @@ export default function Home({ tripsDb }) {
     });
     const newTrips = await res.json();
     toggleLoader();
-
-    if (newTrips.error) return alert(newTrips.error);
+    if (newTrips.message) return alert(newTrips.message);
     setTrips(newTrips);
 
     event.target.reset();
@@ -118,7 +115,7 @@ export default function Home({ tripsDb }) {
                 }}
               />
             )}
-            <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} />
+            <TripList trips={trips} onSubmitNewTrip={onSubmitNewTrip} loader={loader} />
           </Main>
         </>
       ) : (

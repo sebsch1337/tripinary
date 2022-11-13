@@ -3,7 +3,7 @@ import Link from "next/link";
 import TripCard from "./TripCard";
 import TripForm from "./TripForm";
 
-export default function TripList({ trips, onSubmitNewTrip }) {
+export default function TripList({ trips, onSubmitNewTrip, loader }) {
   return (
     <TripsWrapper>
       {trips.map((trip) => (
@@ -13,7 +13,7 @@ export default function TripList({ trips, onSubmitNewTrip }) {
           </a>
         </Link>
       ))}
-      <TripForm onSubmitNewTrip={onSubmitNewTrip} />
+      <TripForm onSubmitNewTrip={onSubmitNewTrip} loader={loader} />
     </TripsWrapper>
   );
 }

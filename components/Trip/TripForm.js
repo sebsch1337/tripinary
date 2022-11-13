@@ -2,9 +2,9 @@ import styled from "styled-components";
 import Input from "../FormElements/Input";
 import AddButton from "../Buttons/AddButton";
 
-export default function TripForm({ onSubmitNewTrip }) {
+export default function TripForm({ onSubmitNewTrip, loader }) {
   return (
-    <FormBox onSubmit={onSubmitNewTrip} aria-label="add trip form">
+    <FormBox onSubmit={onSubmitNewTrip} aria-label="add trip form" disabled={true}>
       <Input
         width="90%"
         height="2.8rem"
@@ -14,6 +14,7 @@ export default function TripForm({ onSubmitNewTrip }) {
         aria-label="countryname"
         name="country"
         pattern="^[^-\s][a-zA-ZäÄöÖüÜß ]*$"
+        disabled={loader.triggered}
         required={true}
       />
       <AddTripButton width="2rem" height="2rem" />
