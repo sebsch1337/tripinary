@@ -13,6 +13,7 @@ export default function TripForm({ onSubmitNewTrip }) {
         placeholder="Country"
         aria-label="countryname"
         name="country"
+        pattern="^[^-\s][a-zA-ZäÄöÖüÜß ]*$"
         required={true}
       />
       <AddTripButton width="2rem" height="2rem" />

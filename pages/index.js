@@ -57,6 +57,8 @@ export default function Home({ tripsDb }) {
     event.preventDefault();
     const countryName = event.target.country.value;
 
+    if (countryName.trim().length === 0) return;
+
     toggleLoader();
     const res = await fetch("/api/trips", {
       method: "POST",

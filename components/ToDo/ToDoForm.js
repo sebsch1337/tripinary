@@ -21,6 +21,7 @@ export default function ToDoForm({ onSubmitNewToDoItem }) {
         name="todo"
         aria-label="todo"
         placeholder="Activity"
+        pattern=".*[^ ].*"
         required={true}
       />
     </ToDoListForm>

@@ -1,1 +1,1 @@
-export const validateTripName = (name) => name.match("^[a-zA-ZäÄöÖüÜß ]*$");
+export const validateTripName = (name) => name.match("^[^-s][a-zA-ZäÄöÖüÜß ]*$");

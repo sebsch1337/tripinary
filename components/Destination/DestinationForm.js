@@ -20,6 +20,7 @@ export default function DestinationForm({ onSubmitNewDestination }) {
           name="destination"
           aria-label="place"
           placeholder="Place"
+          pattern="^[^-\s][a-zA-ZäÄöÖüÜß ]*$"
           required={true}
         />
       </FormBox>
