@@ -3,7 +3,6 @@
 <p align="center">Your Next.js Travel Planner</p>
 <p align="center"><a href="https://tripinary.vercel.app/">https://tripinary.vercel.app/</a></p>
 
-
 ## Overview
 
 TRIPINARY is a travel planning app, where you can track your destinations, dates, flights (or other transportation data), accomodations and to-do's.
@@ -19,6 +18,7 @@ TRIPINARY is a travel planning app, where you can track your destinations, dates
 - Check / uncheck your to-do's
 - Get an overview of your upcoming destinations
 - Your data is stored in a cloud database
+- Shows random cover images from unsplash for every country / place
 
 ## Used Tech Stack
 
@@ -29,6 +29,7 @@ TRIPINARY is a travel planning app, where you can track your destinations, dates
 - Styled-Components 5.3.6
 - Mongoose 6.7.1
 - MongoDB
+- Jest 29.2.0
 
 ## Getting Started
 
