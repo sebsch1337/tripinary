@@ -17,7 +17,7 @@ export default function TripForm({ onSubmitNewTrip, loader }) {
         disabled={loader.triggered}
         required={true}
       />
-      <AddTripButton width="2rem" height="2rem" />
+      <AddTripButton width="2rem" height="2rem" aria-label="submit country" />
     </FormBox>
   );
 }

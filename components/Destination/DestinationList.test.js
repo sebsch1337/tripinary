@@ -11,11 +11,6 @@ const destinations = [
     hotel: "Lebua State Hotel",
     transport: "Flight TG123",
     tripId: "a4e27ee3",
-    toDos: [
-      { id: "dp0l3wve", description: "Poomjai Garden", checked: true },
-      { id: "3ke9if74", description: "ICON Siam", checked: false },
-      { id: "d83je7zg", description: "China Town", checked: false },
-    ],
   },
   {
     id: "fk4t83he",
@@ -25,10 +20,6 @@ const destinations = [
     hotel: "Hilton Hotel",
     transport: "Flight PH101",
     tripId: "3ek2d0s7",
-    toDos: [
-      { id: "dow8gu3j", description: "Ayala Mall", checked: true },
-      { id: "d8e62hgf", description: "Temple of Leah", checked: false },
-    ],
   },
   {
     id: "f93ks6bt",
@@ -38,16 +29,25 @@ const destinations = [
     hotel: "River Hotel",
     transport: "Train TX299",
     tripId: "a4e27ee3",
-    toDos: [
-      { id: "d93jd7eu", description: "Old Town", checked: true },
-      { id: "9wk2j43n", description: "Jungle Tour", checked: false },
-    ],
+  },
+];
+
+const toDos = [
+  {
+    id: "lk42ktt4",
+    description: "Visit Temple",
+    destinationId: "br43kd8i",
+  },
+  {
+    id: "lk4p43t4",
+    description: "Go for a walk",
+    destinationId: "f93ks6bt",
   },
 ];
 
 describe("DestinationList", () => {
   it("renders all destination items", () => {
-    render(<DestinationList destinations={destinations} tripId="a4e27ee3" />);
+    render(<DestinationList destinations={destinations} tripId="a4e27ee3" toDos={toDos} />);
 
     expect(screen.getAllByRole("link")).toHaveLength(2);
     expect(screen.getByText("Bangkok"));
@@ -58,14 +58,17 @@ describe("DestinationList", () => {
     render(
       <DestinationList
         destinations={destinations}
-        onSubmitNewDestination={dummyCallback}
+        toDos={toDos}
+        onSubmitNewDestination=""
+        setDeleteDestinationId={dummyCallback}
         tripId="a4e27ee3"
         toggleModal={dummyCallback}
       />
     );
 
     const buttons = screen.getAllByLabelText("Delete destination");
+    console.log(buttons);
     await userEvent.click(buttons[0]);
-    expect(dummyCallback).toHaveBeenCalledTimes(1);
+    expect(dummyCallback).toHaveBeenCalledTimes(2);
   });
 });
