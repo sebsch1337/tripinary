@@ -20,6 +20,8 @@ TRIPINARY is a travel planning app, where you can track your destinations, dates
 - Your data is stored in a cloud database
 - Shows random cover images from unsplash for every country / place
 
+> **Note** This application is mobile only.
+
 ## Used Tech Stack
 
 - Next.js 12.3.1
