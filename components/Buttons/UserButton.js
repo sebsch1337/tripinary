@@ -11,7 +11,8 @@ export default function UserButton({ img, onClick }) {
 
 const ProfileImage = styled(Image)`
   all: unset;
-  border-radius: 100%;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 const StyledButton = styled.button`
