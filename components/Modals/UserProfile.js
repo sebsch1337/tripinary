@@ -43,7 +43,8 @@ const ProfileName = styled.h3`
 
 const ProfileImage = styled(Image)`
   all: unset;
-  border-radius: 100%;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 const UserInfoSection = styled.section`
