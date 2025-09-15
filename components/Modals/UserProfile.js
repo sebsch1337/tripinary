@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import LogoutButton from "../Buttons/LogoutButton";
 import UserButton from "../Buttons/UserButton";
 import DeleteAccountButton from "../Buttons/DeleteAccountButton";

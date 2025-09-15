@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import editSvg from "../../assets/edit.svg";
 
 export default function EditButton({ toggleModal, name }) {

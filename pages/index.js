@@ -5,7 +5,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { getAllTrips } from "../services/tripService";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import logoSvg from "../assets/logo.svg";
 import gitHubSvg from "../assets/github.svg";
 import googleSvg from "../assets/google.svg";

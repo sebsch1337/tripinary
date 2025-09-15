@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export default function LoginButton({ onClick, providerName, bgColor, icon }) {
   return (

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import DeleteButton from "../Buttons/DeleteButton";
 import checkedIcon from "../../assets/checked.svg";
 import unCheckedIcon from "../../assets/unchecked.svg";
