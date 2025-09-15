@@ -6,27 +6,27 @@ import TripForm from "./TripForm";
 
 export default function TripList({ trips, onSubmitNewTrip, loader }) {
 	return (
-		<TripsWrapper>
-			{trips.map((trip) => (
+        <TripsWrapper>
+            {trips.map((trip) => (
 				<Link
 					key={trip.id}
 					href={`/destinations/${trip.id}`}
 					passHref
 				>
-					<a>
-						<TripCard
-							countryName={trip?.country}
-							imageURL={trip?.image?.largeImageURL}
-						/>
-					</a>
-				</Link>
+
+                    <TripCard
+                        countryName={trip?.country}
+                        imageURL={trip?.image?.largeImageURL}
+                    />
+
+                </Link>
 			))}
-			<TripForm
+            <TripForm
 				onSubmitNewTrip={onSubmitNewTrip}
 				loader={loader}
 			/>
-		</TripsWrapper>
-	);
+        </TripsWrapper>
+    );
 }
 
 const TripsWrapper = styled.section`

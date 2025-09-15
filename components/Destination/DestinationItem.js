@@ -8,7 +8,7 @@ export default function DestinationItem({ destination, onClick, hasToDos }) {
     <ListBox>
       <BulletCircle />
       <NameWrapper>
-        <Link href={`/details/${destination.id}`} passHref>
+        <Link href={`/details/${destination.id}`} passHref legacyBehavior>
           <AnkorTag>
             <NameArea>{destination.name}</NameArea>
           </AnkorTag>
